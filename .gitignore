@@ -1,0 +1,72 @@
+# ======================
+# Python
+# ======================
+
+__pycache__/
+*.py[cod]
+
+# ======================
+# Virtual environments
+# ======================
+
+venv/
+.venv/
+env/
+
+# ======================
+# IDE
+# ======================
+
+.vscode/
+.idea/
+
+# ======================
+# OS
+# ======================
+
+.DS_Store
+Thumbs.db
+
+# ======================
+# Datasets
+# ======================
+
+data/unsplash-lite/
+data/images/
+
+# ======================
+# Generated metadata
+# ======================
+
+data/*.sqlite
+data/*.db
+data/**/*.sqlite
+
+data/metadata.csv
+data/**/*.csv
+
+# ======================
+# Embeddings
+# ======================
+
+data/embeddings/*.npy
+data/embeddings/*.npz
+
+# ======================
+# FAISS indexes
+# ======================
+
+data/indexes/*.index
+
+# ======================
+# Experiments
+# ======================
+
+experiments/runs/
+
+# ======================
+# Temporary files
+# ======================
+
+temp_plan.md
+*.log
