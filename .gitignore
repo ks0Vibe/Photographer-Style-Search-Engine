@@ -63,10 +63,11 @@ data/indexes/*.index
 # ======================
 
 experiments/runs/
+experiments/visualizations/
 
 # ======================
 # Temporary files
 # ======================
 
-temp_plan.md
 *.log
+
