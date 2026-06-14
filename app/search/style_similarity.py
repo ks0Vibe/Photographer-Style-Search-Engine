@@ -8,6 +8,29 @@ from app.search.metadata_repository import ImageMetadata
 
 
 class StyleSimilarity:
+    def __init__(
+        self,
+        brightness_weight: float = 0.20,
+        contrast_weight: float = 0.20,
+        saturation_weight: float = 0.20,
+        warmth_weight: float = 0.20,
+        histogram_weight: float = 0.20,
+    ) -> None:
+        self._weights = {
+            "brightness": brightness_weight,
+            "contrast": contrast_weight,
+            "saturation": saturation_weight,
+            "warmth": warmth_weight,
+            "histogram": histogram_weight,
+        }
+        total_weight = sum(self._weights.values())
+        if total_weight <= 0:
+            raise ValueError("Style similarity weights must sum to more than 0")
+        self._weights = {
+            key: value / total_weight
+            for key, value in self._weights.items()
+        }
+
     def brightness_similarity(self, a: float, b: float) -> float:
         return self._bounded_difference_similarity(a, b)
 
@@ -62,18 +85,32 @@ class StyleSimilarity:
         assert candidate_metadata.warmth is not None
         assert candidate_metadata.color_histogram is not None
 
-        scores = (
-            self.brightness_similarity(query_metadata.brightness, candidate_metadata.brightness),
-            self.contrast_similarity(query_metadata.contrast, candidate_metadata.contrast),
-            self.saturation_similarity(query_metadata.saturation, candidate_metadata.saturation),
-            self.warmth_similarity(query_metadata.warmth, candidate_metadata.warmth),
-            self.histogram_similarity(
+        scores = {
+            "brightness": self.brightness_similarity(
+                query_metadata.brightness,
+                candidate_metadata.brightness,
+            ),
+            "contrast": self.contrast_similarity(
+                query_metadata.contrast,
+                candidate_metadata.contrast,
+            ),
+            "saturation": self.saturation_similarity(
+                query_metadata.saturation,
+                candidate_metadata.saturation,
+            ),
+            "warmth": self.warmth_similarity(
+                query_metadata.warmth,
+                candidate_metadata.warmth,
+            ),
+            "histogram": self.histogram_similarity(
                 query_metadata.color_histogram,
                 candidate_metadata.color_histogram,
             ),
-        )
+        }
 
-        return float(sum(scores) / len(scores))
+        return float(
+            sum(self._weights[key] * score for key, score in scores.items())
+        )
 
     @staticmethod
     def _bounded_difference_similarity(a: float, b: float) -> float:

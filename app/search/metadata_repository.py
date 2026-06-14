@@ -80,6 +80,23 @@ class MetadataRepository:
         logger.info("Loaded metadata rows: requested=%s found=%s", len(image_ids), len(metadata_by_id))
         return metadata_by_id
 
+    def get_style_features(self, image_id: str) -> dict[str, float | list[float]] | None:
+        metadata = self.get_by_id(image_id)
+        if metadata is None:
+            return None
+        return self._metadata_to_style_features(metadata)
+
+    def get_style_features_batch(
+        self,
+        image_ids: list[str],
+    ) -> dict[str, dict[str, float | list[float]]]:
+        metadata_by_id = self.get_many(image_ids)
+        return {
+            image_id: self._metadata_to_style_features(metadata)
+            for image_id, metadata in metadata_by_id.items()
+            if metadata.has_style_features
+        }
+
     def _connect(self) -> sqlite3.Connection:
         if not self.database_path.exists():
             raise FileNotFoundError(f"Database file not found: {self.database_path}")
@@ -114,3 +131,24 @@ class MetadataRepository:
             raise ValueError("Stored color_histogram must decode to a list")
 
         return tuple(float(value) for value in values)
+
+    @staticmethod
+    def _metadata_to_style_features(
+        metadata: ImageMetadata,
+    ) -> dict[str, float | list[float]]:
+        if not metadata.has_style_features:
+            raise ValueError(f"Style features are incomplete for image_id={metadata.image_id}")
+
+        assert metadata.brightness is not None
+        assert metadata.contrast is not None
+        assert metadata.saturation is not None
+        assert metadata.warmth is not None
+        assert metadata.color_histogram is not None
+
+        return {
+            "brightness": float(metadata.brightness),
+            "contrast": float(metadata.contrast),
+            "saturation": float(metadata.saturation),
+            "warmth": float(metadata.warmth),
+            "color_histogram": [float(value) for value in metadata.color_histogram],
+        }
