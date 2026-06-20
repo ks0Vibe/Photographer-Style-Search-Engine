@@ -1,0 +1,19 @@
+Evaluating reranking on 30 query images
+
+CLIP only:
+avg brightness difference = 0.1698
+avg contrast difference = 0.0745
+avg saturation difference = 0.1821
+avg warmth difference = 0.0510
+
+Reranked:
+avg brightness difference = 0.0924
+avg contrast difference = 0.0577
+avg saturation difference = 0.1239
+avg warmth difference = 0.0399
+
+Improvement (positive means reranked is closer in style):
+brightness: 0.0774
+contrast: 0.0167
+saturation: 0.0582
+warmth: 0.0111

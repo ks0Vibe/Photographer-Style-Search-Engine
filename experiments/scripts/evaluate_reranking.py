@@ -1,3 +1,4 @@
+import csv
 import sqlite3
 import statistics
 import sys
@@ -5,19 +6,30 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.ml.clip_encoder import CLIPEncoder
 from app.search import FaissIndex, MetadataRepository, RetrievalService, VectorStore
+from experiments.paths import STYLE_RERANKING_DIR, ensure_experiment_directories
 
 
 DATABASE_PATH = PROJECT_ROOT / "data" / "metadata.sqlite"
 EMBEDDINGS_PATH = PROJECT_ROOT / "data" / "embeddings" / "clip_embeddings.npy"
 IMAGE_IDS_PATH = PROJECT_ROOT / "data" / "embeddings" / "image_ids.npy"
 INDEX_PATH = PROJECT_ROOT / "data" / "indexes" / "flat.index"
+METRICS_PATH = STYLE_RERANKING_DIR / "metrics.csv"
+OUTPUT_PATH = STYLE_RERANKING_DIR / "evaluation_output.txt"
+REPORT_PATH = STYLE_RERANKING_DIR / "report.md"
 QUERY_SAMPLE_SIZE = 30
 TOP_K = 10
+
+COMPARISON_IMAGE_IDS = [
+    "9U_uCvfpptk",
+    "9wTWFyInJ4Y",
+    "39DcBUbYZP4",
+    "A-G8q9zorGs",
+]
 
 
 @dataclass
@@ -121,32 +133,110 @@ def evaluate_service(service: RetrievalService, query_rows: list[tuple[str, str]
     return metrics
 
 
-def print_report(title: str, averages: dict[str, float]) -> None:
-    print(f"{title}:")
-    print(f"avg brightness difference = {averages['brightness']:.4f}")
-    print(f"avg contrast difference = {averages['contrast']:.4f}")
-    print(f"avg saturation difference = {averages['saturation']:.4f}")
-    print(f"avg warmth difference = {averages['warmth']:.4f}")
-    print()
+def build_console_lines(
+    baseline: dict[str, float],
+    reranked: dict[str, float],
+    query_count: int,
+) -> list[str]:
+    lines = [
+        f"Evaluating reranking on {query_count} query images",
+        "",
+        "CLIP only:",
+        f"avg brightness difference = {baseline['brightness']:.4f}",
+        f"avg contrast difference = {baseline['contrast']:.4f}",
+        f"avg saturation difference = {baseline['saturation']:.4f}",
+        f"avg warmth difference = {baseline['warmth']:.4f}",
+        "",
+        "Reranked:",
+        f"avg brightness difference = {reranked['brightness']:.4f}",
+        f"avg contrast difference = {reranked['contrast']:.4f}",
+        f"avg saturation difference = {reranked['saturation']:.4f}",
+        f"avg warmth difference = {reranked['warmth']:.4f}",
+        "",
+        "Improvement (positive means reranked is closer in style):",
+    ]
+    for metric_name in ("brightness", "contrast", "saturation", "warmth"):
+        improvement = baseline[metric_name] - reranked[metric_name]
+        lines.append(f"{metric_name}: {improvement:.4f}")
+    return lines
 
 
-def print_improvements(
+def write_metrics_csv(
     baseline: dict[str, float],
     reranked: dict[str, float],
 ) -> None:
-    print("Improvement (positive means reranked is closer in style):")
-    for metric_name in ("brightness", "contrast", "saturation", "warmth"):
-        improvement = baseline[metric_name] - reranked[metric_name]
-        print(f"{metric_name}: {improvement:.4f}")
+    with METRICS_PATH.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["metric", "clip_only", "reranked", "improvement"],
+        )
+        writer.writeheader()
+        for metric_name in ("brightness", "contrast", "saturation", "warmth"):
+            writer.writerow(
+                {
+                    "metric": metric_name,
+                    "clip_only": f"{baseline[metric_name]:.6f}",
+                    "reranked": f"{reranked[metric_name]:.6f}",
+                    "improvement": f"{baseline[metric_name] - reranked[metric_name]:.6f}",
+                }
+            )
+
+
+def build_report(
+    baseline: dict[str, float],
+    reranked: dict[str, float],
+    query_count: int,
+) -> str:
+    comparison_lines: list[str] = []
+    for image_id in COMPARISON_IMAGE_IDS:
+        comparison_lines.extend(
+            [
+                f"## Query Image: {image_id}",
+                "",
+                f"![](visualizations/compare_{image_id}.jpg)",
+                "",
+            ]
+        )
+    metrics_rows = "\n".join(
+        f"| {metric_name} | {baseline[metric_name]:.4f} | {reranked[metric_name]:.4f} | {baseline[metric_name] - reranked[metric_name]:.4f} |"
+        for metric_name in ("brightness", "contrast", "saturation", "warmth")
+    )
+    return "\n".join(
+        [
+            "# Style Reranking Report",
+            "",
+            "This stage measures whether style-aware reranking produces neighbors that are visually closer to the query than the FAISS semantic baseline alone.",
+            "",
+            f"- Query sample size: {query_count}",
+            f"- Candidate pool size before reranking: 100",
+            f"- Evaluated top-k per query: {TOP_K}",
+            "",
+            "## Metrics",
+            "",
+            "| Metric | CLIP only | Reranked | Improvement |",
+            "| --- | ---: | ---: | ---: |",
+            metrics_rows,
+            "",
+            "Improvement is baseline difference minus reranked difference, so positive values mean the reranker moved the results closer to the query style.",
+            "",
+            "## Visual Comparisons",
+            "",
+            *comparison_lines,
+            "",
+            "## Reproduce",
+            "",
+            "```bash",
+            "python experiments/scripts/evaluate_style_reranking.py",
+            "```",
+        ]
+    )
 
 
 def main() -> None:
+    ensure_experiment_directories()
     query_rows = load_query_rows(QUERY_SAMPLE_SIZE)
     if not query_rows:
         raise RuntimeError("No query rows available for reranking evaluation")
-
-    print(f"Evaluating reranking on {len(query_rows)} query images")
-    print()
 
     clip_only_service = create_service(rerank_enabled=False)
     reranked_service = create_service(rerank_enabled=True)
@@ -154,9 +244,24 @@ def main() -> None:
     clip_only_averages = evaluate_service(clip_only_service, query_rows).averages()
     reranked_averages = evaluate_service(reranked_service, query_rows).averages()
 
-    print_report("CLIP only", clip_only_averages)
-    print_report("Reranked", reranked_averages)
-    print_improvements(clip_only_averages, reranked_averages)
+    console_lines = build_console_lines(
+        baseline=clip_only_averages,
+        reranked=reranked_averages,
+        query_count=len(query_rows),
+    )
+    console_output = "\n".join(console_lines) + "\n"
+
+    print(console_output, end="")
+    OUTPUT_PATH.write_text(console_output, encoding="utf-8")
+    write_metrics_csv(clip_only_averages, reranked_averages)
+    REPORT_PATH.write_text(
+        build_report(clip_only_averages, reranked_averages, len(query_rows)),
+        encoding="utf-8",
+    )
+
+    print(f"Saved metrics: {METRICS_PATH}")
+    print(f"Saved evaluation log: {OUTPUT_PATH}")
+    print(f"Saved report: {REPORT_PATH}")
 
 
 if __name__ == "__main__":

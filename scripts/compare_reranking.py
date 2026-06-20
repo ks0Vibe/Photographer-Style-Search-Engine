@@ -6,8 +6,8 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from experiments.paths import STYLE_RERANKING_VISUALIZATIONS_DIR
 from scripts.visualize_search_results import (
-    OUTPUT_DIR,
     build_comparison_grid,
     create_retrieval_service,
     filter_query_from_results,
@@ -66,7 +66,7 @@ def main() -> None:
         if not output_path.is_absolute():
             output_path = PROJECT_ROOT / output_path
     else:
-        output_path = OUTPUT_DIR / output_name
+        output_path = STYLE_RERANKING_VISUALIZATIONS_DIR / output_name
 
     build_comparison_grid(
         query_image_path=query_image_path,

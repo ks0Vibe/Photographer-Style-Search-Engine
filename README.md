@@ -105,15 +105,14 @@ Photographer-Style-Search-Engine/
 |   |-- visualize_search_results.py
 |   \-- visualize_text_search.py
 |-- experiments/
-|   |-- compare_faiss_vs_qdrant.py
-|   |-- compare_filtered_retrieval.py
-|   |-- evaluate_reranking.py
-|   |-- evaluate_style_reranking.py
-|   |-- faiss_vs_qdrant_results.csv
-|   |-- faiss_vs_qdrant_results.md
-|   |-- filtered_retrieval_results.csv
-|   |-- filtered_retrieval_results.md
-|   \-- qdrant_results.md
+|   |-- 01_clip_baseline/
+|   |-- 02_style_reranking/
+|   |-- 03_qdrant_backend/
+|   |-- 04_filtered_retrieval/
+|   |-- final_report/
+|   |-- scripts/
+|   |-- INDEX.md
+|   \-- run_all_experiments.py
 |-- data/
 |   |-- embeddings/
 |   |   |-- clip_embeddings.npy
@@ -271,26 +270,34 @@ python scripts/visualize_qdrant_image_search.py --image-id oSf8ePoG9NU --keyword
 Run the FAISS style-reranking evaluation:
 
 ```bash
-python experiments/evaluate_style_reranking.py
+.\.venv\Scripts\python.exe experiments/scripts/evaluate_style_reranking.py
 ```
 
 Run the FAISS vs Qdrant comparison:
 
 ```bash
-python experiments/compare_faiss_vs_qdrant.py
+.\.venv\Scripts\python.exe experiments/scripts/compare_faiss_vs_qdrant.py
 ```
 
 Run the Qdrant filtered retrieval comparison:
 
 ```bash
-python experiments/compare_filtered_retrieval.py
+.\.venv\Scripts\python.exe experiments/scripts/compare_filtered_retrieval.py
+```
+
+Regenerate the staged experiment outputs in one pass:
+
+```bash
+.\.venv\Scripts\python.exe experiments/run_all_experiments.py
 ```
 
 Generated reports:
 
-- `experiments/faiss_vs_qdrant_results.md`
-- `experiments/filtered_retrieval_results.md`
-- `experiments/qdrant_results.md`
+- `experiments/01_clip_baseline/report.md`
+- `experiments/02_style_reranking/report.md`
+- `experiments/03_qdrant_backend/report.md`
+- `experiments/04_filtered_retrieval/report.md`
+- `experiments/final_report/results.md`
 
 ## Qdrant Retrieval Backend
 
@@ -315,4 +322,4 @@ This enables filtered vector search and keeps FAISS available as a baseline for 
 - Local Qdrant path mode uses a filesystem lock, so Qdrant scripts should be run one at a time
 - Text queries can use semantic search alone or Qdrant payload filters
 - `detected_objects` is prepared in payloads but not populated by an object-detection pipeline yet
-- Generated visualization images are written to `experiments/visualizations/`
+- Experiment outputs are grouped by stage under `experiments/`; generated visualization images are written to each stage's `visualizations/` directory

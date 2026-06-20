@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.ml.clip_encoder import CLIPEncoder
 from app.search import FaissIndex, MetadataRepository, RetrievalService, VectorStore
+from experiments.paths import CLIP_BASELINE_VISUALIZATIONS_DIR
 
 
 EMBEDDINGS_PATH = PROJECT_ROOT / "data" / "embeddings" / "clip_embeddings.npy"
@@ -17,7 +18,7 @@ IMAGE_IDS_PATH = PROJECT_ROOT / "data" / "embeddings" / "image_ids.npy"
 INDEX_PATH = PROJECT_ROOT / "data" / "indexes" / "flat.index"
 DATABASE_PATH = PROJECT_ROOT / "data" / "metadata.sqlite"
 
-OUTPUT_DIR = PROJECT_ROOT / "experiments" / "visualizations"
+OUTPUT_DIR = CLIP_BASELINE_VISUALIZATIONS_DIR
 
 
 def create_retrieval_service() -> RetrievalService:

@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.ml.clip_encoder import CLIPEncoder
 from app.search import QdrantRetrievalService, QdrantStore
+from experiments.paths import QDRANT_BACKEND_VISUALIZATIONS_DIR
 
 
 DATABASE_PATH = PROJECT_ROOT / "data" / "metadata.sqlite"
@@ -17,7 +18,7 @@ EMBEDDINGS_PATH = PROJECT_ROOT / "data" / "embeddings" / "clip_embeddings.npy"
 IMAGE_IDS_PATH = PROJECT_ROOT / "data" / "embeddings" / "image_ids.npy"
 KEYWORDS_PATH = PROJECT_ROOT / "data" / "unsplash-lite" / "keywords.csv000"
 QDRANT_PATH = PROJECT_ROOT / "data" / "qdrant"
-OUTPUT_DIR = PROJECT_ROOT / "experiments" / "visualizations"
+OUTPUT_DIR = QDRANT_BACKEND_VISUALIZATIONS_DIR
 COLLECTION_NAME = "photos"
 
 

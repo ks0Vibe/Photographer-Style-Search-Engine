@@ -64,7 +64,12 @@ data/qdrant/
 # ======================
 
 experiments/runs/
-experiments/visualizations/
+experiments/01_clip_baseline/visualizations/
+experiments/02_style_reranking/visualizations/
+experiments/03_qdrant_backend/visualizations/
+experiments/04_filtered_retrieval/visualizations/
+experiments/final_report/selected_visualizations/
+experiments/final_report/results.pdf
 
 # ======================
 # Temporary files
@@ -74,4 +79,3 @@ experiments/visualizations/
 
 /docss
 
-/experiments

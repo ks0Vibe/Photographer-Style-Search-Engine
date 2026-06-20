@@ -1,0 +1,36 @@
+query_type,query_label,faiss_latency_ms,qdrant_latency_ms,overlap_at_10,top1_match
+image,--Tn3E5ZtfQ,56.0361,47.1664,1.0,1
+image,-4YbaM07U44,42.4534,49.1415,1.0,1
+image,-87JyMb9ZfU,48.9066,50.966,1.0,1
+image,-FnGodn23_c,47.7374,52.423,1.0,1
+image,-K3kpN0FCKo,47.3342,46.2603,1.0,1
+image,-N235jQ01v4,46.9239,50.8521,1.0,1
+image,-N_UwPdUs7E,45.9782,50.5191,1.0,1
+image,-Q1p5Gzn45c,51.7509,57.0315,1.0,1
+image,-UCR39SnjCg,46.7368,46.3757,1.0,1
+image,-Ylz_tc8NOk,48.0301,51.1282,1.0,1
+image,-aAucsS1f24,52.7141,82.578,1.0,1
+image,-cKXtsJWU-I,48.1235,51.0629,1.0,1
+image,-h5qBDn_8Tw,46.1198,50.6214,1.0,1
+image,-u-utDdi6m0,47.1381,49.3428,1.0,1
+image,-yrI75gsE2g,57.1745,61.9499,1.0,1
+image,00W-OglEHdQ,54.553,58.478,1.0,1
+image,00taym-piCM,47.1397,55.3309,1.0,1
+image,02nvhdj6_dk,51.0743,50.9649,1.0,1
+image,06jbyhQkaZc,51.7296,54.8346,1.0,1
+image,0HvnSVQy1dk,47.8905,52.6134,1.0,1
+image,0ITYt-tkq4I,48.629,52.6779,1.0,1
+image,0M03LwqzZBM,51.1527,56.3702,1.0,1
+image,0PUQAOpLSIQ,52.8237,55.4832,1.0,1
+image,0TvvHQKcwRI,56.4974,60.544,1.0,1
+image,0XYeJue2KJM,49.6856,53.9081,1.0,1
+image,0dD8vddb6_8,49.5146,57.3314,1.0,1
+image,0gmYLADpIzA,48.3764,53.5177,1.0,1
+image,0grrJP6jPDg,53.2656,56.4622,1.0,1
+image,0hvmAoYkQYM,57.24,60.1237,1.0,1
+image,0koIWaAZbaA,51.0886,53.75,1.0,1
+text,warm cinematic landscape,29.4758,34.8581,1.0,1
+text,dark moody forest,27.683,32.8662,1.0,1
+text,street photography,30.6429,33.8894,1.0,1
+text,portrait,29.5516,34.3303,1.0,1
+text,beach sunset,30.4963,33.7189,1.0,1
