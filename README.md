@@ -1,13 +1,13 @@
 # Photographer Style Search Engine
 
-Photographer-oriented image retrieval built on top of CLIP embeddings, FAISS semantic search, and a second-stage photographic style reranker.
+Photographer-oriented image retrieval built on top of CLIP embeddings, a FAISS baseline, and a Qdrant retrieval backend with payload filtering and style-aware reranking.
 
 ## Current Stage
 
-The repository now contains a complete two-stage retrieval pipeline:
+The repository now contains two retrieval backends:
 
-1. Semantic retrieval with CLIP + FAISS
-2. Style-aware reranking with brightness, contrast, saturation, warmth, and color histogram descriptors
+1. FAISS Flat baseline for exact semantic search
+2. Qdrant local vector database for semantic search plus metadata-aware filtering
 
 Implemented components:
 
@@ -17,16 +17,17 @@ Implemented components:
 - CLIP image and text encoder with OpenCLIP
 - Bulk CLIP embedding extraction into aligned NumPy arrays
 - Persistent FAISS Flat index
+- Persistent local Qdrant collection
 - Image-to-image retrieval
 - Text-to-image retrieval
-- Style similarity engine
-- Style reranker
-- Reranking evaluation scripts
-- Search result visualization and CLIP-vs-reranked comparison images
+- Style similarity engine and style reranker
+- Keyword-aware Qdrant retrieval
+- Visualization scripts for FAISS and Qdrant
+- Comparison reports for FAISS vs Qdrant and filtered retrieval
 
 ## Retrieval Architecture
 
-### Stage 1: Semantic retrieval
+### FAISS baseline
 
 ```text
 Query image / text
@@ -34,24 +35,39 @@ Query image / text
     -> 512-d embedding
     -> FAISS Flat index
     -> Top-K semantic candidates
+    -> optional style reranking
 ```
 
-### Stage 2: Style-aware reranking
+### Qdrant backend
 
 ```text
-Top semantic candidates
-    -> style similarity engine
-    -> combined semantic + style score
+Query image / text
+    -> CLIP encoder
+    -> 512-d embedding
+    -> Qdrant vector search
+       + optional keyword filter
+       + optional object filter
+       + optional style payload filters
+    -> Top-K semantic candidates
+    -> optional style reranking
     -> final ranked results
 ```
 
-For image queries, reranking uses descriptors already stored in SQLite:
+For image queries, reranking uses stored visual descriptors:
 
 - `brightness`
 - `contrast`
 - `saturation`
 - `warmth`
 - `color_histogram`
+
+Qdrant payloads store:
+
+- CLIP embeddings
+- file paths and selected metadata
+- visual descriptors
+- Unsplash keywords
+- prepared `detected_objects` field
 
 ## Project Structure
 
@@ -66,6 +82,8 @@ Photographer-Style-Search-Engine/
 |   \-- search/
 |       |-- faiss_index.py
 |       |-- metadata_repository.py
+|       |-- qdrant_retrieval_service.py
+|       |-- qdrant_store.py
 |       |-- retrieval_service.py
 |       |-- style_reranker.py
 |       |-- style_similarity.py
@@ -75,22 +93,37 @@ Photographer-Style-Search-Engine/
 |   |-- compare_reranking.py
 |   |-- extract_clip_embeddings.py
 |   |-- extract_visual_features.py
-|   |-- test_clip_encoder.py
+|   |-- qdrant_common.py
+|   |-- setup_qdrant_collection.py
 |   |-- test_image_search.py
+|   |-- test_qdrant_image_search.py
+|   |-- test_qdrant_text_search.py
 |   |-- test_text_search.py
-|   \-- visualize_search_results.py
+|   |-- upload_embeddings_to_qdrant.py
+|   |-- visualize_qdrant_image_search.py
+|   |-- visualize_qdrant_text_search.py
+|   |-- visualize_search_results.py
+|   \-- visualize_text_search.py
 |-- experiments/
+|   |-- compare_faiss_vs_qdrant.py
+|   |-- compare_filtered_retrieval.py
 |   |-- evaluate_reranking.py
-|   \-- evaluate_style_reranking.py
+|   |-- evaluate_style_reranking.py
+|   |-- faiss_vs_qdrant_results.csv
+|   |-- faiss_vs_qdrant_results.md
+|   |-- filtered_retrieval_results.csv
+|   |-- filtered_retrieval_results.md
+|   \-- qdrant_results.md
 |-- data/
 |   |-- embeddings/
 |   |   |-- clip_embeddings.npy
 |   |   \-- image_ids.npy
 |   |-- indexes/
 |   |   \-- flat.index
+|   |-- qdrant/
 |   |-- metadata.sqlite
 |   \-- unsplash-lite/
-|-- PROMPTS/
+|-- docss/
 |-- README.md
 \-- requirements.txt
 ```
@@ -99,7 +132,7 @@ Photographer-Style-Search-Engine/
 
 Target runtime is Python 3.12.
 
-Create or activate the local virtual environment:
+Activate the local virtual environment:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
@@ -137,6 +170,20 @@ Build the FAISS Flat index:
 python scripts/build_flat_index.py
 ```
 
+### Qdrant Setup
+
+Create or recreate the local Qdrant collection:
+
+```bash
+python scripts/setup_qdrant_collection.py
+```
+
+Upload embeddings and payloads into Qdrant:
+
+```bash
+python scripts/upload_embeddings_to_qdrant.py
+```
+
 Expected core artifacts:
 
 ```text
@@ -144,6 +191,7 @@ data/metadata.sqlite
 data/embeddings/clip_embeddings.npy
 data/embeddings/image_ids.npy
 data/indexes/flat.index
+data/qdrant/
 ```
 
 For the current 1000-image subset:
@@ -154,6 +202,8 @@ image_ids.shape == (1000,)
 ```
 
 ## Search Usage
+
+### FAISS baseline
 
 Image-to-image retrieval:
 
@@ -185,27 +235,84 @@ Generate a side-by-side CLIP-only vs reranked comparison:
 python scripts/compare_reranking.py --image-id oSf8ePoG9NU --top-k 5
 ```
 
+### Qdrant retrieval backend
+
+Run Qdrant text search:
+
+```bash
+python scripts/test_qdrant_text_search.py --query "warm cinematic landscape"
+python scripts/test_qdrant_text_search.py --query "street photography" --keyword person
+python scripts/test_qdrant_text_search.py --query "dark forest" --max-brightness 0.4
+```
+
+Run Qdrant image search:
+
+```bash
+python scripts/test_qdrant_image_search.py --image-id oSf8ePoG9NU
+python scripts/test_qdrant_image_search.py --image-id oSf8ePoG9NU --keyword nature
+```
+
+Visualize Qdrant text search:
+
+```bash
+python scripts/visualize_qdrant_text_search.py --query "warm cinematic landscape" --top-k 5
+python scripts/visualize_qdrant_text_search.py --query "street photography" --keyword person --top-k 5
+```
+
+Visualize Qdrant image search:
+
+```bash
+python scripts/visualize_qdrant_image_search.py --image-id oSf8ePoG9NU --top-k 5
+python scripts/visualize_qdrant_image_search.py --image-id oSf8ePoG9NU --keyword nature --top-k 5
+```
+
 ## Evaluation
 
-Run the reranking evaluation:
+Run the FAISS style-reranking evaluation:
 
 ```bash
 python experiments/evaluate_style_reranking.py
 ```
 
-This reports average query-to-result differences for:
+Run the FAISS vs Qdrant comparison:
 
-- brightness
-- contrast
-- saturation
-- warmth
+```bash
+python experiments/compare_faiss_vs_qdrant.py
+```
 
-The current reranking stage produces measurable improvement over CLIP-only retrieval on the local sample set.
+Run the Qdrant filtered retrieval comparison:
+
+```bash
+python experiments/compare_filtered_retrieval.py
+```
+
+Generated reports:
+
+- `experiments/faiss_vs_qdrant_results.md`
+- `experiments/filtered_retrieval_results.md`
+- `experiments/qdrant_results.md`
+
+## Qdrant Retrieval Backend
+
+The project supports Qdrant as a vector database backend.
+
+Qdrant stores:
+
+- CLIP embeddings
+- image metadata
+- visual descriptors
+- keywords
+- detected objects
+
+This enables filtered vector search and keeps FAISS available as a baseline for exact local comparison.
 
 ## Notes
 
 - `image_ids.npy` is stored in the same order as `clip_embeddings.npy`
 - CLIP embeddings are normalized and stored as `float32`
 - FAISS uses `IndexFlatIP`, so normalized embeddings behave as cosine similarity
-- Text queries use semantic retrieval only; image queries can be reranked by photographic style
+- Qdrant uses cosine distance in a persistent local collection at `data/qdrant/`
+- Local Qdrant path mode uses a filesystem lock, so Qdrant scripts should be run one at a time
+- Text queries can use semantic search alone or Qdrant payload filters
+- `detected_objects` is prepared in payloads but not populated by an object-detection pipeline yet
 - Generated visualization images are written to `experiments/visualizations/`

@@ -71,45 +71,71 @@ class StyleSimilarity:
         query_metadata: ImageMetadata,
         candidate_metadata: ImageMetadata,
     ) -> float:
-        if not query_metadata.has_style_features or not candidate_metadata.has_style_features:
+        weighted_scores: list[tuple[str, float]] = []
+
+        if query_metadata.brightness is not None and candidate_metadata.brightness is not None:
+            weighted_scores.append(
+                (
+                    "brightness",
+                    self.brightness_similarity(
+                        query_metadata.brightness,
+                        candidate_metadata.brightness,
+                    ),
+                )
+            )
+        if query_metadata.contrast is not None and candidate_metadata.contrast is not None:
+            weighted_scores.append(
+                (
+                    "contrast",
+                    self.contrast_similarity(
+                        query_metadata.contrast,
+                        candidate_metadata.contrast,
+                    ),
+                )
+            )
+        if query_metadata.saturation is not None and candidate_metadata.saturation is not None:
+            weighted_scores.append(
+                (
+                    "saturation",
+                    self.saturation_similarity(
+                        query_metadata.saturation,
+                        candidate_metadata.saturation,
+                    ),
+                )
+            )
+        if query_metadata.warmth is not None and candidate_metadata.warmth is not None:
+            weighted_scores.append(
+                (
+                    "warmth",
+                    self.warmth_similarity(
+                        query_metadata.warmth,
+                        candidate_metadata.warmth,
+                    ),
+                )
+            )
+        if (
+            query_metadata.color_histogram is not None
+            and candidate_metadata.color_histogram is not None
+        ):
+            weighted_scores.append(
+                (
+                    "histogram",
+                    self.histogram_similarity(
+                        query_metadata.color_histogram,
+                        candidate_metadata.color_histogram,
+                    ),
+                )
+            )
+
+        if not weighted_scores:
             return 0.0
 
-        assert query_metadata.brightness is not None
-        assert query_metadata.contrast is not None
-        assert query_metadata.saturation is not None
-        assert query_metadata.warmth is not None
-        assert query_metadata.color_histogram is not None
-        assert candidate_metadata.brightness is not None
-        assert candidate_metadata.contrast is not None
-        assert candidate_metadata.saturation is not None
-        assert candidate_metadata.warmth is not None
-        assert candidate_metadata.color_histogram is not None
-
-        scores = {
-            "brightness": self.brightness_similarity(
-                query_metadata.brightness,
-                candidate_metadata.brightness,
-            ),
-            "contrast": self.contrast_similarity(
-                query_metadata.contrast,
-                candidate_metadata.contrast,
-            ),
-            "saturation": self.saturation_similarity(
-                query_metadata.saturation,
-                candidate_metadata.saturation,
-            ),
-            "warmth": self.warmth_similarity(
-                query_metadata.warmth,
-                candidate_metadata.warmth,
-            ),
-            "histogram": self.histogram_similarity(
-                query_metadata.color_histogram,
-                candidate_metadata.color_histogram,
-            ),
-        }
+        total_weight = sum(self._weights[key] for key, _ in weighted_scores)
+        if total_weight <= 0:
+            return 0.0
 
         return float(
-            sum(self._weights[key] * score for key, score in scores.items())
+            sum(self._weights[key] * score for key, score in weighted_scores) / total_weight
         )
 
     @staticmethod

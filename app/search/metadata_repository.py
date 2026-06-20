@@ -19,6 +19,8 @@ class ImageMetadata:
     saturation: float | None = None
     warmth: float | None = None
     color_histogram: tuple[float, ...] | None = None
+    keywords: tuple[str, ...] | None = None
+    detected_objects: tuple[str, ...] | None = None
 
     @property
     def has_style_features(self) -> bool:
@@ -115,6 +117,8 @@ class MetadataRepository:
             saturation=row["saturation"],
             warmth=row["warmth"],
             color_histogram=MetadataRepository._parse_histogram(row["color_histogram"]),
+            keywords=tuple(),
+            detected_objects=tuple(),
         )
 
     @staticmethod

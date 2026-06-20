@@ -9,6 +9,7 @@ torchvision
 open_clip_torch
 
 faiss-cpu
+qdrant-client
 
 fastapi
 uvicorn

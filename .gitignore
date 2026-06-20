@@ -57,6 +57,7 @@ data/embeddings/*.npz
 # ======================
 
 data/indexes/*.index
+data/qdrant/
 
 # ======================
 # Experiments
@@ -71,3 +72,6 @@ experiments/visualizations/
 
 *.log
 
+/docss
+
+/experiments
