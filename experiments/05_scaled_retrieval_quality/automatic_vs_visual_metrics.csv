@@ -1,0 +1,29 @@
+query,query_group,mode,auto_precision_at_10,visual_precision_at_10,auto_ndcg_at_10,visual_ndcg_at_10,precision_delta,ndcg_delta,interpretation
+building,object_like,qdrant_keyword,1.0,1.0,1.0,1.0,0.0,0.0,automatic metric agrees with visual inspection
+building,object_like,qdrant_semantic,1.0,1.0,1.0,1.0,0.0,0.0,automatic metric agrees with visual inspection
+car,object_like,qdrant_keyword,1.0,1.0,1.0,0.940945536986672,0.0,-0.05905446301332795,keyword metadata likely inflated score
+car,object_like,qdrant_semantic,0.9,0.9,0.977015370299312,0.9542802499524593,0.0,-0.022735120346852655,automatic metric agrees with visual inspection
+car at night,combined,qdrant_keyword_primary,1.0,1.0,1.0,0.993216879066224,0.0,-0.006783120933775977,automatic metric agrees with visual inspection
+car at night,combined,qdrant_keyword_secondary,1.0,1.0,0.930290177510145,0.9350749970800658,0.0,0.0047848195699208285,automatic metric agrees with visual inspection
+car at night,combined,qdrant_semantic,1.0,1.0,0.9728725566954699,0.9728725566954699,0.0,0.0,automatic metric agrees with visual inspection
+dark forest with fog,combined,qdrant_keyword_primary,1.0,1.0,1.0,1.0,0.0,0.0,automatic metric agrees with visual inspection
+dark forest with fog,combined,qdrant_rerank,1.0,1.0,0.891065690164833,1.0,0.0,0.10893430983516705,automatic metric agrees with visual inspection
+dark forest with fog,combined,qdrant_semantic,1.0,1.0,0.891065690164833,1.0,0.0,0.10893430983516705,automatic metric agrees with visual inspection
+dark moody forest,style_semantic,qdrant_rerank,1.0,1.0,0.891065690164833,0.8766783678033221,0.0,-0.014387322361510857,automatic metric agrees with visual inspection
+dark moody forest,style_semantic,qdrant_semantic,1.0,1.0,0.891065690164833,0.891065690164833,0.0,0.0,automatic metric agrees with visual inspection
+dog,object_like,qdrant_keyword,1.0,1.0,1.0,0.9959548051864799,0.0,-0.004045194813520059,automatic metric agrees with visual inspection
+dog,object_like,qdrant_semantic,1.0,1.0,1.0,0.9959548051864799,0.0,-0.004045194813520059,automatic metric agrees with visual inspection
+dog on beach,combined,qdrant_keyword_primary,1.0,1.0,1.0,0.9705716473745996,0.0,-0.029428352625400445,automatic metric agrees with visual inspection
+dog on beach,combined,qdrant_keyword_secondary,1.0,1.0,0.9897119920294625,0.9705035095351635,0.0,-0.019208482494298962,automatic metric agrees with visual inspection
+dog on beach,combined,qdrant_semantic,1.0,1.0,0.9897119920294625,0.9705035095351635,0.0,-0.019208482494298962,automatic metric agrees with visual inspection
+minimal architecture,style_semantic,qdrant_rerank,1.0,1.0,1.0,0.9288001496875684,0.0,-0.07119985031243159,style reranking visually improves consistency
+minimal architecture,style_semantic,qdrant_semantic,1.0,1.0,1.0,0.8649720860594351,0.0,-0.1350279139405649,automatic metric agrees with visual inspection
+person,object_like,qdrant_keyword,1.0,1.0,1.0,0.85474073601631,0.0,-0.14525926398369005,keyword metadata likely inflated score
+person,object_like,qdrant_semantic,0.6,0.6,0.8798540966214208,0.7058913633338828,0.0,-0.17396273328753797,automatic metric overestimates quality
+person in street photography,combined,qdrant_keyword_primary,1.0,1.0,0.9911365418282454,0.9897119920294625,0.0,-0.0014245497987829259,automatic metric agrees with visual inspection
+person in street photography,combined,qdrant_keyword_secondary,1.0,1.0,0.9959548051864799,0.9667011384129007,0.0,-0.029253666773579212,automatic metric agrees with visual inspection
+person in street photography,combined,qdrant_semantic,1.0,1.0,0.9911365418282454,0.9897119920294625,0.0,-0.0014245497987829259,automatic metric agrees with visual inspection
+vibrant summer beach,style_semantic,qdrant_rerank,1.0,1.0,1.0,0.9411537730414338,0.0,-0.05884622695856623,automatic metric agrees with visual inspection
+vibrant summer beach,style_semantic,qdrant_semantic,1.0,1.0,1.0,0.9981666155888351,0.0,-0.0018333844111648734,automatic metric agrees with visual inspection
+warm cinematic landscape,style_semantic,qdrant_rerank,1.0,1.0,0.9386944824477192,0.9295623869974058,0.0,-0.00913209545031346,style reranking visually improves consistency
+warm cinematic landscape,style_semantic,qdrant_semantic,1.0,1.0,0.817835483840445,0.7400690722083366,0.0,-0.0777664116321084,automatic metric agrees with visual inspection

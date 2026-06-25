@@ -1,0 +1,29 @@
+query,query_group,mode,keyword_filter,rerank,runs,avg_latency_ms,min_latency_ms,max_latency_ms
+warm cinematic landscape,style_semantic,qdrant_semantic,,False,3,122.04906666496147,108.29600000579376,140.24199999403208
+warm cinematic landscape,style_semantic,qdrant_rerank,,True,3,133.96793333231471,125.89219999790657,146.95249999931548
+dark moody forest,style_semantic,qdrant_semantic,,False,3,109.78856666770298,87.92350000294391,133.81339999614283
+dark moody forest,style_semantic,qdrant_rerank,,True,3,154.92463333551618,144.991499997559,172.7701000054367
+vibrant summer beach,style_semantic,qdrant_semantic,,False,3,139.7696000058204,136.37360000575427,142.31070000096224
+vibrant summer beach,style_semantic,qdrant_rerank,,True,3,126.03466666769236,91.68830000271555,145.59129999543075
+minimal architecture,style_semantic,qdrant_semantic,,False,3,139.86163333659837,138.63339999807067,140.4925000097137
+minimal architecture,style_semantic,qdrant_rerank,,True,3,137.50086666065422,129.73069999134168,148.71999999741092
+person,object_like,qdrant_semantic,,False,3,140.3352000003603,138.47859999805223,141.3068999972893
+person,object_like,qdrant_keyword,person,False,3,503.22429999747936,489.05160000140313,511.1447999952361
+car,object_like,qdrant_semantic,,False,3,116.55736666095133,84.87809999496676,137.89849999011494
+car,object_like,qdrant_keyword,car,False,3,529.1617666662205,511.9269999995595,548.1587999965996
+dog,object_like,qdrant_semantic,,False,3,123.53093333755776,92.0104000106221,140.59910000651143
+dog,object_like,qdrant_keyword,dog,False,3,521.9938333320897,513.8552999997046,526.7328000045381
+building,object_like,qdrant_semantic,,False,3,117.65586667267296,83.21660000365227,142.32300000730902
+building,object_like,qdrant_keyword,building,False,3,491.8565333355218,480.3957999974955,509.3543000111822
+person in street photography,combined,qdrant_semantic,,False,3,113.41183332842775,81.95269999851007,142.41019998735283
+person in street photography,combined,qdrant_keyword_primary,person,False,3,518.887866671624,510.1859999995213,532.92440000223
+person in street photography,combined,qdrant_keyword_secondary,street,False,3,539.936999998948,524.1760000062641,553.7160999956541
+car at night,combined,qdrant_semantic,,False,3,122.11700000140506,85.83359999465756,140.30739999725483
+car at night,combined,qdrant_keyword_primary,car,False,3,525.8037333308797,504.3715999927372,550.6471999979112
+car at night,combined,qdrant_keyword_secondary,night,False,3,528.7252666603308,523.8141999871004,533.1726000003982
+dog on beach,combined,qdrant_semantic,,False,3,117.0752333321919,86.12880000146106,137.144399996032
+dog on beach,combined,qdrant_keyword_primary,dog,False,3,522.7137666612786,510.6847999995807,535.0188999873353
+dog on beach,combined,qdrant_keyword_secondary,beach,False,3,507.39033333472133,496.7209000024013,513.7299000052735
+dark forest with fog,combined,qdrant_semantic,,False,3,134.80813334172126,127.53090000478551,140.3648000123212
+dark forest with fog,combined,qdrant_keyword_primary,forest,False,3,520.7450666639488,509.3358000012813,542.7934000035748
+dark forest with fog,combined,qdrant_rerank,,True,3,119.28860000140655,87.50209999561775,139.00850000209175

@@ -1,0 +1,9 @@
+query_group,mode,query_mode_count,precision_at_10,avg_relevance,dcg_at_10,ndcg_at_10,mrr_at_10
+combined,qdrant_keyword_primary,4,1.0,1.95,13.308042007552082,0.9977841354570613,1.0
+combined,qdrant_keyword_secondary,3,1.0,1.8333333333333333,12.30454372813058,0.9719856582420291,1.0
+combined,qdrant_rerank,1,1.0,1.9,11.630678014265037,0.891065690164833,1.0
+combined,qdrant_semantic,4,1.0,1.775,11.761582438515841,0.9611966951795027,1.0
+object_like,qdrant_keyword,4,1.0,2.0,13.630678014265037,1.0,1.0
+object_like,qdrant_semantic,4,0.875,1.75,12.113587045740225,0.9642173667301832,1.0
+style_semantic,qdrant_rerank,4,1.0,1.825,11.991544886505249,0.957440043153138,1.0
+style_semantic,qdrant_semantic,4,1.0,1.65,10.52134552556106,0.9272252935013194,1.0

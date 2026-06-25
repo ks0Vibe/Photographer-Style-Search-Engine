@@ -2,6 +2,7 @@ import sqlite3
 import sys
 from pathlib import Path
 from typing import Any
+import json
 
 import numpy as np
 
@@ -27,8 +28,15 @@ def load_metadata_rows(database_path: Path) -> dict[str, dict[str, Any]]:
     conn = sqlite3.connect(database_path)
     conn.row_factory = sqlite3.Row
     try:
+        columns = {
+            str(row[1])
+            for row in conn.execute("PRAGMA table_info(images);").fetchall()
+        }
+        detected_objects_select = (
+            "detected_objects" if "detected_objects" in columns else "'[]' AS detected_objects"
+        )
         rows = conn.execute(
-            """
+            f"""
             SELECT
                 image_id,
                 file_path,
@@ -39,7 +47,8 @@ def load_metadata_rows(database_path: Path) -> dict[str, dict[str, Any]]:
                 contrast,
                 saturation,
                 warmth,
-                color_histogram
+                color_histogram,
+                {detected_objects_select}
             FROM images
             """
         ).fetchall()
@@ -75,7 +84,7 @@ def build_payloads(
                 "warmth": row["warmth"],
                 "color_histogram": _parse_histogram(row["color_histogram"]),
                 "keywords": keywords_by_image_id.get(image_id, []),
-                "detected_objects": [],
+                "detected_objects": _parse_detected_objects(row["detected_objects"]),
             }
         )
 
@@ -86,10 +95,29 @@ def _parse_histogram(raw_histogram: str | None) -> list[float] | None:
     if raw_histogram is None:
         return None
 
-    import json
-
     values = json.loads(raw_histogram)
     return [float(value) for value in values]
+
+
+def _parse_detected_objects(raw_detected_objects: Any) -> list[str]:
+    if raw_detected_objects is None:
+        return []
+
+    try:
+        values = json.loads(str(raw_detected_objects))
+    except json.JSONDecodeError:
+        return []
+
+    if not isinstance(values, list):
+        return []
+
+    return sorted(
+        {
+            str(value).strip().lower()
+            for value in values
+            if str(value).strip()
+        }
+    )
 
 
 def main() -> None:

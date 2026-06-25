@@ -1,0 +1,17 @@
+{
+  "sqlite_image_rows": 24916,
+  "embeddings_shape": [
+    24916,
+    512
+  ],
+  "image_ids_shape": [
+    24916
+  ],
+  "faiss_index_vectors": 24916,
+  "qdrant_points": 24916,
+  "embedding_dim": 512,
+  "failed_embeddings_if_available": 0,
+  "qdrant_collection": "photos",
+  "qdrant_distance": "Cosine",
+  "qdrant_local_mode_limitation": "Qdrant local path mode may warn for collections above 20k points; this is a scalability limitation of local mode, not a fatal evaluation error."
+}

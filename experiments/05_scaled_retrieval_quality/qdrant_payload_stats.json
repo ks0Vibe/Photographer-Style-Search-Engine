@@ -1,0 +1,334 @@
+{
+  "total_points_scrolled": 24916,
+  "qdrant_points": 24916,
+  "points_with_non_empty_keywords": 24916,
+  "points_with_non_empty_detected_objects": 0,
+  "keyword_coverage": 1.0,
+  "object_coverage": 0.0,
+  "unique_keywords": 23830,
+  "unique_detected_objects": 0,
+  "top_keywords": [
+    {
+      "keyword": "nature",
+      "count": 17678
+    },
+    {
+      "keyword": "outdoors",
+      "count": 16496
+    },
+    {
+      "keyword": "plant",
+      "count": 12143
+    },
+    {
+      "keyword": "landscape",
+      "count": 8416
+    },
+    {
+      "keyword": "scenery",
+      "count": 8279
+    },
+    {
+      "keyword": "tree",
+      "count": 8076
+    },
+    {
+      "keyword": "animal",
+      "count": 7940
+    },
+    {
+      "keyword": "water",
+      "count": 7823
+    },
+    {
+      "keyword": "sky",
+      "count": 7082
+    },
+    {
+      "keyword": "mountain",
+      "count": 6619
+    },
+    {
+      "keyword": "land",
+      "count": 5756
+    },
+    {
+      "keyword": "sea",
+      "count": 5540
+    },
+    {
+      "keyword": "ocean",
+      "count": 5371
+    },
+    {
+      "keyword": "building",
+      "count": 4895
+    },
+    {
+      "keyword": "vegetation",
+      "count": 4597
+    },
+    {
+      "keyword": "light",
+      "count": 4262
+    },
+    {
+      "keyword": "person",
+      "count": 4110
+    },
+    {
+      "keyword": "flower",
+      "count": 4091
+    },
+    {
+      "keyword": "snow",
+      "count": 4067
+    },
+    {
+      "keyword": "blossom",
+      "count": 3954
+    },
+    {
+      "keyword": "human",
+      "count": 3905
+    },
+    {
+      "keyword": "mountain range",
+      "count": 3887
+    },
+    {
+      "keyword": "ice",
+      "count": 3886
+    },
+    {
+      "keyword": "weather",
+      "count": 3823
+    },
+    {
+      "keyword": "coast",
+      "count": 3675
+    }
+  ],
+  "top_detected_objects": [],
+  "sample_payloads": [
+    {
+      "image_id": "--2IBUMom1I",
+      "file_path": "data\\unsplash-lite\\images\\--2IBUMom1I.jpg",
+      "ai_description": "person standing near concrete cottage during golden hour",
+      "keywords": [
+        "apparel",
+        "architecture",
+        "back",
+        "banister",
+        "building",
+        "clothing",
+        "cloud",
+        "control tower",
+        "corridor",
+        "dawn",
+        "deck",
+        "display",
+        "door",
+        "dusk",
+        "electronics",
+        "exercise",
+        "fashion",
+        "fitness",
+        "flare",
+        "floor"
+      ],
+      "detected_objects": []
+    },
+    {
+      "image_id": "--6JlGcHl-w",
+      "file_path": "data\\unsplash-lite\\images\\--6JlGcHl-w.jpg",
+      "ai_description": "pink flower in tilt shift lens",
+      "keywords": [
+        "acanthaceae",
+        "blossom",
+        "bud",
+        "carnation",
+        "dahlia",
+        "flower",
+        "flower arrangement",
+        "flower bouquet",
+        "geranium",
+        "peony",
+        "petal",
+        "plant",
+        "pollen",
+        "rose",
+        "sprout"
+      ],
+      "detected_objects": []
+    },
+    {
+      "image_id": "--Jy_8mvs4E",
+      "file_path": "data\\unsplash-lite\\images\\--Jy_8mvs4E.jpg",
+      "ai_description": "assorted-color bubbles",
+      "keywords": [
+        "abstract",
+        "bold",
+        "bubble",
+        "colorful",
+        "colourful",
+        "david clode",
+        "droplet",
+        "floating oil",
+        "fractal",
+        "green",
+        "jar",
+        "leaf",
+        "oil",
+        "oil and water photo",
+        "oil bubble photo",
+        "oil bubbles",
+        "oil discs",
+        "oil disks",
+        "oil droplets",
+        "oil drops"
+      ],
+      "detected_objects": []
+    },
+    {
+      "image_id": "--SDX4KWIbA",
+      "file_path": "data\\unsplash-lite\\images\\--SDX4KWIbA.jpg",
+      "ai_description": "brown rabbit on white textile",
+      "keywords": [
+        "angora",
+        "animal",
+        "bear",
+        "bread",
+        "brown",
+        "bun",
+        "bunny",
+        "canine",
+        "cat",
+        "display",
+        "dog",
+        "ears",
+        "electronics",
+        "flare",
+        "food",
+        "hare",
+        "kitten",
+        "lcd screen",
+        "light",
+        "long"
+      ],
+      "detected_objects": []
+    },
+    {
+      "image_id": "--Tn3E5ZtfQ",
+      "file_path": "data\\unsplash-lite\\images\\--Tn3E5ZtfQ.jpg",
+      "ai_description": "selective photo of leafed plant",
+      "keywords": [
+        "arecaceae",
+        "black and white",
+        "branch",
+        "canopy",
+        "childhood",
+        "day",
+        "day light",
+        "design",
+        "earth",
+        "fern",
+        "flora",
+        "forest",
+        "leaf",
+        "life",
+        "lifestyle",
+        "light",
+        "line",
+        "live",
+        "love",
+        "monochrome"
+      ],
+      "detected_objects": []
+    },
+    {
+      "image_id": "--e3kJUMSZw",
+      "file_path": "data\\unsplash-lite\\images\\--e3kJUMSZw.jpg",
+      "ai_description": "aerial photography of trees",
+      "keywords": [
+        "abies",
+        "aerial photography",
+        "aerial view",
+        "animal",
+        "arial",
+        "arial view",
+        "basin",
+        "bird",
+        "conifer",
+        "crater",
+        "dark",
+        "darkness",
+        "dji",
+        "eruption",
+        "fir",
+        "forest",
+        "freeze",
+        "frost",
+        "frozen",
+        "frozen forest"
+      ],
+      "detected_objects": []
+    },
+    {
+      "image_id": "--kGuWTwn48",
+      "file_path": "data\\unsplash-lite\\images\\--kGuWTwn48.jpg",
+      "ai_description": "looking up at the night sky through the trees",
+      "keywords": [
+        "astronomy",
+        "building",
+        "dawn",
+        "dusk",
+        "flare",
+        "forest",
+        "grove",
+        "housing",
+        "jungle",
+        "land",
+        "landscape",
+        "light",
+        "lightning",
+        "midwest",
+        "nature",
+        "nebula",
+        "night",
+        "no people",
+        "outdoors",
+        "outer space"
+      ],
+      "detected_objects": []
+    },
+    {
+      "image_id": "--lzOIJ-a4U",
+      "file_path": "data\\unsplash-lite\\images\\--lzOIJ-a4U.jpg",
+      "ai_description": "desert dune during day time",
+      "keywords": [
+        "blue sky",
+        "desert",
+        "dirt road",
+        "dune",
+        "ecosystem",
+        "gravel",
+        "habitat",
+        "landform",
+        "landscape",
+        "natural environment",
+        "nature",
+        "ocean",
+        "outdoors",
+        "plateau",
+        "road",
+        "sand",
+        "sands",
+        "scenery",
+        "sea",
+        "sky"
+      ],
+      "detected_objects": []
+    }
+  ]
+}

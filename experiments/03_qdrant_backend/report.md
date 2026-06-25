@@ -11,10 +11,10 @@ This stage compares the baseline FAISS backend against the Qdrant backend under 
 
 ## Results
 
-- FAISS average latency: 47.19 ms
-- FAISS p95 latency: 56.50 ms
-- Qdrant average latency: 51.41 ms
-- Qdrant p95 latency: 60.54 ms
+- FAISS average latency: 47.48 ms
+- FAISS p95 latency: 54.53 ms
+- Qdrant average latency: 50.04 ms
+- Qdrant p95 latency: 56.63 ms
 - Average overlap@10: 1.000
 - Top-1 consistency: 1.000
 - FAISS index size: 2048045 bytes

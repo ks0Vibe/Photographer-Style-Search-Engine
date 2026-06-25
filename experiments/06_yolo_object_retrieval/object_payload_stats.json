@@ -1,0 +1,519 @@
+{
+  "collection": "photos",
+  "qdrant_points": 24916,
+  "total_scanned_points": 24916,
+  "images_with_detected_objects": 11418,
+  "object_coverage": 0.45825975276930486,
+  "unique_detected_objects": 78,
+  "top_detected_objects": [
+    {
+      "object": "person",
+      "count": 3923
+    },
+    {
+      "object": "bird",
+      "count": 1489
+    },
+    {
+      "object": "dog",
+      "count": 1104
+    },
+    {
+      "object": "potted plant",
+      "count": 716
+    },
+    {
+      "object": "cat",
+      "count": 594
+    },
+    {
+      "object": "vase",
+      "count": 558
+    },
+    {
+      "object": "bear",
+      "count": 405
+    },
+    {
+      "object": "boat",
+      "count": 345
+    },
+    {
+      "object": "horse",
+      "count": 335
+    },
+    {
+      "object": "car",
+      "count": 303
+    },
+    {
+      "object": "kite",
+      "count": 265
+    },
+    {
+      "object": "cow",
+      "count": 246
+    },
+    {
+      "object": "sheep",
+      "count": 243
+    },
+    {
+      "object": "umbrella",
+      "count": 243
+    },
+    {
+      "object": "bed",
+      "count": 234
+    },
+    {
+      "object": "frisbee",
+      "count": 188
+    },
+    {
+      "object": "elephant",
+      "count": 179
+    },
+    {
+      "object": "surfboard",
+      "count": 169
+    },
+    {
+      "object": "sports ball",
+      "count": 153
+    },
+    {
+      "object": "orange",
+      "count": 152
+    },
+    {
+      "object": "bowl",
+      "count": 149
+    },
+    {
+      "object": "broccoli",
+      "count": 148
+    },
+    {
+      "object": "giraffe",
+      "count": 148
+    },
+    {
+      "object": "airplane",
+      "count": 145
+    },
+    {
+      "object": "cake",
+      "count": 141
+    },
+    {
+      "object": "teddy bear",
+      "count": 141
+    },
+    {
+      "object": "bench",
+      "count": 139
+    },
+    {
+      "object": "dining table",
+      "count": 138
+    },
+    {
+      "object": "chair",
+      "count": 138
+    },
+    {
+      "object": "apple",
+      "count": 136
+    },
+    {
+      "object": "cup",
+      "count": 128
+    },
+    {
+      "object": "truck",
+      "count": 112
+    },
+    {
+      "object": "banana",
+      "count": 96
+    },
+    {
+      "object": "train",
+      "count": 91
+    },
+    {
+      "object": "traffic light",
+      "count": 87
+    },
+    {
+      "object": "backpack",
+      "count": 87
+    },
+    {
+      "object": "donut",
+      "count": 86
+    },
+    {
+      "object": "clock",
+      "count": 78
+    },
+    {
+      "object": "pizza",
+      "count": 71
+    },
+    {
+      "object": "zebra",
+      "count": 56
+    },
+    {
+      "object": "cell phone",
+      "count": 53
+    },
+    {
+      "object": "tie",
+      "count": 50
+    },
+    {
+      "object": "carrot",
+      "count": 49
+    },
+    {
+      "object": "bottle",
+      "count": 45
+    },
+    {
+      "object": "book",
+      "count": 43
+    },
+    {
+      "object": "couch",
+      "count": 36
+    },
+    {
+      "object": "suitcase",
+      "count": 33
+    },
+    {
+      "object": "tv",
+      "count": 33
+    },
+    {
+      "object": "bus",
+      "count": 32
+    },
+    {
+      "object": "handbag",
+      "count": 29
+    }
+  ],
+  "top_keywords": [
+    {
+      "keyword": "nature",
+      "count": 17678
+    },
+    {
+      "keyword": "outdoors",
+      "count": 16496
+    },
+    {
+      "keyword": "plant",
+      "count": 12143
+    },
+    {
+      "keyword": "landscape",
+      "count": 8416
+    },
+    {
+      "keyword": "scenery",
+      "count": 8279
+    },
+    {
+      "keyword": "tree",
+      "count": 8076
+    },
+    {
+      "keyword": "animal",
+      "count": 7940
+    },
+    {
+      "keyword": "water",
+      "count": 7823
+    },
+    {
+      "keyword": "sky",
+      "count": 7082
+    },
+    {
+      "keyword": "mountain",
+      "count": 6619
+    },
+    {
+      "keyword": "land",
+      "count": 5756
+    },
+    {
+      "keyword": "sea",
+      "count": 5540
+    },
+    {
+      "keyword": "ocean",
+      "count": 5371
+    },
+    {
+      "keyword": "building",
+      "count": 4895
+    },
+    {
+      "keyword": "vegetation",
+      "count": 4597
+    },
+    {
+      "keyword": "light",
+      "count": 4262
+    },
+    {
+      "keyword": "person",
+      "count": 4110
+    },
+    {
+      "keyword": "flower",
+      "count": 4091
+    },
+    {
+      "keyword": "snow",
+      "count": 4067
+    },
+    {
+      "keyword": "blossom",
+      "count": 3954
+    }
+  ],
+  "sample_images_with_objects": [
+    {
+      "image_id": "--2IBUMom1I",
+      "file_path": "data\\unsplash-lite\\images\\--2IBUMom1I.jpg",
+      "ai_description": "person standing near concrete cottage during golden hour",
+      "detected_objects": [
+        "person"
+      ],
+      "keywords": [
+        "apparel",
+        "architecture",
+        "back",
+        "banister",
+        "building",
+        "clothing",
+        "cloud",
+        "control tower",
+        "corridor",
+        "dawn",
+        "deck",
+        "display"
+      ]
+    },
+    {
+      "image_id": "--6JlGcHl-w",
+      "file_path": "data\\unsplash-lite\\images\\--6JlGcHl-w.jpg",
+      "ai_description": "pink flower in tilt shift lens",
+      "detected_objects": [
+        "sports ball"
+      ],
+      "keywords": [
+        "acanthaceae",
+        "blossom",
+        "bud",
+        "carnation",
+        "dahlia",
+        "flower",
+        "flower arrangement",
+        "flower bouquet",
+        "geranium",
+        "peony",
+        "petal",
+        "plant"
+      ]
+    },
+    {
+      "image_id": "--Jy_8mvs4E",
+      "file_path": "data\\unsplash-lite\\images\\--Jy_8mvs4E.jpg",
+      "ai_description": "assorted-color bubbles",
+      "detected_objects": [
+        "apple",
+        "cup",
+        "dining table"
+      ],
+      "keywords": [
+        "abstract",
+        "bold",
+        "bubble",
+        "colorful",
+        "colourful",
+        "david clode",
+        "droplet",
+        "floating oil",
+        "fractal",
+        "green",
+        "jar",
+        "leaf"
+      ]
+    },
+    {
+      "image_id": "--SDX4KWIbA",
+      "file_path": "data\\unsplash-lite\\images\\--SDX4KWIbA.jpg",
+      "ai_description": "brown rabbit on white textile",
+      "detected_objects": [
+        "bear"
+      ],
+      "keywords": [
+        "angora",
+        "animal",
+        "bear",
+        "bread",
+        "brown",
+        "bun",
+        "bunny",
+        "canine",
+        "cat",
+        "display",
+        "dog",
+        "ears"
+      ]
+    },
+    {
+      "image_id": "-0YZgPxq04k",
+      "file_path": "data\\unsplash-lite\\images\\-0YZgPxq04k.jpg",
+      "ai_description": "pink flowers in white ceramic vase",
+      "detected_objects": [
+        "vase"
+      ],
+      "keywords": [
+        "#blossom",
+        "#cozy",
+        "#flowers",
+        "#lilac",
+        "#minimal",
+        "#purple",
+        "#rosa",
+        "#simple",
+        "#spring",
+        "#violett",
+        "blossom",
+        "flower"
+      ]
+    },
+    {
+      "image_id": "-0_ww2ACIw8",
+      "file_path": "data\\unsplash-lite\\images\\-0_ww2ACIw8.jpg",
+      "ai_description": "daylight peeking through green trees",
+      "detected_objects": [
+        "bear"
+      ],
+      "keywords": [
+        "abies",
+        "atmospheric phenomenon",
+        "conifer",
+        "dirt road",
+        "fir",
+        "flora",
+        "forest",
+        "gravel",
+        "habitat",
+        "jungle",
+        "land",
+        "landscape"
+      ]
+    },
+    {
+      "image_id": "-12cgSu9HW0",
+      "file_path": "data\\unsplash-lite\\images\\-12cgSu9HW0.jpg",
+      "ai_description": "green potted plant on table",
+      "detected_objects": [
+        "potted plant",
+        "vase"
+      ],
+      "keywords": [
+        "accessories",
+        "art",
+        "blog",
+        "blossom",
+        "composition",
+        "decoration",
+        "design",
+        "flower",
+        "flower arrangement",
+        "furniture",
+        "header images",
+        "home"
+      ]
+    },
+    {
+      "image_id": "-1l9VYK7O4E",
+      "file_path": "data\\unsplash-lite\\images\\-1l9VYK7O4E.jpg",
+      "ai_description": "wooden dock under clear sky",
+      "detected_objects": [
+        "bird",
+        "person"
+      ],
+      "keywords": [
+        "animal",
+        "back",
+        "bird",
+        "boardwalk",
+        "bridge",
+        "building",
+        "dock",
+        "housing",
+        "human",
+        "lake",
+        "nature",
+        "outdoors"
+      ]
+    },
+    {
+      "image_id": "-1qb8SIBzKY",
+      "file_path": "data\\unsplash-lite\\images\\-1qb8SIBzKY.jpg",
+      "ai_description": "red walk light signage",
+      "detected_objects": [
+        "car",
+        "traffic light"
+      ],
+      "keywords": [
+        "asphalt",
+        "automobile",
+        "building",
+        "car",
+        "city",
+        "light",
+        "lighting",
+        "machine",
+        "metropolis",
+        "nature",
+        "outdoors",
+        "road"
+      ]
+    },
+    {
+      "image_id": "-2pFSIxX9ow",
+      "file_path": "data\\unsplash-lite\\images\\-2pFSIxX9ow.jpg",
+      "ai_description": "wide-angle photography of black vehicle traveling on desert during daytime",
+      "detected_objects": [
+        "cow"
+      ],
+      "keywords": [
+        "desert",
+        "dirt road",
+        "dune",
+        "explore",
+        "exploring",
+        "field",
+        "grassland",
+        "gravel",
+        "ground",
+        "land",
+        "landscape",
+        "mountains"
+      ]
+    }
+  ]
+}

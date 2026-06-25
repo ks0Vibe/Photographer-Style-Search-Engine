@@ -1,0 +1,29 @@
+query,query_group,mode,result_count,precision_at_10,avg_relevance,dcg_at_10,ndcg_at_10,mrr_at_10
+building,object_like,qdrant_keyword,10.0,1.0,2.0,13.630678014265037,1.0,1.0
+building,object_like,qdrant_semantic,10.0,1.0,2.0,13.630678014265037,1.0,1.0
+car,object_like,qdrant_keyword,10.0,1.0,1.5,9.823920779002785,0.940945536986672,1.0
+car,object_like,qdrant_semantic,10.0,0.9,1.4,9.687292695991347,0.9542802499524593,1.0
+car at night,combined,qdrant_keyword_primary,10.0,1.0,1.9,12.96401134759837,0.993216879066224,1.0
+car at night,combined,qdrant_keyword_secondary,10.0,1.0,1.5,9.762629538749747,0.9350749970800658,1.0
+car at night,combined,qdrant_semantic,10.0,1.0,1.5,10.157254112336119,0.9728725566954699,1.0
+dark forest with fog,combined,qdrant_keyword_primary,10.0,1.0,2.0,13.630678014265037,1.0,1.0
+dark forest with fog,combined,qdrant_rerank,10.0,1.0,2.0,13.630678014265037,1.0,1.0
+dark forest with fog,combined,qdrant_semantic,10.0,1.0,2.0,13.630678014265037,1.0,1.0
+dark moody forest,style_semantic,qdrant_rerank,10.0,1.0,1.7,10.361951356270408,0.8766783678033221,1.0
+dark moody forest,style_semantic,qdrant_semantic,10.0,1.0,1.9,11.630678014265037,0.891065690164833,1.0
+dog,object_like,qdrant_keyword,10.0,1.0,1.9,12.999748260693579,0.9959548051864799,1.0
+dog,object_like,qdrant_semantic,10.0,1.0,1.9,12.999748260693579,0.9959548051864799,1.0
+dog on beach,combined,qdrant_keyword_primary,10.0,1.0,1.7,11.471728477880125,0.9705716473745996,1.0
+dog on beach,combined,qdrant_keyword_secondary,10.0,1.0,1.6,10.823920779002785,0.9705035095351635,1.0
+dog on beach,combined,qdrant_semantic,10.0,1.0,1.6,10.823920779002785,0.9705035095351635,1.0
+minimal architecture,style_semantic,qdrant_rerank,10.0,1.0,1.6,10.358807712667954,0.9288001496875684,1.0
+minimal architecture,style_semantic,qdrant_semantic,10.0,1.0,1.8,10.769324898118251,0.8649720860594351,1.0
+person,object_like,qdrant_keyword,10.0,1.0,1.7,10.102658231451583,0.85474073601631,1.0
+person,object_like,qdrant_semantic,10.0,0.6,1.0,5.949166947400328,0.7058913633338828,1.0
+person in street photography,combined,qdrant_keyword_primary,10.0,1.0,1.9,12.918263640048993,0.9897119920294625,1.0
+person in street photography,combined,qdrant_keyword_secondary,10.0,1.0,1.7,11.425980770330748,0.9667011384129007,1.0
+person in street photography,combined,qdrant_semantic,10.0,1.0,1.9,12.918263640048993,0.9897119920294625,1.0
+vibrant summer beach,style_semantic,qdrant_rerank,10.0,1.0,1.7,11.12402218781968,0.9411537730414338,1.0
+vibrant summer beach,style_semantic,qdrant_semantic,10.0,1.0,1.9,13.028618022937074,0.9981666155888351,1.0
+warm cinematic landscape,style_semantic,qdrant_rerank,10.0,1.0,1.5,9.705075256797347,0.9295623869974058,1.0
+warm cinematic landscape,style_semantic,qdrant_semantic,10.0,1.0,1.2,5.776549082987765,0.7400690722083366,1.0
