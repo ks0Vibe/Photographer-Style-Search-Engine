@@ -1,0 +1,4 @@
+mode,query_count,collection_size,embedding_dim,top_k,candidate_pool_size,qdrant_mode,storage_size_mb,upload_time_seconds,indexing_time_seconds_if_available,search_latency_ms_avg,search_latency_ms_p50,search_latency_ms_p95,search_latency_ms_max,ram_note_if_available
+qdrant_synthetic_keyword_filter,8,500000,512,10,100,server,1776.148115158081,317.2120375000002,,202.52466499996444,202.50068749993488,220.50802999998496,572.381200000109,RAM was not measured by this script.
+qdrant_synthetic_object_filter,8,500000,512,10,100,server,1776.148115158081,317.2120375000002,,355.85091749995854,351.46752500008915,385.1082699999324,588.9144999996461,RAM was not measured by this script.
+qdrant_synthetic_semantic,8,500000,512,10,100,server,1776.148115158081,317.2120375000002,,31.368032500006393,31.356362500048363,44.07364750003353,46.897899999748915,RAM was not measured by this script.

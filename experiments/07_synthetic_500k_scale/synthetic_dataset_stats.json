@@ -1,0 +1,245 @@
+{
+  "real_visual_corpus": 24916,
+  "synthetic_vector_corpus": 500000,
+  "collection_size": 500000,
+  "embedding_dim": 512,
+  "vector_dtype": "float32",
+  "approx_vector_memory_mb": 976.5625,
+  "collection_name": "photos_synthetic_500k",
+  "qdrant_mode": "server",
+  "storage": "http://localhost:6333",
+  "distance_metric": "Cosine",
+  "upload_time_seconds": 317.2120375000002,
+  "indexing_time_seconds_if_available": null,
+  "storage_size_mb": 1776.148115158081,
+  "ram_note_if_available": "RAM was not measured by this script.",
+  "generation": {
+    "real_count": 24916,
+    "synthetic_count": 500000,
+    "embedding_dim": 512,
+    "synthetic_embeddings_shape": [
+      500000,
+      512
+    ],
+    "vector_dtype": "float32",
+    "seed": 42,
+    "noise_std": 0.015,
+    "mix_neighbor_prob": 0.35,
+    "mean_norm": 1.0,
+    "min_norm": 0.9999997615814209,
+    "max_norm": 1.0000001192092896,
+    "output_size_mb": 1431.941900253296,
+    "top_copied_keywords": [
+      {
+        "keyword": "nature",
+        "count": 354653
+      },
+      {
+        "keyword": "outdoors",
+        "count": 331216
+      },
+      {
+        "keyword": "plant",
+        "count": 243801
+      },
+      {
+        "keyword": "landscape",
+        "count": 168404
+      },
+      {
+        "keyword": "scenery",
+        "count": 166062
+      },
+      {
+        "keyword": "tree",
+        "count": 162302
+      },
+      {
+        "keyword": "animal",
+        "count": 159866
+      },
+      {
+        "keyword": "water",
+        "count": 157216
+      },
+      {
+        "keyword": "sky",
+        "count": 141727
+      },
+      {
+        "keyword": "mountain",
+        "count": 132302
+      },
+      {
+        "keyword": "land",
+        "count": 115712
+      },
+      {
+        "keyword": "sea",
+        "count": 111394
+      },
+      {
+        "keyword": "ocean",
+        "count": 108030
+      },
+      {
+        "keyword": "building",
+        "count": 97912
+      },
+      {
+        "keyword": "vegetation",
+        "count": 92500
+      },
+      {
+        "keyword": "light",
+        "count": 85624
+      },
+      {
+        "keyword": "person",
+        "count": 82325
+      },
+      {
+        "keyword": "snow",
+        "count": 81918
+      },
+      {
+        "keyword": "flower",
+        "count": 81767
+      },
+      {
+        "keyword": "blossom",
+        "count": 78890
+      },
+      {
+        "keyword": "ice",
+        "count": 78417
+      },
+      {
+        "keyword": "human",
+        "count": 78178
+      },
+      {
+        "keyword": "mountain range",
+        "count": 77758
+      },
+      {
+        "keyword": "weather",
+        "count": 77011
+      },
+      {
+        "keyword": "coast",
+        "count": 73741
+      }
+    ],
+    "top_copied_detected_objects": [
+      {
+        "detected_object": "person",
+        "count": 78798
+      },
+      {
+        "detected_object": "bird",
+        "count": 29651
+      },
+      {
+        "detected_object": "dog",
+        "count": 22360
+      },
+      {
+        "detected_object": "potted plant",
+        "count": 14267
+      },
+      {
+        "detected_object": "cat",
+        "count": 11969
+      },
+      {
+        "detected_object": "vase",
+        "count": 11372
+      },
+      {
+        "detected_object": "bear",
+        "count": 8128
+      },
+      {
+        "detected_object": "boat",
+        "count": 6781
+      },
+      {
+        "detected_object": "horse",
+        "count": 6761
+      },
+      {
+        "detected_object": "car",
+        "count": 6150
+      },
+      {
+        "detected_object": "kite",
+        "count": 5307
+      },
+      {
+        "detected_object": "cow",
+        "count": 5009
+      },
+      {
+        "detected_object": "sheep",
+        "count": 4885
+      },
+      {
+        "detected_object": "umbrella",
+        "count": 4860
+      },
+      {
+        "detected_object": "bed",
+        "count": 4723
+      },
+      {
+        "detected_object": "frisbee",
+        "count": 3814
+      },
+      {
+        "detected_object": "elephant",
+        "count": 3585
+      },
+      {
+        "detected_object": "surfboard",
+        "count": 3434
+      },
+      {
+        "detected_object": "sports ball",
+        "count": 3168
+      },
+      {
+        "detected_object": "orange",
+        "count": 3044
+      },
+      {
+        "detected_object": "broccoli",
+        "count": 2974
+      },
+      {
+        "detected_object": "giraffe",
+        "count": 2965
+      },
+      {
+        "detected_object": "bowl",
+        "count": 2958
+      },
+      {
+        "detected_object": "teddy bear",
+        "count": 2879
+      },
+      {
+        "detected_object": "airplane",
+        "count": 2866
+      }
+    ],
+    "files": {
+      "embeddings": "data\\synthetic_500k\\synthetic_embeddings.npy",
+      "image_ids": "data\\synthetic_500k\\synthetic_image_ids.npy",
+      "payloads": "data\\synthetic_500k\\synthetic_payloads.jsonl",
+      "stats": "data\\synthetic_500k\\synthetic_generation_stats.json"
+    },
+    "note": "Synthetic file_path values are proxy references to source real images for debugging only."
+  },
+  "important_distinction": "Real visual corpus: 24,916 downloaded images. Synthetic scale corpus: 500,000 generated vector objects. Purpose of synthetic corpus: scalability and indexing benchmark, not visual relevance evaluation."
+}

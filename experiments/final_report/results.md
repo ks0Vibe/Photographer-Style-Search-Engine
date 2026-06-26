@@ -9,7 +9,8 @@ This project is a photographer-oriented visual search engine for retrieving imag
 - SQLite stores local image metadata, paths, descriptions, visual descriptors, and YOLO detection fields.
 - OpenCLIP `ViT-B-32` produces normalized 512-dimensional image and text embeddings.
 - FAISS `IndexFlatIP` remains the exact local baseline.
-- Qdrant stores the same embeddings with payload fields for keywords, style descriptors, and detected objects.
+- Qdrant stores the real embeddings with payload fields for keywords, style descriptors, and detected objects.
+- A separate Qdrant collection named `photos_synthetic_500k` stores generated synthetic vector objects for scalability benchmarking only.
 - Unsplash keyword metadata supports broad filtering but can be noisy.
 - Visual descriptors capture brightness, contrast, saturation, warmth, and color histograms.
 - Style reranking improves visual consistency for style-heavy searches.
@@ -30,14 +31,16 @@ User / Streamlit demo
 
 ## 3. Data and Artifacts
 
-- Images: 24,916
-- CLIP embeddings: 24,916 x 512
+- Real corpus: 24,916 downloaded images used for visual retrieval quality evaluation.
+- Real CLIP embeddings: 24,916 x 512
 - FAISS index vectors: 24,916
-- Qdrant collection: `photos`
-- Qdrant points: 24916
+- Real Qdrant collection: `photos`
+- Real Qdrant points: 24916
 - YOLO object coverage: 0.4583
 - Images with detected objects: 11418
 - Unique detected classes: 78
+- Synthetic corpus: 500000 generated vector objects used for scale, indexing, latency, and hardware requirement evaluation.
+- Synthetic Qdrant collection: `photos_synthetic_500k`
 
 ## 4. Experiment Timeline
 
@@ -47,14 +50,24 @@ User / Streamlit demo
 - `04_filtered_retrieval`: metadata and style filter evaluation.
 - `05_scaled_retrieval_quality`: 24,916-image scale test and visual diagnosis of keyword noise.
 - `06_yolo_object_retrieval`: YOLO object payloads, strict object filters, keyword/object combinations, and object-aware reranking.
+- `07_synthetic_500k_scale`: synthetic 500k vector-object benchmark in a separate Qdrant collection for scalability and indexing tests.
 
 ## 5. Main Results
 
 Scale:
 
-- 24,916 images
+Real corpus:
+
+- 24,916 downloaded images
+- used for visual retrieval quality
 - 24,916 embeddings
-- 24,916 Qdrant points
+- 24,916 Qdrant points in `photos`
+
+Synthetic corpus:
+
+- 500000 vector objects
+- used for scale, indexing, latency, hardware requirement evaluation
+- stored separately in `photos_synthetic_500k`
 
 Stage 05:
 
@@ -70,6 +83,13 @@ Stage 06:
 - qdrant_object avg relevance = 1.9100
 - qdrant_keyword avg relevance = 1.6417
 - qdrant_object_rerank nDCG@10 = 0.9795
+
+Stage 07:
+
+- synthetic collection size = 500000
+- qdrant_synthetic_semantic avg latency = 31.37 ms
+- qdrant_synthetic_semantic p95 latency = 44.07 ms
+- synthetic results are scalability/indexing diagnostics, not visual relevance conclusions.
 
 ## 6. Qualitative Findings
 
@@ -108,6 +128,8 @@ The project now includes a local FastAPI API and a Streamlit demo UI. The API ex
 - YOLOv8n uses the fixed COCO class set and misses open-vocabulary scene concepts.
 - Local Qdrant path mode is convenient but not ideal above 20k points.
 - CPU YOLO inference is slow for full-corpus extraction.
+- Synthetic 500k vectors are generated from real embeddings and are not independent real photographs.
+- Synthetic payloads copy metadata from source images, so synthetic results cannot be used for visual relevance claims.
 - The frontend is a local demo, not a production product UI.
 
 ## 9. Future Work
@@ -122,7 +144,7 @@ The project now includes a local FastAPI API and a Streamlit demo UI. The API ex
 
 ## 10. Conclusion
 
-The project has evolved from a CLIP-only retrieval baseline into a multi-signal image search system. It combines semantic embeddings, exact FAISS comparison, Qdrant payload filtering, metadata keywords, visual style descriptors, YOLO object detections, and reranking strategies. The resulting system can search by content, style, metadata, and detected object evidence while keeping the experiment trail reproducible.
+The project has evolved from a CLIP-only retrieval baseline into a multi-signal image search system. It combines semantic embeddings, exact FAISS comparison, Qdrant payload filtering, metadata keywords, visual style descriptors, YOLO object detections, and reranking strategies. The project contains a 24,916-image real visual corpus for quality evaluation and a 500,000-object synthetic vector corpus for scalability and indexing evaluation.
 
 ## Reproduce Report Assembly
 

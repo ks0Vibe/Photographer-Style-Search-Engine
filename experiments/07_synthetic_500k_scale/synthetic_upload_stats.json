@@ -1,0 +1,13 @@
+{
+  "collection_name": "photos_synthetic_500k",
+  "qdrant_mode": "server",
+  "storage": "http://localhost:6333",
+  "uploaded_points": 500000,
+  "collection_size": 500000,
+  "embedding_dim": 512,
+  "batch_size": 2048,
+  "upload_time_seconds": 317.2120375000002,
+  "points_per_second": 1576.2327430591272,
+  "storage_size_mb": 1776.1481,
+  "server_mode_preferred": true
+}

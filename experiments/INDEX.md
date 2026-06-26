@@ -8,6 +8,7 @@
 | `04_filtered_retrieval` | Evaluate Qdrant payload filtering and reranking behavior on text retrieval. | `.\.venv\Scripts\python.exe experiments/scripts/compare_filtered_retrieval.py` | `04_filtered_retrieval/report.md`, `04_filtered_retrieval/filtered_retrieval_results.csv`, `04_filtered_retrieval/filtered_retrieval_results.md`, `04_filtered_retrieval/visualizations/` | Active |
 | `05_scaled_retrieval_quality` | Evaluate retrieval quality, payload coverage, weak relevance metrics, latency, and qualitative failure modes after scaling to 24,916 images. | `.\.venv\Scripts\python.exe experiments/scripts/evaluate_scaled_retrieval_quality.py` | `05_scaled_retrieval_quality/report.md`, `05_scaled_retrieval_quality/dataset_stats.json`, `05_scaled_retrieval_quality/keyword_stats.csv`, `05_scaled_retrieval_quality/qdrant_payload_stats.json`, `05_scaled_retrieval_quality/retrieval_results.csv`, `05_scaled_retrieval_quality/retrieval_metrics.csv`, `05_scaled_retrieval_quality/query_group_metrics.csv`, `05_scaled_retrieval_quality/latency_results.csv`, `05_scaled_retrieval_quality/qualitative_findings.md`, `05_scaled_retrieval_quality/visualizations/*.png` | Active |
 | `06_yolo_object_retrieval` | Evaluate YOLO object payload coverage, object filters, keyword/object combinations, object-aware reranking, and optional manual visual labels. | `.\.venv\Scripts\python.exe experiments/scripts/evaluate_yolo_object_retrieval.py` | `06_yolo_object_retrieval/report.md`, `06_yolo_object_retrieval/object_payload_stats.json`, `06_yolo_object_retrieval/retrieval_results.csv`, `06_yolo_object_retrieval/retrieval_metrics.csv`, `06_yolo_object_retrieval/query_group_metrics.csv`, `06_yolo_object_retrieval/automatic_vs_visual_metrics.csv`, `06_yolo_object_retrieval/visual_inspection_template.csv`, `06_yolo_object_retrieval/visual_inspection.csv`, `06_yolo_object_retrieval/manual_visual_inspection_guide.md`, `06_yolo_object_retrieval/visual_metrics.csv`, `06_yolo_object_retrieval/visual_group_metrics.csv`, `06_yolo_object_retrieval/qualitative_findings.md`, `06_yolo_object_retrieval/visualizations/*.png` | Active |
+| `07_synthetic_500k_scale` | Generate 500,000 synthetic vector objects from real CLIP embeddings, upload them to a separate Qdrant collection, and benchmark storage/search scalability without claiming real-image relevance. | `.\.venv\Scripts\python.exe experiments/scripts/evaluate_synthetic_500k_scale.py` | `07_synthetic_500k_scale/report.md`, `07_synthetic_500k_scale/synthetic_dataset_stats.json`, `07_synthetic_500k_scale/synthetic_upload_stats.json`, `07_synthetic_500k_scale/synthetic_benchmark_results.csv`, `07_synthetic_500k_scale/synthetic_latency_summary.csv` | Active |
 | `final_report` | Assemble a single roll-up report that links the staged outputs, selected images, and application packaging stage. | `.\.venv\Scripts\python.exe experiments/run_all_experiments.py --assemble-only` | `final_report/results.md`, `final_report/results.pdf`, `final_report/selected_visualizations/` | Active |
 
 ## Full Run
@@ -16,3 +17,16 @@
 .\.venv\Scripts\python.exe experiments/run_all_experiments.py
 .\.venv\Scripts\python.exe experiments/run_all_experiments.py --assemble-only
 ```
+
+## Synthetic 500k Stage
+
+```powershell
+.\.venv\Scripts\python.exe scripts\generate_synthetic_vector_objects.py --target-count 500000 --batch-size 50000
+$env:QDRANT_MODE="server"
+$env:QDRANT_URL="http://localhost:6333"
+.\.venv\Scripts\python.exe scripts\setup_synthetic_qdrant_collection.py
+.\.venv\Scripts\python.exe scripts\upload_synthetic_vectors_to_qdrant.py --batch-size 2048
+.\.venv\Scripts\python.exe experiments\scripts\evaluate_synthetic_500k_scale.py
+```
+
+Use `QDRANT_MODE=local` with `QDRANT_PATH=data/qdrant_synthetic_500k` only when Docker/server Qdrant is unavailable.

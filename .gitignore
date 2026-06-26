@@ -48,6 +48,7 @@ pip-wheel-metadata/
 # Datasets
 data/unsplash-lite/
 data/images/
+data/synthetic_500k/
 
 # Generated metadata
 data/*.sqlite
@@ -81,6 +82,7 @@ runs/
 data/indexes/*.index
 data/qdrant/
 data/qdrant_storage/
+data/qdrant_synthetic_500k/
 
 # Experiments
 experiments/runs/

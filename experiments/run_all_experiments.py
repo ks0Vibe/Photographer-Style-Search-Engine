@@ -38,6 +38,7 @@ RERANKING_IMAGE_IDS = [
 ]
 STAGE_05_DIR = PROJECT_ROOT / "experiments" / "05_scaled_retrieval_quality"
 STAGE_06_DIR = PROJECT_ROOT / "experiments" / "06_yolo_object_retrieval"
+STAGE_07_DIR = PROJECT_ROOT / "experiments" / "07_synthetic_500k_scale"
 FINAL_REPORT_VISUALS = [
     STAGE_05_DIR / "visualizations" / "dog_on_beach__qdrant_keyword_primary.png",
     STAGE_05_DIR / "visualizations" / "person_in_street_photography__qdrant_keyword_primary.png",
@@ -84,6 +85,17 @@ def aggregate_metric(path: Path, mode: str, metric: str) -> str:
     return f"{sum(values) / len(values):.4f}"
 
 
+def aggregate_latency(path: Path, mode: str, metric: str) -> str:
+    values = [
+        float(row[metric])
+        for row in read_csv(path)
+        if row.get("mode") == mode and row.get(metric) not in {"", None}
+    ]
+    if not values:
+        return "n/a"
+    return f"{sum(values) / len(values):.2f}"
+
+
 def copy_selected_visualizations() -> list[Path]:
     FINAL_REPORT_SELECTED_VISUALIZATIONS_DIR.mkdir(parents=True, exist_ok=True)
     for existing_file in FINAL_REPORT_SELECTED_VISUALIZATIONS_DIR.glob("*"):
@@ -110,10 +122,15 @@ def assemble_final_report() -> None:
     selected_visuals = copy_selected_visualizations()
     stage05_payload = read_json(STAGE_05_DIR / "qdrant_payload_stats.json")
     stage06_payload = read_json(STAGE_06_DIR / "object_payload_stats.json")
+    stage07_stats = read_json(STAGE_07_DIR / "synthetic_dataset_stats.json")
+    stage07_latency_path = STAGE_07_DIR / "synthetic_latency_summary.csv"
     stage06_metrics_path = STAGE_06_DIR / "retrieval_metrics.csv"
     keyword_avg_relevance = aggregate_metric(stage06_metrics_path, "qdrant_keyword", "avg_relevance")
     object_avg_relevance = aggregate_metric(stage06_metrics_path, "qdrant_object", "avg_relevance")
     rerank_ndcg = aggregate_metric(stage06_metrics_path, "qdrant_object_rerank", "ndcg_at_10")
+    synthetic_semantic_avg = aggregate_latency(stage07_latency_path, "qdrant_synthetic_semantic", "search_latency_ms_avg")
+    synthetic_semantic_p95 = aggregate_latency(stage07_latency_path, "qdrant_synthetic_semantic", "search_latency_ms_p95")
+    synthetic_collection_size = stage07_stats.get("collection_size", 500000)
 
     lines = [
         "# Photographer Style Search Engine: Final Report",
@@ -127,7 +144,8 @@ def assemble_final_report() -> None:
         "- SQLite stores local image metadata, paths, descriptions, visual descriptors, and YOLO detection fields.",
         "- OpenCLIP `ViT-B-32` produces normalized 512-dimensional image and text embeddings.",
         "- FAISS `IndexFlatIP` remains the exact local baseline.",
-        "- Qdrant stores the same embeddings with payload fields for keywords, style descriptors, and detected objects.",
+        "- Qdrant stores the real embeddings with payload fields for keywords, style descriptors, and detected objects.",
+        "- A separate Qdrant collection named `photos_synthetic_500k` stores generated synthetic vector objects for scalability benchmarking only.",
         "- Unsplash keyword metadata supports broad filtering but can be noisy.",
         "- Visual descriptors capture brightness, contrast, saturation, warmth, and color histograms.",
         "- Style reranking improves visual consistency for style-heavy searches.",
@@ -148,14 +166,16 @@ def assemble_final_report() -> None:
         "",
         "## 3. Data and Artifacts",
         "",
-        "- Images: 24,916",
-        "- CLIP embeddings: 24,916 x 512",
+        "- Real corpus: 24,916 downloaded images used for visual retrieval quality evaluation.",
+        "- Real CLIP embeddings: 24,916 x 512",
         "- FAISS index vectors: 24,916",
-        "- Qdrant collection: `photos`",
-        f"- Qdrant points: {stage06_payload.get('qdrant_points', 24916)}",
+        "- Real Qdrant collection: `photos`",
+        f"- Real Qdrant points: {stage06_payload.get('qdrant_points', 24916)}",
         f"- YOLO object coverage: {format_float(stage06_payload.get('object_coverage', 0.4583))}",
         f"- Images with detected objects: {stage06_payload.get('images_with_detected_objects', 11418)}",
         f"- Unique detected classes: {stage06_payload.get('unique_detected_objects', 78)}",
+        f"- Synthetic corpus: {synthetic_collection_size} generated vector objects used for scale, indexing, latency, and hardware requirement evaluation.",
+        "- Synthetic Qdrant collection: `photos_synthetic_500k`",
         "",
         "## 4. Experiment Timeline",
         "",
@@ -165,14 +185,24 @@ def assemble_final_report() -> None:
         "- `04_filtered_retrieval`: metadata and style filter evaluation.",
         "- `05_scaled_retrieval_quality`: 24,916-image scale test and visual diagnosis of keyword noise.",
         "- `06_yolo_object_retrieval`: YOLO object payloads, strict object filters, keyword/object combinations, and object-aware reranking.",
+        "- `07_synthetic_500k_scale`: synthetic 500k vector-object benchmark in a separate Qdrant collection for scalability and indexing tests.",
         "",
         "## 5. Main Results",
         "",
         "Scale:",
         "",
-        "- 24,916 images",
+        "Real corpus:",
+        "",
+        "- 24,916 downloaded images",
+        "- used for visual retrieval quality",
         "- 24,916 embeddings",
-        "- 24,916 Qdrant points",
+        "- 24,916 Qdrant points in `photos`",
+        "",
+        "Synthetic corpus:",
+        "",
+        f"- {synthetic_collection_size} vector objects",
+        "- used for scale, indexing, latency, hardware requirement evaluation",
+        "- stored separately in `photos_synthetic_500k`",
         "",
         "Stage 05:",
         "",
@@ -188,6 +218,13 @@ def assemble_final_report() -> None:
         f"- qdrant_object avg relevance = {object_avg_relevance}",
         f"- qdrant_keyword avg relevance = {keyword_avg_relevance}",
         f"- qdrant_object_rerank nDCG@10 = {rerank_ndcg}",
+        "",
+        "Stage 07:",
+        "",
+        f"- synthetic collection size = {synthetic_collection_size}",
+        f"- qdrant_synthetic_semantic avg latency = {synthetic_semantic_avg} ms",
+        f"- qdrant_synthetic_semantic p95 latency = {synthetic_semantic_p95} ms",
+        "- synthetic results are scalability/indexing diagnostics, not visual relevance conclusions.",
         "",
         "## 6. Qualitative Findings",
         "",
@@ -222,6 +259,8 @@ def assemble_final_report() -> None:
             "- YOLOv8n uses the fixed COCO class set and misses open-vocabulary scene concepts.",
             "- Local Qdrant path mode is convenient but not ideal above 20k points.",
             "- CPU YOLO inference is slow for full-corpus extraction.",
+            "- Synthetic 500k vectors are generated from real embeddings and are not independent real photographs.",
+            "- Synthetic payloads copy metadata from source images, so synthetic results cannot be used for visual relevance claims.",
             "- The frontend is a local demo, not a production product UI.",
             "",
             "## 9. Future Work",
@@ -236,7 +275,7 @@ def assemble_final_report() -> None:
             "",
             "## 10. Conclusion",
             "",
-            "The project has evolved from a CLIP-only retrieval baseline into a multi-signal image search system. It combines semantic embeddings, exact FAISS comparison, Qdrant payload filtering, metadata keywords, visual style descriptors, YOLO object detections, and reranking strategies. The resulting system can search by content, style, metadata, and detected object evidence while keeping the experiment trail reproducible.",
+            "The project has evolved from a CLIP-only retrieval baseline into a multi-signal image search system. It combines semantic embeddings, exact FAISS comparison, Qdrant payload filtering, metadata keywords, visual style descriptors, YOLO object detections, and reranking strategies. The project contains a 24,916-image real visual corpus for quality evaluation and a 500,000-object synthetic vector corpus for scalability and indexing evaluation.",
             "",
             "## Reproduce Report Assembly",
             "",
