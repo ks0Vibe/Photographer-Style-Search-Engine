@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.ml.clip_encoder import CLIPEncoder
 from app.search import QdrantRetrievalService, QdrantStore
+from app.search.qdrant_config import get_qdrant_settings
 from experiments.paths import QDRANT_BACKEND_VISUALIZATIONS_DIR
 
 
@@ -17,19 +18,32 @@ DATABASE_PATH = PROJECT_ROOT / "data" / "metadata.sqlite"
 EMBEDDINGS_PATH = PROJECT_ROOT / "data" / "embeddings" / "clip_embeddings.npy"
 IMAGE_IDS_PATH = PROJECT_ROOT / "data" / "embeddings" / "image_ids.npy"
 KEYWORDS_PATH = PROJECT_ROOT / "data" / "unsplash-lite" / "keywords.csv000"
-QDRANT_PATH = PROJECT_ROOT / "data" / "qdrant"
+QDRANT_SETTINGS = get_qdrant_settings()
+QDRANT_PATH = QDRANT_SETTINGS.path
+QDRANT_URL = QDRANT_SETTINGS.url
+QDRANT_MODE = QDRANT_SETTINGS.mode
 OUTPUT_DIR = QDRANT_BACKEND_VISUALIZATIONS_DIR
-COLLECTION_NAME = "photos"
+COLLECTION_NAME = QDRANT_SETTINGS.collection_name
 
 
 def create_qdrant_service() -> QdrantRetrievalService:
     return QdrantRetrievalService(
         clip_encoder=CLIPEncoder(),
-        qdrant_store=QdrantStore(
-            collection_name=COLLECTION_NAME,
-            qdrant_path=QDRANT_PATH,
-        ),
+        qdrant_store=create_qdrant_store(),
     )
+
+
+def create_qdrant_store() -> QdrantStore:
+    kwargs: dict[str, Any] = {"collection_name": COLLECTION_NAME}
+    if QDRANT_MODE == "server":
+        kwargs["qdrant_url"] = QDRANT_URL
+    else:
+        kwargs["qdrant_path"] = QDRANT_PATH
+    return QdrantStore(**kwargs)
+
+
+def qdrant_storage_label() -> str:
+    return QDRANT_SETTINGS.storage_label
 
 
 def add_filter_args(parser: argparse.ArgumentParser) -> None:

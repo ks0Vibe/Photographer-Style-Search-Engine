@@ -1,8 +1,8 @@
 # Photographer Style Search Engine
 
-Photographer-oriented image retrieval built on CLIP embeddings, a FAISS exact-search baseline, a local Qdrant vector database, metadata filters, YOLO object detection, and style/object-aware reranking.
+Photographer-oriented image retrieval built on CLIP embeddings, a FAISS exact-search baseline, Qdrant vector search, metadata filters, YOLO object detection, and style/object-aware reranking.
 
-The project is currently script-driven. The `app/api/` package exists as a placeholder, but no HTTP API routes are implemented yet.
+The project includes a script pipeline, FastAPI search API, Streamlit demo UI, local Qdrant path mode, optional Docker/server Qdrant mode, and reproducible experiment reports.
 
 ## What Is Implemented
 
@@ -18,6 +18,9 @@ The project is currently script-driven. The `app/api/` package exists as a place
 - Style similarity and reranking over semantic candidates
 - Object-aware reranking over semantic Qdrant candidates
 - Qdrant payload filtering by keyword, detected object, and style ranges
+- FastAPI endpoints for health, stats, text search, image search, metadata lookup, and local image serving
+- Streamlit demo UI that calls the FastAPI API
+- Optional Docker Qdrant support via `docker-compose.yml`
 - Visualization scripts for FAISS and Qdrant search results
 - Reproducible experiment reports under `experiments/`
 
@@ -62,13 +65,30 @@ Query image or text
 
 Qdrant payloads include image IDs, paths, selected Unsplash metadata, visual descriptors, keyword lists from `keywords.csv000`, and YOLO `detected_objects` copied from SQLite.
 
+### Application Layer
+
+```text
+User / Streamlit demo
+    -> FastAPI
+    -> CLIP encoder
+    -> Qdrant
+    -> metadata/style/object filters
+    -> rerankers
+    -> image results
+```
+
 ## Repository Layout
 
 ```text
 Photographer-Style-Search-Engine/
 |-- app/
 |   |-- api/
-|   |   \-- __init__.py
+|   |   |-- __init__.py
+|   |   |-- dependencies.py
+|   |   |-- routes.py
+|   |   \-- schemas.py
+|   |-- demo/
+|   |   \-- streamlit_app.py
 |   |-- database/
 |   |   |-- __init__.py
 |   |   \-- create_database.py
@@ -81,13 +101,15 @@ Photographer-Style-Search-Engine/
 |   |   |-- faiss_index.py
 |   |   |-- metadata_repository.py
 |   |   |-- object_aware_reranker.py
+|   |   |-- qdrant_config.py
 |   |   |-- qdrant_retrieval_service.py
 |   |   |-- qdrant_store.py
 |   |   |-- retrieval_service.py
 |   |   |-- style_reranker.py
 |   |   |-- style_similarity.py
 |   |   \-- vector_store.py
-|   \-- __init__.py
+|   |-- __init__.py
+|   \-- main.py
 |-- data/
 |   |-- embeddings/
 |   |   |-- .gitkeep
@@ -119,6 +141,8 @@ Photographer-Style-Search-Engine/
 |   |   |-- compare_filtered_retrieval.py
 |   |   |-- evaluate_reranking.py
 |   |   |-- evaluate_scaled_retrieval_quality.py
+|   |   |-- prepare_yolo_visual_inspection.py
+|   |   |-- compute_yolo_visual_metrics.py
 |   |   |-- evaluate_yolo_object_retrieval.py
 |   |   \-- evaluate_style_reranking.py
 |   |-- INDEX.md
@@ -150,6 +174,7 @@ Photographer-Style-Search-Engine/
 |-- dataset_check.py
 |-- download_dataset.py
 |-- requirements.txt
+|-- docker-compose.yml
 |-- LICENSE
 \-- README.md
 ```
@@ -173,7 +198,7 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-The dependency set includes OpenCLIP, PyTorch, FAISS CPU, Qdrant client, Ultralytics YOLO, OpenCV, Pillow, pandas, FastAPI/Uvicorn, and supporting libraries.
+The dependency set includes OpenCLIP, PyTorch, FAISS CPU, Qdrant client, Ultralytics YOLO, OpenCV, Pillow, pandas, FastAPI/Uvicorn, Streamlit, requests, pytest, and supporting libraries.
 
 ## Dataset
 
@@ -218,6 +243,8 @@ Create or refresh the SQLite database:
 python app/database/create_database.py
 ```
 
+This refreshes SQLite from the metadata CSV. If you reset the database, rerun visual descriptors and YOLO detection before uploading Qdrant payloads again.
+
 Extract visual descriptors into SQLite:
 
 ```bash
@@ -257,9 +284,10 @@ Build the FAISS index:
 python scripts/build_flat_index.py
 ```
 
-Create or recreate the local Qdrant collection:
+Create or recreate the Qdrant collection in local path mode:
 
 ```bash
+$env:QDRANT_MODE="local"
 python scripts/setup_qdrant_collection.py
 ```
 
@@ -280,6 +308,37 @@ data/qdrant/
 ```
 
 Local Qdrant path mode uses a filesystem lock, so run Qdrant scripts one at a time.
+
+### Qdrant Modes
+
+Default local mode stores Qdrant data under `data/qdrant/`:
+
+```powershell
+$env:QDRANT_MODE="local"
+$env:QDRANT_PATH="data/qdrant"
+.\.venv\Scripts\python.exe scripts\setup_qdrant_collection.py
+.\.venv\Scripts\python.exe scripts\upload_embeddings_to_qdrant.py
+```
+
+Optional Docker/server mode stores Qdrant data under `data/qdrant_storage/`:
+
+```powershell
+docker compose up -d qdrant
+$env:QDRANT_MODE="server"
+$env:QDRANT_URL="http://localhost:6333"
+.\.venv\Scripts\python.exe scripts\setup_qdrant_collection.py
+.\.venv\Scripts\python.exe scripts\upload_embeddings_to_qdrant.py
+.\.venv\Scripts\python.exe scripts\test_qdrant_text_search.py --query "dog on beach" --object dog --top-k 5
+```
+
+Supported Qdrant environment variables:
+
+```text
+QDRANT_MODE=local
+QDRANT_PATH=data/qdrant
+QDRANT_URL=http://localhost:6333
+QDRANT_COLLECTION=photos
+```
 
 ## Search Usage
 
@@ -376,6 +435,64 @@ Shared Qdrant filters:
 --max-warmth FLOAT
 ```
 
+## API
+
+Run the FastAPI app:
+
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
+```
+
+Health and stats:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/health
+Invoke-RestMethod http://127.0.0.1:8000/stats
+```
+
+Text search:
+
+```powershell
+$body = @{
+  query = "dog on beach"
+  top_k = 5
+  candidate_pool_size = 100
+  object = "dog"
+  object_rerank = $true
+} | ConvertTo-Json
+
+Invoke-RestMethod `
+  -Uri http://127.0.0.1:8000/search/text `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body $body
+```
+
+Other endpoints:
+
+```text
+GET  /health
+GET  /stats
+POST /search/text
+POST /search/image
+GET  /images/{image_id}
+GET  /image-file/{image_id}
+```
+
+## Demo UI
+
+Terminal 1:
+
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
+```
+
+Terminal 2:
+
+```powershell
+.\.venv\Scripts\streamlit.exe run app\demo\streamlit_app.py
+```
+
 ## Experiments
 
 The staged experiment layout is documented in `experiments/INDEX.md`.
@@ -388,12 +505,15 @@ Run individual stages:
 .\.venv\Scripts\python.exe experiments\scripts\compare_filtered_retrieval.py
 .\.venv\Scripts\python.exe experiments\scripts\evaluate_scaled_retrieval_quality.py
 .\.venv\Scripts\python.exe experiments\scripts\evaluate_yolo_object_retrieval.py
+.\.venv\Scripts\python.exe experiments\scripts\prepare_yolo_visual_inspection.py
+.\.venv\Scripts\python.exe experiments\scripts\compute_yolo_visual_metrics.py
 ```
 
 Regenerate all staged outputs:
 
 ```bash
 .\.venv\Scripts\python.exe experiments\run_all_experiments.py
+.\.venv\Scripts\python.exe experiments\run_all_experiments.py --assemble-only
 ```
 
 Checked-in reports:
@@ -417,13 +537,19 @@ Current summarized findings:
 
 | Path | Purpose |
 | --- | --- |
-| `app/api/__init__.py` | Placeholder API package; no routes are currently defined. |
+| `app/api/__init__.py` | API router export. |
+| `app/api/dependencies.py` | Cached API search service, SQLite metadata lookup, stats, and image path resolution. |
+| `app/api/routes.py` | FastAPI endpoints for health, stats, text/image search, metadata lookup, and image files. |
+| `app/api/schemas.py` | Pydantic request and response models for the API. |
+| `app/main.py` | FastAPI application entrypoint. |
+| `app/demo/streamlit_app.py` | Streamlit demo UI that calls the FastAPI API. |
 | `app/database/create_database.py` | SQLite schema creation and metadata import. |
 | `app/ml/clip_encoder.py` | OpenCLIP model wrapper for normalized image and text embeddings. |
 | `app/ml/visual_descriptor.py` | OpenCV/Pillow style descriptor extraction. |
 | `app/search/faiss_index.py` | FAISS index build, save, load, and search wrapper. |
 | `app/search/metadata_repository.py` | SQLite-backed metadata lookup and style feature parsing. |
 | `app/search/object_aware_reranker.py` | Reranks semantic Qdrant text candidates with object, keyword, and style evidence. |
+| `app/search/qdrant_config.py` | Environment-driven Qdrant local/server configuration. |
 | `app/search/qdrant_retrieval_service.py` | Qdrant text/image retrieval service with filters and reranking. |
 | `app/search/qdrant_store.py` | Qdrant collection, upload, keyword loading, and filter construction. |
 | `app/search/retrieval_service.py` | FAISS-backed retrieval service. |
@@ -475,6 +601,8 @@ Current summarized findings:
 | `experiments/scripts/compare_filtered_retrieval.py` | Compares Qdrant semantic, keyword-filtered, style-filtered, and reranked modes. |
 | `experiments/scripts/evaluate_scaled_retrieval_quality.py` | Evaluates scaled Qdrant retrieval quality, payload coverage, latency, weak relevance metrics, and qualitative failure modes. |
 | `experiments/scripts/evaluate_yolo_object_retrieval.py` | Evaluates YOLO object payloads, object filters, keyword/object combinations, and object-aware reranking. |
+| `experiments/scripts/prepare_yolo_visual_inspection.py` | Creates/preserves stage 06 manual visual inspection labels and writes the labeling guide. |
+| `experiments/scripts/compute_yolo_visual_metrics.py` | Computes stage 06 visual metrics from complete manual top-10 labels and updates the report. |
 | `experiments/01_clip_baseline/` | Checked-in CLIP-only baseline report and CSV. |
 | `experiments/02_style_reranking/` | Checked-in style-reranking metrics, log, and report. |
 | `experiments/03_qdrant_backend/` | Checked-in FAISS vs Qdrant CSV, markdown table, and report. |
@@ -489,6 +617,15 @@ Current summarized findings:
 - `image_ids.npy` is stored in the same row order as `clip_embeddings.npy`.
 - CLIP embeddings are normalized and stored as `float32`.
 - FAISS uses inner product search over normalized vectors, which behaves like cosine similarity.
-- Qdrant uses cosine distance in a persistent local collection at `data/qdrant/`.
+- Qdrant uses cosine distance in either local path mode at `data/qdrant/` or server mode via `QDRANT_URL`.
 - Text style reranking in Qdrant is heuristic. It only activates when `--rerank` is passed and the query contains style cues such as `dark`, `warm`, `cold`, `vibrant`, `muted`, `cinematic`, or `dramatic`.
 - Visualization outputs are written under each stage's `visualizations/` directory or to an explicit `--output` path.
+- Stage 06 visual metrics require manual labels in `experiments/06_yolo_object_retrieval/visual_inspection.csv`.
+- YOLOv8n is CPU-expensive on the full corpus and is limited to COCO classes.
+- Local Qdrant mode is convenient for development; Docker/server Qdrant is preferred for larger or shared runs.
+
+## Tests
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest
+```

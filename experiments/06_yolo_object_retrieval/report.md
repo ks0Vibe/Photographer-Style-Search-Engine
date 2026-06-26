@@ -192,3 +192,66 @@ The new object payloads make retrieval more reliable for COCO-supported object q
 However, YOLO does not solve all visual search cases. Many photographer-style queries involve scenes, styles, and open-vocabulary concepts such as `building`, `street photography`, `minimal architecture`, `forest`, or `cinematic landscape`, which are not always covered by COCO object classes. For these cases, CLIP semantic search, metadata keywords, style descriptors, and future open-vocabulary detectors remain important.
 
 Overall, the project has progressed from CLIP-only semantic retrieval to a multi-signal image search system combining CLIP embeddings, Qdrant payload filters, metadata keywords, visual style descriptors, YOLO object detections, and object-aware reranking.
+
+## Visual Inspection Metrics
+
+Human visual inspection is pending. `visual_inspection.csv` exists for manual labeling, but no query/mode pair has complete top-10 visual labels yet.
+
+Incomplete or missing top-10 visual labels:
+
+- bird / qdrant_keyword
+- bird / qdrant_keyword_object
+- bird / qdrant_object
+- bird / qdrant_object_rerank
+- bird / qdrant_semantic
+- bird in nature / qdrant_keyword
+- bird in nature / qdrant_keyword_object
+- bird in nature / qdrant_object
+- bird in nature / qdrant_object_rerank
+- bird in nature / qdrant_semantic
+- building / qdrant_keyword
+- building / qdrant_object_rerank
+- building / qdrant_semantic
+- building in city / qdrant_keyword
+- building in city / qdrant_object_rerank
+- building in city / qdrant_semantic
+- car / qdrant_keyword
+- car / qdrant_keyword_object
+- car / qdrant_object
+- car / qdrant_object_rerank
+- car / qdrant_semantic
+- car at night / qdrant_keyword
+- car at night / qdrant_keyword_object
+- car at night / qdrant_object
+- car at night / qdrant_object_rerank
+- car at night / qdrant_semantic
+- cat / qdrant_keyword
+- cat / qdrant_keyword_object
+- cat / qdrant_object
+- cat / qdrant_object_rerank
+- cat / qdrant_semantic
+- cat indoors / qdrant_keyword
+- cat indoors / qdrant_keyword_object
+- cat indoors / qdrant_object
+- cat indoors / qdrant_object_rerank
+- cat indoors / qdrant_semantic
+- dog / qdrant_keyword
+- dog / qdrant_keyword_object
+- dog / qdrant_object
+- dog / qdrant_object_rerank
+- dog / qdrant_semantic
+- dog on beach / qdrant_keyword
+- dog on beach / qdrant_keyword_object
+- dog on beach / qdrant_object
+- dog on beach / qdrant_object_rerank
+- dog on beach / qdrant_semantic
+- person / qdrant_keyword
+- person / qdrant_keyword_object
+- person / qdrant_object
+- person / qdrant_object_rerank
+- person / qdrant_semantic
+- person in street photography / qdrant_keyword
+- person in street photography / qdrant_keyword_object
+- person in street photography / qdrant_object
+- person in street photography / qdrant_object_rerank
+- person in street photography / qdrant_semantic

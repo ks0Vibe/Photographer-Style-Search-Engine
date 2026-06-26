@@ -16,7 +16,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.search import ObjectAwareReranker
-from scripts.qdrant_common import COLLECTION_NAME, DATABASE_PATH, QDRANT_PATH, create_qdrant_service
+from app.search.qdrant_config import create_qdrant_client
+from scripts.qdrant_common import COLLECTION_NAME, DATABASE_PATH, create_qdrant_service
 from scripts.visualize_text_search import build_result_grid, sanitize_query_for_filename
 
 
@@ -95,9 +96,7 @@ def normalize_list(values: Any) -> list[str]:
 
 
 def collect_payload_stats() -> dict[str, Any]:
-    from qdrant_client import QdrantClient
-
-    client = QdrantClient(path=str(QDRANT_PATH))
+    client = create_qdrant_client()
     object_counter: Counter[str] = Counter()
     keyword_counter: Counter[str] = Counter()
     total = 0

@@ -22,8 +22,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.ml.clip_encoder import CLIPEncoder
-from app.search import QdrantRetrievalService, QdrantStore
-from scripts.qdrant_common import COLLECTION_NAME, QDRANT_PATH
+from app.search import QdrantRetrievalService
+from scripts.qdrant_common import COLLECTION_NAME, create_qdrant_store
 from scripts.visualize_text_search import build_result_grid, sanitize_query_for_filename
 
 
@@ -248,7 +248,7 @@ def load_dataset_stats(qdrant_points: int) -> dict[str, Any]:
 
 
 def collect_qdrant_payload_stats() -> tuple[dict[str, Any], list[dict[str, Any]], int]:
-    store = QdrantStore(collection_name=COLLECTION_NAME, qdrant_path=QDRANT_PATH)
+    store = create_qdrant_store()
     keyword_counter: Counter[str] = Counter()
     object_counter: Counter[str] = Counter()
     sample_payloads: list[dict[str, Any]] = []
@@ -586,7 +586,7 @@ def run_evaluation(
 
     service = QdrantRetrievalService(
         clip_encoder=CLIPEncoder(),
-        qdrant_store=QdrantStore(collection_name=COLLECTION_NAME, qdrant_path=QDRANT_PATH),
+        qdrant_store=create_qdrant_store(),
     )
     try:
         for spec in specs:

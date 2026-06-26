@@ -1,89 +1,97 @@
-# ======================
-# Python
-# ======================
-
+# Python bytecode / caches
 __pycache__/
 *.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
 
-# ======================
 # Virtual environments
-# ======================
-
 venv/
 .venv/
 env/
+.env/
 
-# ======================
-# IDE
-# ======================
+# Local configuration / secrets
+.env
+.env.*
+!.env.example
+*.local
 
+# IDE / editor
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# ======================
 # OS
-# ======================
-
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# ======================
+# Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Notebooks
+.ipynb_checkpoints/
+
 # Datasets
-# ======================
-
 data/unsplash-lite/
 data/images/
 
-# ======================
 # Generated metadata
-# ======================
-
 data/*.sqlite
 data/*.db
 data/**/*.sqlite
+data/**/*.db
+data/**/*.jsonl
+data/**/*.parquet
+data/**/*.feather
 
 data/metadata.csv
 data/**/*.csv
 
-# ======================
 # Embeddings
-# ======================
-
 data/embeddings/*.npy
 data/embeddings/*.npz
 
-# ======================
 # Model weights / exports
-# ======================
-
 *.pt
 *.pth
+*.ckpt
+*.safetensors
 *.onnx
 *.engine
+*.pkl
+*.pickle
+*.joblib
 runs/
 
-# ======================
-# FAISS indexes
-# ======================
-
+# Vector indexes / stores
 data/indexes/*.index
 data/qdrant/
+data/qdrant_storage/
 
-# ======================
 # Experiments
-# ======================
-
 experiments/runs/
 experiments/*/visualizations/
 
 experiments/final_report/selected_visualizations/
 experiments/final_report/results.pdf
 
-# ======================
 # Temporary files
-# ======================
-
 *.log
+*.tmp
+*.temp
 
 /docss
-

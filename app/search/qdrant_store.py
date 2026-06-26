@@ -6,7 +6,9 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-from qdrant_client import QdrantClient, models
+from qdrant_client import models
+
+from app.search.qdrant_config import QdrantSettings, create_qdrant_client
 
 
 logger = logging.getLogger(__name__)
@@ -85,9 +87,11 @@ class QdrantStore:
         self,
         collection_name: str = "photos",
         qdrant_path: Path | None = None,
+        qdrant_url: str | None = None,
     ) -> None:
         self.collection_name = collection_name
         self.qdrant_path = Path(qdrant_path) if qdrant_path is not None else None
+        self.qdrant_url = qdrant_url
         self.client = self._create_client()
 
     def recreate_collection(self, vector_size: int = 512) -> None:
@@ -212,12 +216,29 @@ class QdrantStore:
         except Exception:
             pass
 
-    def _create_client(self) -> QdrantClient:
+    def _create_client(self):
+        if self.qdrant_url:
+            return create_qdrant_client(
+                QdrantSettings(
+                    mode="server",
+                    collection_name=self.collection_name,
+                    path=self.qdrant_path or Path("data/qdrant"),
+                    url=self.qdrant_url,
+                )
+            )
         if self.qdrant_path is None:
+            from qdrant_client import QdrantClient
+
             return QdrantClient(":memory:")
 
-        self.qdrant_path.parent.mkdir(parents=True, exist_ok=True)
-        return QdrantClient(path=str(self.qdrant_path))
+        return create_qdrant_client(
+            QdrantSettings(
+                mode="local",
+                collection_name=self.collection_name,
+                path=self.qdrant_path,
+                url="",
+            )
+        )
 
     @staticmethod
     def _prepare_query_vector(query_vector: np.ndarray) -> np.ndarray:

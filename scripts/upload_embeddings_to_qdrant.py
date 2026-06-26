@@ -10,14 +10,15 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from app.search import QdrantStore, VectorStore, load_keywords_by_image_id
+from app.search import VectorStore, load_keywords_by_image_id
 from scripts.qdrant_common import (
     COLLECTION_NAME,
     DATABASE_PATH,
     EMBEDDINGS_PATH,
     IMAGE_IDS_PATH,
     KEYWORDS_PATH,
-    QDRANT_PATH,
+    create_qdrant_store,
+    qdrant_storage_label,
 )
 
 
@@ -132,7 +133,7 @@ def main() -> None:
     keywords_by_image_id = load_keywords_by_image_id(KEYWORDS_PATH) if KEYWORDS_PATH.exists() else {}
     payloads = build_payloads(image_ids, metadata_by_id, keywords_by_image_id)
 
-    store = QdrantStore(collection_name=COLLECTION_NAME, qdrant_path=QDRANT_PATH)
+    store = create_qdrant_store()
     try:
         store.validate_collection_exists()
         store.upload_points(embeddings=embeddings, image_ids=image_ids, payloads=payloads)
@@ -142,7 +143,7 @@ def main() -> None:
 
     print(f"Uploaded points: {point_count}")
     print(f"Collection: {COLLECTION_NAME}")
-    print(f"Storage: {QDRANT_PATH}")
+    print(f"Storage: {qdrant_storage_label()}")
 
 
 if __name__ == "__main__":

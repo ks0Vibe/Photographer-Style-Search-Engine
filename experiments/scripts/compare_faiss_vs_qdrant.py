@@ -14,12 +14,11 @@ from app.search import (
     FaissIndex,
     MetadataRepository,
     QdrantRetrievalService,
-    QdrantStore,
     RetrievalService,
     VectorStore,
 )
 from experiments.paths import QDRANT_BACKEND_DIR, ensure_experiment_directories
-from scripts.qdrant_common import COLLECTION_NAME, DATABASE_PATH, EMBEDDINGS_PATH, IMAGE_IDS_PATH, QDRANT_PATH, resolve_image_path
+from scripts.qdrant_common import DATABASE_PATH, EMBEDDINGS_PATH, IMAGE_IDS_PATH, QDRANT_PATH, create_qdrant_store, resolve_image_path
 
 
 FAISS_INDEX_PATH = PROJECT_ROOT / "data" / "indexes" / "flat.index"
@@ -56,10 +55,7 @@ def build_faiss_service(clip_encoder: CLIPEncoder) -> RetrievalService:
 def build_qdrant_service(clip_encoder: CLIPEncoder) -> QdrantRetrievalService:
     return QdrantRetrievalService(
         clip_encoder=clip_encoder,
-        qdrant_store=QdrantStore(
-            collection_name=COLLECTION_NAME,
-            qdrant_path=QDRANT_PATH,
-        ),
+        qdrant_store=create_qdrant_store(),
     )
 
 

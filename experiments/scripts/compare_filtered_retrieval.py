@@ -10,9 +10,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.ml.clip_encoder import CLIPEncoder
-from app.search import QdrantRetrievalService, QdrantStore, load_keywords_by_image_id
+from app.search import QdrantRetrievalService, load_keywords_by_image_id
 from experiments.paths import FILTERED_RETRIEVAL_DIR, ensure_experiment_directories
-from scripts.qdrant_common import COLLECTION_NAME, IMAGE_IDS_PATH, KEYWORDS_PATH, QDRANT_PATH
+from scripts.qdrant_common import IMAGE_IDS_PATH, KEYWORDS_PATH, create_qdrant_store
 
 
 CSV_OUTPUT_PATH = FILTERED_RETRIEVAL_DIR / "filtered_retrieval_results.csv"
@@ -45,10 +45,7 @@ STYLE_FILTERS = {
 def create_qdrant_service() -> QdrantRetrievalService:
     return QdrantRetrievalService(
         clip_encoder=CLIPEncoder(),
-        qdrant_store=QdrantStore(
-            collection_name=COLLECTION_NAME,
-            qdrant_path=QDRANT_PATH,
-        ),
+        qdrant_store=create_qdrant_store(),
     )
 
 

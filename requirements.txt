@@ -3,6 +3,8 @@ pandas
 pillow
 opencv-python
 tqdm
+requests
+streamlit
 
 torch
 torchvision
@@ -18,3 +20,4 @@ uvicorn
 pydantic
 
 python-multipart
+pytest
