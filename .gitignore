@@ -89,6 +89,9 @@ data/qdrant_synthetic_500k/
 experiments/runs/
 experiments/*/visualizations/
 
+experiments/09_validation_results/*.csv
+experiments/09_validation_results/run_summary.md
+
 experiments/final_report/selected_visualizations/
 experiments/final_report/results.pdf
 

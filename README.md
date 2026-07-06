@@ -141,6 +141,8 @@ Photographer-Style-Search-Engine/
 |   |-- 05_scaled_retrieval_quality/
 |   |-- 06_yolo_object_retrieval/
 |   |-- 07_synthetic_500k_scale/
+|   |-- 08_validation_set/
+|   |-- 09_validation_results/
 |   |-- configs/
 |   |-- final_report/
 |   |-- runs/
@@ -627,6 +629,7 @@ Run individual stages:
 .\.venv\Scripts\python.exe experiments\scripts\evaluate_scaled_retrieval_quality.py
 .\.venv\Scripts\python.exe experiments\scripts\evaluate_yolo_object_retrieval.py
 .\.venv\Scripts\python.exe experiments\scripts\evaluate_synthetic_500k_scale.py
+.\.venv\Scripts\python.exe experiments\scripts\generate_validation_results.py
 .\.venv\Scripts\python.exe experiments\scripts\prepare_yolo_visual_inspection.py
 .\.venv\Scripts\python.exe experiments\scripts\compute_yolo_visual_metrics.py
 ```
@@ -647,6 +650,8 @@ Checked-in reports:
 - `experiments/05_scaled_retrieval_quality/report.md`
 - `experiments/06_yolo_object_retrieval/report.md`
 - `experiments/07_synthetic_500k_scale/report.md`
+- `experiments/08_validation_set/` - validation queries and manual relevance-label template for future search quality metrics
+- `experiments/09_validation_results/` - generated top-k validation results from FAISS, Qdrant, filtering, and reranking systems
 - `experiments/final_report/results.md`
 
 Current summarized findings:
@@ -735,6 +740,7 @@ Current summarized findings:
 | `experiments/scripts/evaluate_scaled_retrieval_quality.py` | Evaluates scaled Qdrant retrieval quality, payload coverage, latency, weak relevance metrics, and qualitative failure modes. |
 | `experiments/scripts/evaluate_yolo_object_retrieval.py` | Evaluates YOLO object payloads, object filters, keyword/object combinations, and object-aware reranking. |
 | `experiments/scripts/evaluate_synthetic_500k_scale.py` | Benchmarks the separate synthetic 500k vector Qdrant collection for scalability, filters, and latency. |
+| `experiments/scripts/generate_validation_results.py` | Generates top-k validation result CSVs from FAISS, Qdrant, filtering, and reranking systems. |
 | `experiments/scripts/prepare_yolo_visual_inspection.py` | Creates/preserves stage 06 manual visual inspection labels and writes the labeling guide. |
 | `experiments/scripts/compute_yolo_visual_metrics.py` | Computes stage 06 visual metrics from complete manual top-10 labels and updates the report. |
 | `experiments/01_clip_baseline/` | Checked-in CLIP-only baseline report and CSV. |
@@ -744,6 +750,8 @@ Current summarized findings:
 | `experiments/05_scaled_retrieval_quality/` | Scaled retrieval quality report, diagnostics, metrics CSVs, latency CSV, qualitative findings, and PNG grids. |
 | `experiments/06_yolo_object_retrieval/` | YOLO object retrieval report, object payload stats, metrics CSVs, visual inspection template, qualitative findings, and PNG grids. |
 | `experiments/07_synthetic_500k_scale/` | Synthetic 500k vector-object scale benchmark report, dataset stats, upload stats, and latency CSVs. |
+| `experiments/08_validation_set/` | Validation queries and manual relevance-label template for future search quality metrics. |
+| `experiments/09_validation_results/` | Generated top-k validation results from FAISS, Qdrant, filtering, and reranking systems. |
 | `experiments/final_report/` | Roll-up markdown report that links staged outputs. |
 | `experiments/configs/.gitkeep` | Placeholder for future experiment configuration files. |
 

@@ -1,0 +1,31 @@
+query_id,query,type,intended_system,notes
+Q001,warm cinematic landscape,semantic_text,FAISS CLIP baseline; Qdrant semantic search,Checks broad scene and mood matching through CLIP embeddings.
+Q002,dark moody forest,semantic_text,FAISS CLIP baseline; Qdrant semantic search,Checks semantic retrieval for natural scenes with darker visual tone.
+Q003,vibrant summer portrait,semantic_text,FAISS CLIP baseline; Qdrant semantic search,Checks person-focused semantic search with bright seasonal context.
+Q004,minimal architecture,semantic_text,FAISS CLIP baseline; Qdrant semantic search,Checks clean architectural compositions and simple visual structure.
+Q005,cold blue mountain scene,semantic_text,FAISS CLIP baseline; Qdrant semantic search,Checks landscape semantics with color temperature constraints.
+Q006,food photography with warm light,semantic_text,FAISS CLIP baseline; Qdrant semantic search,Checks semantic retrieval for food scenes and lighting context.
+Q007,quiet city street at dawn,semantic_text,FAISS CLIP baseline; Qdrant semantic search,Checks urban scene retrieval with time-of-day feel.
+Q008,dramatic ocean waves,semantic_text,FAISS CLIP baseline; Qdrant semantic search,Checks visually distinct nature and motion-related semantics.
+Q009,warm golden hour light,style_text,FAISS + style reranking; Qdrant semantic search,Checks warmth and late-day lighting style.
+Q010,low contrast pastel tones,style_text,FAISS + style reranking,Checks soft contrast and muted color palette behavior.
+Q011,high contrast black and white,style_text,FAISS + style reranking,Checks monochrome and contrast-sensitive ranking.
+Q012,cinematic teal and orange,style_text,FAISS + style reranking,Checks cinematic color grading and style-aware reranking.
+Q013,soft natural window light,style_text,FAISS + style reranking,Checks gentle lighting and natural photographic style.
+Q014,dark low key portrait lighting,style_text,FAISS + style reranking,Checks darkness and low-key mood handling.
+Q015,bright airy minimal style,style_text,FAISS + style reranking,Checks brightness and minimalist visual style.
+Q016,saturated colorful street scene,style_text,FAISS + style reranking; Qdrant semantic search,Checks saturation and color-rich street photography.
+Q017,person in street photography,object_text,Qdrant filtered search; Qdrant + object-aware reranking,Checks person object retrieval in street scenes.
+Q018,dog on beach,object_text,Qdrant filtered search; Qdrant + object-aware reranking,Checks dog object retrieval with beach scene context.
+Q019,car at night,object_text,Qdrant filtered search; Qdrant + object-aware reranking,Checks car object retrieval with night visual context.
+Q020,bicycle in urban street,object_text,Qdrant filtered search; Qdrant + object-aware reranking,Checks bicycle object retrieval and urban filtering.
+Q021,bird in nature,object_text,Qdrant filtered search; Qdrant + object-aware reranking,Checks bird object labels with nature background.
+Q022,boat on water,object_text,Qdrant filtered search; Qdrant + object-aware reranking,Checks boat object retrieval and water scene context.
+Q023,cup on table,object_text,Qdrant filtered search; Qdrant + object-aware reranking,Checks small object retrieval in indoor or food scenes.
+Q024,train in station,object_text,Qdrant filtered search; Qdrant + object-aware reranking,Checks vehicle object retrieval with transport context.
+Q025,warm portrait with person outdoors,mixed_text,FAISS + style reranking; Qdrant filtered search; Qdrant + object-aware reranking,Checks person object plus warmth and outdoor constraints.
+Q026,dark forest with animal,mixed_text,FAISS + style reranking; Qdrant filtered search; Qdrant + object-aware reranking,Checks natural scene plus dark style and object evidence.
+Q027,bright beach scene with dog,mixed_text,FAISS + style reranking; Qdrant filtered search; Qdrant + object-aware reranking,Checks dog object plus bright beach scene constraints.
+Q028,cinematic car on city street at night,mixed_text,FAISS + style reranking; Qdrant filtered search; Qdrant + object-aware reranking,Checks car object plus city scene plus cinematic night style.
+Q029,REPLACE_WITH_REAL_IMAGE_ID_001,image_to_image,image-to-image similarity,Placeholder image query. Replace with a real local dataset image ID after sampling from the indexed dataset.
+Q030,REPLACE_WITH_REAL_IMAGE_ID_002,image_to_image,image-to-image similarity,Placeholder image query. Replace with a real local dataset image ID after sampling from the indexed dataset.
