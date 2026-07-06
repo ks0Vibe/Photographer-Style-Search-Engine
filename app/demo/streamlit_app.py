@@ -31,6 +31,16 @@ def main() -> None:
     if "query" not in st.session_state:
         st.session_state.query = "dog on beach"
 
+    text_tab, image_tab = st.tabs(["Text Search", "Image Search"])
+
+    with text_tab:
+        render_text_search(api_base_url)
+
+    with image_tab:
+        render_image_search(api_base_url)
+
+
+def render_text_search(api_base_url: str) -> None:
     preset_columns = st.columns(len(PRESET_QUERIES))
     for column, preset in zip(preset_columns, PRESET_QUERIES, strict=True):
         if column.button(preset):
@@ -78,9 +88,90 @@ def main() -> None:
             response = requests.post(f"{api_base_url}/search/text", json=body, timeout=120)
             response.raise_for_status()
         except requests.RequestException as exc:
-            st.error(f"Search failed: {exc}")
+            render_request_error("Search failed", exc)
             return
         render_results(api_base_url, response.json())
+
+
+def render_image_search(api_base_url: str) -> None:
+    uploaded_file = st.file_uploader("Upload query image", type=["jpg", "jpeg", "png", "webp"])
+    image_id = st.text_input("Image ID from dataset", value="")
+
+    control_columns = st.columns(3)
+    top_k = control_columns[0].number_input("top_k", min_value=1, max_value=50, value=10, step=1, key="image_top_k")
+    candidate_pool_size = control_columns[1].number_input(
+        "candidate_pool_size",
+        min_value=1,
+        max_value=500,
+        value=100,
+        step=10,
+        key="image_candidate_pool_size",
+    )
+    rerank = control_columns[2].checkbox("Style rerank", value=False, key="image_style_rerank")
+
+    if uploaded_file is not None:
+        st.image(uploaded_file, caption="Query image", width=320)
+
+    if st.button("Search by image", type="primary"):
+        if uploaded_file is not None:
+            search_uploaded_image(api_base_url, uploaded_file, int(top_k), int(candidate_pool_size), bool(rerank))
+            return
+
+        if image_id.strip():
+            search_dataset_image(api_base_url, image_id.strip(), int(top_k), int(candidate_pool_size), bool(rerank))
+            return
+
+        st.warning("Upload a query image or enter an image ID.")
+
+
+def search_uploaded_image(
+    api_base_url: str,
+    uploaded_file,
+    top_k: int,
+    candidate_pool_size: int,
+    rerank: bool,
+) -> None:
+    files = {
+        "file": (
+            uploaded_file.name,
+            uploaded_file.getvalue(),
+            uploaded_file.type or "application/octet-stream",
+        )
+    }
+    data = {
+        "top_k": str(top_k),
+        "candidate_pool_size": str(candidate_pool_size),
+        "rerank": "true" if rerank else "false",
+    }
+    try:
+        response = requests.post(f"{api_base_url}/search/image/upload", files=files, data=data, timeout=180)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        render_request_error("Image upload search failed", exc)
+        return
+    render_results(api_base_url, response.json())
+
+
+def search_dataset_image(
+    api_base_url: str,
+    image_id: str,
+    top_k: int,
+    candidate_pool_size: int,
+    rerank: bool,
+) -> None:
+    body = {
+        "image_id": image_id,
+        "top_k": top_k,
+        "candidate_pool_size": candidate_pool_size,
+        "rerank": rerank,
+    }
+    try:
+        response = requests.post(f"{api_base_url}/search/image", json=body, timeout=180)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        render_request_error("Image search failed", exc)
+        return
+    render_results(api_base_url, response.json())
 
 
 def render_results(api_base_url: str, payload: dict) -> None:
@@ -97,7 +188,10 @@ def render_results(api_base_url: str, payload: dict) -> None:
     for index, result in enumerate(results):
         with columns[index % 3]:
             image_id = result.get("image_id", "")
-            st.image(f"{api_base_url}/image-file/{image_id}", use_container_width=True)
+            try:
+                st.image(f"{api_base_url}/image-file/{image_id}", use_container_width=True)
+            except Exception:
+                st.info("Image file could not be loaded.")
             st.markdown(f"**#{result.get('rank')}** `{image_id}`")
             st.write(f"score: {float(result.get('score', 0.0)):.4f}")
             st.write(result.get("ai_description") or "")
@@ -112,6 +206,14 @@ def render_results(api_base_url: str, payload: dict) -> None:
             )
             if result.get("photo_url"):
                 st.link_button("Unsplash", result["photo_url"])
+
+
+def render_request_error(prefix: str, exc: requests.RequestException) -> None:
+    response = getattr(exc, "response", None)
+    if response is None:
+        st.error(f"{prefix}: API is not reachable at the configured URL.")
+        return
+    st.error(f"{prefix}: {response.status_code} {response.text}")
 
 
 def _fmt(value: object) -> str:

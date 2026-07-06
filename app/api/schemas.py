@@ -44,14 +44,14 @@ class ImageSearchRequest(StyleFilters):
     candidate_pool_size: int = Field(default=100, ge=1, le=500)
     keyword: str | None = None
     object: str | None = None
-    rerank: bool = True
+    rerank: bool = False
 
 
 class SearchResult(BaseModel):
     rank: int
     image_id: str
     score: float
-    file_path: str
+    file_path: str | None = None
     photo_url: str | None = None
     ai_description: str | None = None
     photographer_username: str | None = None
@@ -65,6 +65,16 @@ class SearchResult(BaseModel):
 
 class SearchResponse(BaseModel):
     query: str
+    mode: str
+    top_k: int
+    latency_ms: float
+    results: list[SearchResult]
+
+
+class ImageSearchResponse(BaseModel):
+    query_type: str
+    query_image_id: str | None = None
+    query_image_path: str | None = None
     mode: str
     top_k: int
     latency_ms: float

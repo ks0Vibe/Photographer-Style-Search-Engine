@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+from io import BytesIO
+import sqlite3
 
 import pytest
 from fastapi.testclient import TestClient
+from PIL import Image
 
 from app.main import app
 
@@ -20,6 +23,13 @@ def local_artifacts_available() -> bool:
 
 
 client = TestClient(app)
+
+
+def first_image_id() -> str:
+    with sqlite3.connect(PROJECT_ROOT / "data" / "metadata.sqlite") as conn:
+        row = conn.execute("SELECT image_id FROM images ORDER BY image_id LIMIT 1").fetchone()
+    assert row is not None
+    return str(row[0])
 
 
 def test_health() -> None:
@@ -59,3 +69,45 @@ def test_text_search_and_image_metadata() -> None:
     metadata_response = client.get(f"/images/{image_id}")
     assert metadata_response.status_code == 200
     assert metadata_response.json()["image_id"] == image_id
+
+
+@pytest.mark.skipif(not local_artifacts_available(), reason="Local dataset/Qdrant artifacts are not available")
+def test_image_search_by_existing_image_id() -> None:
+    response = client.post(
+        "/search/image",
+        json={
+            "image_id": first_image_id(),
+            "top_k": 1,
+            "candidate_pool_size": 5,
+            "rerank": False,
+        },
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["query_type"] == "dataset_image_id"
+    assert payload["query_image_id"]
+    assert payload["mode"] == "image_semantic"
+    assert "results" in payload
+
+
+@pytest.mark.skipif(not local_artifacts_available(), reason="Local dataset/Qdrant artifacts are not available")
+def test_image_search_upload_smoke() -> None:
+    image = Image.new("RGB", (16, 16), color=(120, 80, 40))
+    buffer = BytesIO()
+    image.save(buffer, format="PNG")
+    buffer.seek(0)
+
+    response = client.post(
+        "/search/image/upload",
+        data={
+            "top_k": "1",
+            "candidate_pool_size": "5",
+            "rerank": "false",
+        },
+        files={"file": ("query.png", buffer.getvalue(), "image/png")},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["query_type"] == "uploaded_image"
+    assert payload["query_image_path"].startswith("data")
+    assert "results" in payload

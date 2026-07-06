@@ -49,6 +49,7 @@ pip-wheel-metadata/
 data/unsplash-lite/
 data/images/
 data/synthetic_500k/
+data/query_uploads/
 
 # Generated metadata
 data/*.sqlite

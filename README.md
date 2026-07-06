@@ -122,7 +122,9 @@ Photographer-Style-Search-Engine/
 |   |   |-- .gitkeep
 |   |   \-- flat.index
 |   |-- qdrant/
+|   |-- qdrant_storage/
 |   |-- qdrant_synthetic_500k/
+|   |-- query_uploads/
 |   |-- synthetic_500k/
 |   |-- metadata.sqlite
 |   \-- unsplash-lite/
@@ -141,6 +143,7 @@ Photographer-Style-Search-Engine/
 |   |-- 07_synthetic_500k_scale/
 |   |-- configs/
 |   |-- final_report/
+|   |-- runs/
 |   |-- scripts/
 |   |   |-- __init__.py
 |   |   |-- compare_faiss_vs_qdrant.py
@@ -182,10 +185,16 @@ Photographer-Style-Search-Engine/
 |   |-- visualize_search_results.py
 |   \-- visualize_text_search.py
 |-- dataset_check.py
+|-- check_schema.py
+|-- checks.py
+|-- checks_keyword_availability.py
+|-- checks_keywords_csv.py
+|-- checks_qdrant_payload.py
 |-- download_dataset.py
 |-- requirements.txt
 |-- docker-compose.yml
 |-- LICENSE
+|-- yolov8n.pt
 \-- README.md
 ```
 
@@ -209,6 +218,14 @@ pip install -r requirements.txt
 ```
 
 The dependency set includes OpenCLIP, PyTorch, FAISS CPU, Qdrant client, Ultralytics YOLO, OpenCV, Pillow, pandas, FastAPI/Uvicorn, Streamlit, requests, pytest, and supporting libraries.
+
+Runtime notes:
+
+- First CLIP or YOLO runs may download model weights unless they are already present locally.
+- `yolov8n.pt` can be placed in the repository root and is ignored by Git.
+- CPU execution works, but full-corpus YOLO extraction is slow; CUDA is used only when the local PyTorch/Ultralytics install supports it.
+- Docker is optional and only required for server-mode Qdrant.
+- Run commands from the repository root so relative paths resolve consistently.
 
 ## Dataset
 
@@ -315,6 +332,21 @@ data/embeddings/clip_embeddings.npy
 data/embeddings/image_ids.npy
 data/indexes/flat.index
 data/qdrant/
+```
+
+Other generated runtime artifacts are also ignored by Git:
+
+```text
+data/unsplash-lite/
+data/query_uploads/
+data/qdrant_storage/
+data/qdrant_synthetic_500k/
+data/synthetic_500k/
+experiments/runs/
+experiments/*/visualizations/
+experiments/final_report/selected_visualizations/
+experiments/final_report/results.pdf
+*.pt
 ```
 
 Local Qdrant path mode uses a filesystem lock, so run Qdrant scripts one at a time.
@@ -511,6 +543,39 @@ Invoke-RestMethod `
   -Body $body
 ```
 
+Image search by existing dataset image ID:
+
+```powershell
+$body = @{
+  image_id = "oSf8ePoG9NU"
+  top_k = 5
+  candidate_pool_size = 100
+  rerank = $true
+} | ConvertTo-Json
+
+Invoke-RestMethod `
+  -Uri http://127.0.0.1:8000/search/image `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body $body
+```
+
+Image search by uploaded query image:
+
+```powershell
+$form = @{
+  file = Get-Item "C:\Users\ksvibe\Pictures\query.jpg"
+  top_k = "5"
+  candidate_pool_size = "100"
+  rerank = "true"
+}
+
+Invoke-RestMethod `
+  -Uri http://127.0.0.1:8000/search/image/upload `
+  -Method Post `
+  -Form $form
+```
+
 Other endpoints:
 
 ```text
@@ -518,11 +583,24 @@ GET  /health
 GET  /stats
 POST /search/text
 POST /search/image
+POST /search/image/upload
 GET  /images/{image_id}
 GET  /image-file/{image_id}
 ```
 
+API limits and behavior:
+
+- `top_k` accepts `1..100` in API requests.
+- `candidate_pool_size` accepts `1..500`.
+- `/search/image` requires exactly one of `image_id` or `image_path`.
+- `/search/image` supports `keyword`, `object`, style-range filters, and style reranking.
+- `/search/image/upload` accepts only `.jpg`, `.jpeg`, `.png`, and `.webp` files with matching image content types; it currently exposes only `top_k`, `candidate_pool_size`, and `rerank`.
+- Uploaded query files are stored under `data/query_uploads/`.
+- `image_path` requests reject parent-directory traversal and only resolve existing local image files.
+
 ## Demo UI
+
+The Streamlit demo supports both text search and image-to-image search. Image search can use either an uploaded query image or an existing dataset image ID.
 
 Terminal 1:
 
@@ -609,6 +687,11 @@ Current summarized findings:
 | Path | Purpose |
 | --- | --- |
 | `dataset_check.py` | Prints a small sample and column list from `photos.csv000`. |
+| `check_schema.py` | Prints SQLite table names and column types. |
+| `checks.py` | Legacy SQLite keyword coverage check; expects a `keywords` column and may not apply to the current normalized keyword flow. |
+| `checks_keywords_csv.py` | Inspects `keywords.csv000`, infers ID/keyword columns, and prints keyword coverage and top keywords. |
+| `checks_keyword_availability.py` | Samples local Qdrant points for a fixed list of common keyword filters. |
+| `checks_qdrant_payload.py` | Scans local Qdrant payload coverage for keywords and detected objects. |
 | `download_dataset.py` | Downloads Unsplash Lite images and writes main metadata CSV. |
 | `app/database/create_database.py` | Builds SQLite tables and imports `data/unsplash-lite/metadata.csv`. |
 | `scripts/extract_visual_features.py` | Computes visual style descriptors and stores them in SQLite. |
@@ -682,3 +765,5 @@ Current summarized findings:
 ```powershell
 .\.venv\Scripts\python.exe -m pytest
 ```
+
+`tests/test_api.py` always checks `/health`. Dataset/Qdrant-dependent API tests are skipped automatically when `data/metadata.sqlite`, `data/qdrant/`, or `data/embeddings/clip_embeddings.npy` are missing.
