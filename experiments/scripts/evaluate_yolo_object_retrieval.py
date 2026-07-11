@@ -251,6 +251,7 @@ def enrich_results(
             "query": query,
             "query_group": query_group,
             "mode": mode,
+            "requested_object": QUERY_OBJECT[query],
             "rank": rank,
             "image_id": str(result.get("image_id", "")),
             "score": float(result.get("score", 0.0) or 0.0),
@@ -352,6 +353,8 @@ def write_visual_template(rows: list[dict[str, Any]]) -> None:
             "rank": row["rank"],
             "image_id": row["image_id"],
             "file_path": row["file_path"],
+            "requested_object": row["requested_object"],
+            "object_present": "",
             "visual_relevance": "",
             "visual_notes": "",
         }

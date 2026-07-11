@@ -8,6 +8,12 @@ Use `visual_inspection.csv` to label the top-10 grids from the YOLO object retri
 - `1` = partial visual match
 - `0` = visual failure
 
+## Object Precision@10 (required)
+
+For every result in the `qdrant_semantic`, `qdrant_object`, and `qdrant_object_rerank` rows, fill `object_present` with exactly `1` when the requested object is visibly present and `0` when it is absent. Do not infer this from the YOLO payload or metadata; inspect the image. Leave no blank cells in these three modes for the 12 object queries if you want the aggregate metric.
+
+The aggregate `object_precision_metrics.csv` reports Object Precision@10 before (`qdrant_semantic`) and after object filter/rerank (`qdrant_object`, `qdrant_object_rerank`).
+
 ## Object-Like Queries
 
 - `2` = requested object is clearly visible and central

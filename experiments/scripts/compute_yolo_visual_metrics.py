@@ -18,6 +18,8 @@ RETRIEVAL_METRICS_PATH = STAGE_DIR / "retrieval_metrics.csv"
 VISUAL_METRICS_PATH = STAGE_DIR / "visual_metrics.csv"
 VISUAL_GROUP_METRICS_PATH = STAGE_DIR / "visual_group_metrics.csv"
 AUTOMATIC_VS_VISUAL_PATH = STAGE_DIR / "automatic_vs_visual_metrics.csv"
+OBJECT_PRECISION_PATH = STAGE_DIR / "object_precision_metrics.csv"
+OBJECT_PRECISION_SUMMARY_PATH = STAGE_DIR / "object_precision_summary.csv"
 REPORT_PATH = STAGE_DIR / "report.md"
 
 TOP_K = 10
@@ -41,6 +43,21 @@ GROUP_COLUMNS = [
     "dcg_at_10",
     "ndcg_at_10",
     "mrr_at_10",
+]
+OBJECT_COLUMNS = [
+    "query",
+    "query_group",
+    "requested_object",
+    "mode",
+    "result_count",
+    "labeled_object_results",
+    "object_precision_at_10",
+]
+OBJECT_SUMMARY_COLUMNS = [
+    "mode",
+    "query_count",
+    "labeled_object_results",
+    "object_precision_at_10",
 ]
 
 
@@ -70,6 +87,13 @@ def parse_visual_relevance(value: str) -> int | None:
     if parsed not in {0, 1, 2}:
         return None
     return parsed
+
+
+def parse_object_present(value: str) -> int | None:
+    value = str(value or "").strip().lower()
+    if value in {"0", "1"}:
+        return int(value)
+    return None
 
 
 def dcg_at_k(relevances: list[int]) -> float:
@@ -126,6 +150,48 @@ def compute_visual_metrics(rows: list[dict[str, str]]) -> tuple[list[dict[str, o
             }
         )
     return metrics_rows, missing
+
+
+def compute_object_precision(rows: list[dict[str, str]]) -> tuple[list[dict[str, object]], list[str]]:
+    allowed_modes = {"qdrant_semantic", "qdrant_object", "qdrant_object_rerank"}
+    grouped: dict[tuple[str, str, str, str], list[dict[str, str]]] = defaultdict(list)
+    for row in rows:
+        if row.get("mode") in allowed_modes and row.get("requested_object"):
+            grouped[(row["query"], row["query_group"], row["requested_object"], row["mode"])].append(row)
+
+    metrics_rows: list[dict[str, object]] = []
+    missing: list[str] = []
+    for (query, query_group, requested_object, mode), group_rows in sorted(grouped.items()):
+        ordered = sorted(group_rows, key=lambda row: int(row["rank"]))[:TOP_K]
+        labels = [parse_object_present(row.get("object_present", "")) for row in ordered]
+        if len(ordered) != TOP_K or any(label is None for label in labels):
+            missing.append(f"{query} / {mode}")
+            continue
+        metrics_rows.append({
+            "query": query,
+            "query_group": query_group,
+            "requested_object": requested_object,
+            "mode": mode,
+            "result_count": len(ordered),
+            "labeled_object_results": sum(labels),
+            "object_precision_at_10": sum(labels) / TOP_K,
+        })
+    return metrics_rows, missing
+
+
+def aggregate_object_precision(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        grouped[str(row["mode"])].append(row)
+    output = []
+    for mode, mode_rows in sorted(grouped.items()):
+        output.append({
+            "mode": mode,
+            "query_count": len(mode_rows),
+            "labeled_object_results": sum(int(row["labeled_object_results"]) for row in mode_rows),
+            "object_precision_at_10": statistics.fmean(float(row["object_precision_at_10"]) for row in mode_rows),
+        })
+    return output
 
 
 def aggregate_group_metrics(metrics_rows: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -200,7 +266,7 @@ def markdown_table(rows: list[dict[str, object]], columns: list[str]) -> str:
     return "\n".join(lines)
 
 
-def update_report(metrics_rows: list[dict[str, object]], group_rows: list[dict[str, object]], missing: list[str]) -> None:
+def update_report(metrics_rows: list[dict[str, object]], group_rows: list[dict[str, object]], missing: list[str], object_rows: list[dict[str, object]], object_missing: list[str]) -> None:
     if not REPORT_PATH.exists():
         return
 
@@ -235,6 +301,22 @@ def update_report(metrics_rows: list[dict[str, object]], group_rows: list[dict[s
         if len(missing) > 80:
             section.append(f"- ... {len(missing) - 80} more")
 
+    section.extend([
+        "",
+        "## Manual Object Precision@10",
+        "",
+        "This metric uses the independently inspected `object_present` field. It is not the automatic YOLO payload metric.",
+        "",
+    ])
+    object_summary = aggregate_object_precision(object_rows)
+    if object_summary:
+        section.append(markdown_table(object_summary, OBJECT_SUMMARY_COLUMNS))
+    else:
+        section.append("No complete object-present labels are available yet.")
+    if object_missing:
+        section.extend(["", "Incomplete object labels:", ""])
+        section.extend(f"- {item}" for item in object_missing[:80])
+
     REPORT_PATH.write_text(report + "\n\n" + "\n".join(section) + "\n", encoding="utf-8")
 
 
@@ -256,11 +338,15 @@ def main() -> None:
             "ndcg_delta",
             "interpretation",
         ])
+        write_csv(OBJECT_PRECISION_PATH, [], OBJECT_COLUMNS)
+        write_csv(OBJECT_PRECISION_SUMMARY_PATH, [], OBJECT_SUMMARY_COLUMNS)
         return
 
     metrics_rows, missing = compute_visual_metrics(rows)
     group_rows = aggregate_group_metrics(metrics_rows)
     comparison_rows = build_automatic_vs_visual(metrics_rows)
+    object_rows, object_missing = compute_object_precision(rows)
+    object_summary = aggregate_object_precision(object_rows)
 
     write_csv(VISUAL_METRICS_PATH, metrics_rows, METRIC_COLUMNS)
     write_csv(VISUAL_GROUP_METRICS_PATH, group_rows, GROUP_COLUMNS)
@@ -280,7 +366,9 @@ def main() -> None:
             "interpretation",
         ],
     )
-    update_report(metrics_rows, group_rows, missing)
+    write_csv(OBJECT_PRECISION_PATH, object_rows, OBJECT_COLUMNS)
+    write_csv(OBJECT_PRECISION_SUMMARY_PATH, object_summary, OBJECT_SUMMARY_COLUMNS)
+    update_report(metrics_rows, group_rows, missing, object_rows, object_missing)
 
     print(f"Complete visual metric groups: {len(metrics_rows)}")
     print(f"Incomplete query/mode pairs: {len(missing)}")
@@ -291,6 +379,10 @@ def main() -> None:
     print(f"Wrote: {VISUAL_METRICS_PATH}")
     print(f"Wrote: {VISUAL_GROUP_METRICS_PATH}")
     print(f"Wrote: {AUTOMATIC_VS_VISUAL_PATH}")
+    print(f"Complete object precision groups: {len(object_rows)}")
+    print(f"Incomplete object precision groups: {len(object_missing)}")
+    print(f"Wrote: {OBJECT_PRECISION_PATH}")
+    print(f"Wrote: {OBJECT_PRECISION_SUMMARY_PATH}")
 
 
 if __name__ == "__main__":

@@ -255,3 +255,46 @@ Incomplete or missing top-10 visual labels:
 - person in street photography / qdrant_object
 - person in street photography / qdrant_object_rerank
 - person in street photography / qdrant_semantic
+
+## Manual Object Precision@10
+
+This metric uses the independently inspected `object_present` field. It is not the automatic YOLO payload metric.
+
+No complete object-present labels are available yet.
+
+Incomplete object labels:
+
+- bird / qdrant_object
+- bird / qdrant_object_rerank
+- bird / qdrant_semantic
+- bird in nature / qdrant_object
+- bird in nature / qdrant_object_rerank
+- bird in nature / qdrant_semantic
+- building / qdrant_object_rerank
+- building / qdrant_semantic
+- building in city / qdrant_object_rerank
+- building in city / qdrant_semantic
+- car / qdrant_object
+- car / qdrant_object_rerank
+- car / qdrant_semantic
+- car at night / qdrant_object
+- car at night / qdrant_object_rerank
+- car at night / qdrant_semantic
+- cat / qdrant_object
+- cat / qdrant_object_rerank
+- cat / qdrant_semantic
+- cat indoors / qdrant_object
+- cat indoors / qdrant_object_rerank
+- cat indoors / qdrant_semantic
+- dog / qdrant_object
+- dog / qdrant_object_rerank
+- dog / qdrant_semantic
+- dog on beach / qdrant_object
+- dog on beach / qdrant_object_rerank
+- dog on beach / qdrant_semantic
+- person / qdrant_object
+- person / qdrant_object_rerank
+- person / qdrant_semantic
+- person in street photography / qdrant_object
+- person in street photography / qdrant_object_rerank
+- person in street photography / qdrant_semantic

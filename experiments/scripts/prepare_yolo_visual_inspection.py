@@ -22,6 +22,8 @@ OUTPUT_COLUMNS = [
     "rank",
     "image_id",
     "file_path",
+    "requested_object",
+    "object_present",
     "visual_relevance",
     "visual_notes",
     "visible_main_object",
@@ -30,12 +32,27 @@ OUTPUT_COLUMNS = [
 ]
 
 MANUAL_COLUMNS = [
+    "object_present",
     "visual_relevance",
     "visual_notes",
     "visible_main_object",
     "style_or_context_match",
     "failure_reason",
 ]
+REQUESTED_OBJECT_BY_QUERY = {
+    "person": "person",
+    "car": "car",
+    "dog": "dog",
+    "cat": "cat",
+    "building": "building",
+    "bird": "bird",
+    "person in street photography": "person",
+    "car at night": "car",
+    "dog on beach": "dog",
+    "cat indoors": "cat",
+    "bird in nature": "bird",
+    "building in city": "building",
+}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -80,6 +97,9 @@ def build_visual_rows() -> list[dict[str, str]]:
         seen.add(key)
 
         row = {column: str(source_row.get(column, "") or "") for column in OUTPUT_COLUMNS}
+        row["requested_object"] = str(
+            source_row.get("requested_object", "") or REQUESTED_OBJECT_BY_QUERY.get(row["query"], "")
+        )
         for column in MANUAL_COLUMNS:
             row[column] = preserved.get(key, {}).get(column, "")
         output_rows.append(row)
@@ -108,6 +128,12 @@ def write_guide() -> None:
                 "- `2` = full visual match",
                 "- `1` = partial visual match",
                 "- `0` = visual failure",
+                "",
+                "## Object Precision@10 (required)",
+                "",
+                "For every result in the `qdrant_semantic`, `qdrant_object`, and `qdrant_object_rerank` rows, fill `object_present` with exactly `1` when the requested object is visibly present and `0` when it is absent. Do not infer this from the YOLO payload or metadata; inspect the image. Leave no blank cells in these three modes for the 12 object queries if you want the aggregate metric.",
+                "",
+                "The aggregate `object_precision_metrics.csv` reports Object Precision@10 before (`qdrant_semantic`) and after object filter/rerank (`qdrant_object`, `qdrant_object_rerank`).",
                 "",
                 "## Object-Like Queries",
                 "",
