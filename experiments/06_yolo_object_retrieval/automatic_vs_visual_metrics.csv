@@ -1,57 +1,57 @@
 query,query_group,mode,auto_precision_at_10,visual_precision_at_10,auto_ndcg_at_10,visual_ndcg_at_10,precision_delta,ndcg_delta,interpretation
-bird,object_like,qdrant_keyword,1.0,,0.9783012898581854,,,,visual inspection pending
-bird,object_like,qdrant_keyword_object,1.0,,1.0,,,,visual inspection pending
-bird,object_like,qdrant_object,1.0,,1.0,,,,visual inspection pending
-bird,object_like,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-bird,object_like,qdrant_semantic,1.0,,0.9783012898581854,,,,visual inspection pending
-bird in nature,combined,qdrant_keyword,1.0,,0.9680382008450961,,,,visual inspection pending
-bird in nature,combined,qdrant_keyword_object,1.0,,0.9680382008450961,,,,visual inspection pending
-bird in nature,combined,qdrant_object,1.0,,0.9680382008450961,,,,visual inspection pending
-bird in nature,combined,qdrant_object_rerank,1.0,,0.9680382008450961,,,,visual inspection pending
-bird in nature,combined,qdrant_semantic,1.0,,0.9680382008450961,,,,visual inspection pending
-building,object_like,qdrant_keyword,1.0,,1.0,,,,visual inspection pending
-building,object_like,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-building,object_like,qdrant_semantic,1.0,,1.0,,,,visual inspection pending
-building in city,combined,qdrant_keyword,1.0,,1.0,,,,visual inspection pending
-building in city,combined,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-building in city,combined,qdrant_semantic,1.0,,1.0,,,,visual inspection pending
-car,object_like,qdrant_keyword,1.0,,0.9038057203530259,,,,visual inspection pending
-car,object_like,qdrant_keyword_object,1.0,,1.0,,,,visual inspection pending
-car,object_like,qdrant_object,1.0,,1.0,,,,visual inspection pending
-car,object_like,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-car,object_like,qdrant_semantic,0.9,,0.8981530574686004,,,,visual inspection pending
-car at night,combined,qdrant_keyword,1.0,,0.9659827410858348,,,,visual inspection pending
-car at night,combined,qdrant_keyword_object,1.0,,1.0,,,,visual inspection pending
-car at night,combined,qdrant_object,1.0,,1.0,,,,visual inspection pending
-car at night,combined,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-car at night,combined,qdrant_semantic,1.0,,1.0,,,,visual inspection pending
-cat,object_like,qdrant_keyword,1.0,,1.0,,,,visual inspection pending
-cat,object_like,qdrant_keyword_object,1.0,,1.0,,,,visual inspection pending
-cat,object_like,qdrant_object,1.0,,1.0,,,,visual inspection pending
-cat,object_like,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-cat,object_like,qdrant_semantic,1.0,,1.0,,,,visual inspection pending
-cat indoors,combined,qdrant_keyword,1.0,,0.7947449158465975,,,,visual inspection pending
-cat indoors,combined,qdrant_keyword_object,1.0,,0.7947449158465975,,,,visual inspection pending
-cat indoors,combined,qdrant_object,1.0,,0.7947449158465975,,,,visual inspection pending
-cat indoors,combined,qdrant_object_rerank,1.0,,0.7947449158465975,,,,visual inspection pending
-cat indoors,combined,qdrant_semantic,1.0,,0.7947449158465975,,,,visual inspection pending
-dog,object_like,qdrant_keyword,1.0,,0.9905701067474235,,,,visual inspection pending
-dog,object_like,qdrant_keyword_object,1.0,,1.0,,,,visual inspection pending
-dog,object_like,qdrant_object,1.0,,1.0,,,,visual inspection pending
-dog,object_like,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-dog,object_like,qdrant_semantic,1.0,,0.9905701067474235,,,,visual inspection pending
-dog on beach,combined,qdrant_keyword,1.0,,0.9476171368560403,,,,visual inspection pending
-dog on beach,combined,qdrant_keyword_object,1.0,,1.0,,,,visual inspection pending
-dog on beach,combined,qdrant_object,1.0,,1.0,,,,visual inspection pending
-dog on beach,combined,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-dog on beach,combined,qdrant_semantic,1.0,,0.9362206353857262,,,,visual inspection pending
-person,object_like,qdrant_keyword,1.0,,0.979174059915808,,,,visual inspection pending
-person,object_like,qdrant_keyword_object,1.0,,1.0,,,,visual inspection pending
-person,object_like,qdrant_object,1.0,,1.0,,,,visual inspection pending
-person,object_like,qdrant_object_rerank,1.0,,1.0,,,,visual inspection pending
-person,object_like,qdrant_semantic,0.6,,0.8638910950182956,,,,visual inspection pending
-person in street photography,combined,qdrant_keyword,1.0,,0.9911365418282454,,,,visual inspection pending
-person in street photography,combined,qdrant_keyword_object,1.0,,0.9911365418282454,,,,visual inspection pending
-person in street photography,combined,qdrant_object,1.0,,0.9911365418282454,,,,visual inspection pending
-person in street photography,combined,qdrant_object_rerank,1.0,,0.9911365418282454,,,,visual inspection pending
-person in street photography,combined,qdrant_semantic,1.0,,0.9911365418282454,,,,visual inspection pending
+bird,object_like,qdrant_keyword,1.0,1.0,0.9783012898581854,1.0,0.0000,0.0217,visual labels complete
+bird,object_like,qdrant_keyword_object,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+bird,object_like,qdrant_object,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+bird,object_like,qdrant_object_rerank,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+bird,object_like,qdrant_semantic,1.0,1.0,0.9783012898581854,1.0,0.0000,0.0217,visual labels complete
+bird in nature,combined,qdrant_keyword,1.0,1.0,0.9680382008450961,1.0,0.0000,0.0320,visual labels complete
+bird in nature,combined,qdrant_keyword_object,1.0,1.0,0.9680382008450961,1.0,0.0000,0.0320,visual labels complete
+bird in nature,combined,qdrant_object,1.0,1.0,0.9680382008450961,1.0,0.0000,0.0320,visual labels complete
+bird in nature,combined,qdrant_object_rerank,1.0,1.0,0.9680382008450961,1.0,0.0000,0.0320,visual labels complete
+bird in nature,combined,qdrant_semantic,1.0,1.0,0.9680382008450961,1.0,0.0000,0.0320,visual labels complete
+building,object_like,qdrant_keyword,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+building,object_like,qdrant_object_rerank,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+building,object_like,qdrant_semantic,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+building in city,combined,qdrant_keyword,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+building in city,combined,qdrant_object_rerank,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+building in city,combined,qdrant_semantic,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+car,object_like,qdrant_keyword,1.0,0.9,0.9038057203530259,0.9678356921788558,-0.1000,0.0640,visual labels complete
+car,object_like,qdrant_keyword_object,1.0,0.9,1.0,0.9657546930659757,-0.1000,-0.0342,visual labels complete
+car,object_like,qdrant_object,1.0,0.9,1.0,0.9600561678681352,-0.1000,-0.0399,visual labels complete
+car,object_like,qdrant_object_rerank,1.0,0.9,1.0,0.9657546930659757,-0.1000,-0.0342,visual labels complete
+car,object_like,qdrant_semantic,0.9,0.9,0.8981530574686004,0.9618875612162702,0.0000,0.0637,visual labels complete
+car at night,combined,qdrant_keyword,1.0,1.0,0.9659827410858348,0.9542524482424992,0.0000,-0.0117,visual labels complete
+car at night,combined,qdrant_keyword_object,1.0,1.0,1.0,0.9676790818408763,0.0000,-0.0323,visual labels complete
+car at night,combined,qdrant_object,1.0,1.0,1.0,0.9676790818408763,0.0000,-0.0323,visual labels complete
+car at night,combined,qdrant_object_rerank,1.0,1.0,1.0,0.9676790818408763,0.0000,-0.0323,visual labels complete
+car at night,combined,qdrant_semantic,1.0,1.0,1.0,0.9520896899080846,0.0000,-0.0479,visual labels complete
+cat,object_like,qdrant_keyword,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+cat,object_like,qdrant_keyword_object,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+cat,object_like,qdrant_object,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+cat,object_like,qdrant_object_rerank,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+cat,object_like,qdrant_semantic,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+cat indoors,combined,qdrant_keyword,1.0,1.0,0.7947449158465975,1.0,0.0000,0.2053,visual labels complete
+cat indoors,combined,qdrant_keyword_object,1.0,1.0,0.7947449158465975,1.0,0.0000,0.2053,visual labels complete
+cat indoors,combined,qdrant_object,1.0,1.0,0.7947449158465975,1.0,0.0000,0.2053,visual labels complete
+cat indoors,combined,qdrant_object_rerank,1.0,1.0,0.7947449158465975,1.0,0.0000,0.2053,visual labels complete
+cat indoors,combined,qdrant_semantic,1.0,1.0,0.7947449158465975,1.0,0.0000,0.2053,visual labels complete
+dog,object_like,qdrant_keyword,1.0,1.0,0.9905701067474235,1.0,0.0000,0.0094,visual labels complete
+dog,object_like,qdrant_keyword_object,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+dog,object_like,qdrant_object,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+dog,object_like,qdrant_object_rerank,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+dog,object_like,qdrant_semantic,1.0,1.0,0.9905701067474235,1.0,0.0000,0.0094,visual labels complete
+dog on beach,combined,qdrant_keyword,1.0,1.0,0.9476171368560403,1.0,0.0000,0.0524,visual labels complete
+dog on beach,combined,qdrant_keyword_object,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+dog on beach,combined,qdrant_object,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+dog on beach,combined,qdrant_object_rerank,1.0,1.0,1.0,1.0,0.0000,0.0000,visual labels complete
+dog on beach,combined,qdrant_semantic,1.0,1.0,0.9362206353857262,0.9897119920294625,0.0000,0.0535,visual labels complete
+person,object_like,qdrant_keyword,1.0,1.0,0.979174059915808,0.9720629321112085,0.0000,-0.0071,visual labels complete
+person,object_like,qdrant_keyword_object,1.0,1.0,1.0,0.9897119920294625,0.0000,-0.0103,visual labels complete
+person,object_like,qdrant_object,1.0,1.0,1.0,0.9892145016656066,0.0000,-0.0108,visual labels complete
+person,object_like,qdrant_object_rerank,1.0,1.0,1.0,0.9897119920294625,0.0000,-0.0103,visual labels complete
+person,object_like,qdrant_semantic,0.6,0.7,0.8638910950182956,0.8998605768380041,0.1000,0.0360,visual labels complete
+person in street photography,combined,qdrant_keyword,1.0,1.0,0.9911365418282454,1.0,0.0000,0.0089,visual labels complete
+person in street photography,combined,qdrant_keyword_object,1.0,1.0,0.9911365418282454,1.0,0.0000,0.0089,visual labels complete
+person in street photography,combined,qdrant_object,1.0,1.0,0.9911365418282454,1.0,0.0000,0.0089,visual labels complete
+person in street photography,combined,qdrant_object_rerank,1.0,1.0,0.9911365418282454,1.0,0.0000,0.0089,visual labels complete
+person in street photography,combined,qdrant_semantic,1.0,1.0,0.9911365418282454,1.0,0.0000,0.0089,visual labels complete

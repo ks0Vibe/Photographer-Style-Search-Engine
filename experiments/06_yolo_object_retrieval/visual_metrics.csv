@@ -1,1 +1,57 @@
 query,query_group,mode,result_count,precision_at_10,avg_relevance,dcg_at_10,ndcg_at_10,mrr_at_10
+bird,object_like,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird,object_like,qdrant_keyword_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird,object_like,qdrant_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird,object_like,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird,object_like,qdrant_semantic,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird in nature,combined,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird in nature,combined,qdrant_keyword_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird in nature,combined,qdrant_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird in nature,combined,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+bird in nature,combined,qdrant_semantic,10,1.0,2.0,13.630678014265037,1.0,1.0
+building,object_like,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+building,object_like,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+building,object_like,qdrant_semantic,10,1.0,2.0,13.630678014265037,1.0,1.0
+building in city,combined,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+building in city,combined,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+building in city,combined,qdrant_semantic,10,1.0,2.0,13.630678014265037,1.0,1.0
+car,object_like,qdrant_keyword,10,0.9,1.5,10.514399644021447,0.9678356921788558,1.0
+car,object_like,qdrant_keyword_object,10,0.9,1.5,10.491792029414452,0.9657546930659757,1.0
+car,object_like,qdrant_object,10,0.9,1.6,11.069921682050229,0.9600561678681352,1.0
+car,object_like,qdrant_object_rerank,10,0.9,1.5,10.491792029414452,0.9657546930659757,1.0
+car,object_like,qdrant_semantic,10,0.9,1.6,11.0910385516787,0.9618875612162702,1.0
+car at night,combined,qdrant_keyword,10,1.0,1.7,11.278842747160178,0.9542524482424992,1.0
+car at night,combined,qdrant_keyword_object,10,1.0,1.9,12.630678014265037,0.9676790818408763,1.0
+car at night,combined,qdrant_object,10,1.0,1.9,12.630678014265037,0.9676790818408763,1.0
+car at night,combined,qdrant_object_rerank,10,1.0,1.9,12.630678014265037,0.9676790818408763,1.0
+car at night,combined,qdrant_semantic,10,1.0,1.3,8.383548497867036,0.9520896899080846,1.0
+cat,object_like,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat,object_like,qdrant_keyword_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat,object_like,qdrant_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat,object_like,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat,object_like,qdrant_semantic,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat indoors,combined,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat indoors,combined,qdrant_keyword_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat indoors,combined,qdrant_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat indoors,combined,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+cat indoors,combined,qdrant_semantic,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog,object_like,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog,object_like,qdrant_keyword_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog,object_like,qdrant_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog,object_like,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog,object_like,qdrant_semantic,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog on beach,combined,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog on beach,combined,qdrant_keyword_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog on beach,combined,qdrant_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog on beach,combined,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+dog on beach,combined,qdrant_semantic,10,1.0,1.9,12.918263640048993,0.9897119920294625,1.0
+person,object_like,qdrant_keyword,10,1.0,1.8,12.102658231451583,0.9720629321112085,1.0
+person,object_like,qdrant_keyword_object,10,1.0,1.9,12.918263640048993,0.9897119920294625,1.0
+person,object_like,qdrant_object,10,1.0,1.8,12.31620364872103,0.9892145016656066,1.0
+person,object_like,qdrant_object_rerank,10,1.0,1.9,12.918263640048993,0.9897119920294625,1.0
+person,object_like,qdrant_semantic,10,0.7,1.2,8.580096700971787,0.8998605768380041,1.0
+person in street photography,combined,qdrant_keyword,10,1.0,2.0,13.630678014265037,1.0,1.0
+person in street photography,combined,qdrant_keyword_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+person in street photography,combined,qdrant_object,10,1.0,2.0,13.630678014265037,1.0,1.0
+person in street photography,combined,qdrant_object_rerank,10,1.0,2.0,13.630678014265037,1.0,1.0
+person in street photography,combined,qdrant_semantic,10,1.0,2.0,13.630678014265037,1.0,1.0

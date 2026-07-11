@@ -1,1 +1,35 @@
 query,query_group,requested_object,mode,result_count,labeled_object_results,object_precision_at_10
+bird,object_like,bird,qdrant_object,10,10,1.0
+bird,object_like,bird,qdrant_object_rerank,10,10,1.0
+bird,object_like,bird,qdrant_semantic,10,10,1.0
+bird in nature,combined,bird,qdrant_object,10,10,1.0
+bird in nature,combined,bird,qdrant_object_rerank,10,10,1.0
+bird in nature,combined,bird,qdrant_semantic,10,10,1.0
+building,object_like,building,qdrant_object_rerank,10,10,1.0
+building,object_like,building,qdrant_semantic,10,10,1.0
+building in city,combined,building,qdrant_object_rerank,10,10,1.0
+building in city,combined,building,qdrant_semantic,10,10,1.0
+car,object_like,car,qdrant_object,10,9,0.9
+car,object_like,car,qdrant_object_rerank,10,9,0.9
+car,object_like,car,qdrant_semantic,10,9,0.9
+car at night,combined,car,qdrant_object,10,9,0.9
+car at night,combined,car,qdrant_object_rerank,10,9,0.9
+car at night,combined,car,qdrant_semantic,10,5,0.5
+cat,object_like,cat,qdrant_object,10,10,1.0
+cat,object_like,cat,qdrant_object_rerank,10,10,1.0
+cat,object_like,cat,qdrant_semantic,10,10,1.0
+cat indoors,combined,cat,qdrant_object,10,10,1.0
+cat indoors,combined,cat,qdrant_object_rerank,10,10,1.0
+cat indoors,combined,cat,qdrant_semantic,10,10,1.0
+dog,object_like,dog,qdrant_object,10,10,1.0
+dog,object_like,dog,qdrant_object_rerank,10,10,1.0
+dog,object_like,dog,qdrant_semantic,10,10,1.0
+dog on beach,combined,dog,qdrant_object,10,10,1.0
+dog on beach,combined,dog,qdrant_object_rerank,10,10,1.0
+dog on beach,combined,dog,qdrant_semantic,10,9,0.9
+person,object_like,person,qdrant_object,10,10,1.0
+person,object_like,person,qdrant_object_rerank,10,10,1.0
+person,object_like,person,qdrant_semantic,10,7,0.7
+person in street photography,combined,person,qdrant_object,10,10,1.0
+person in street photography,combined,person,qdrant_object_rerank,10,10,1.0
+person in street photography,combined,person,qdrant_semantic,10,10,1.0

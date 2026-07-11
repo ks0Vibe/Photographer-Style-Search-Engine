@@ -7,6 +7,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+import numpy as np
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -14,6 +16,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 STAGE_DIR = PROJECT_ROOT / "experiments" / "06_yolo_object_retrieval"
 VISUAL_INSPECTION_PATH = STAGE_DIR / "visual_inspection.csv"
+RETRIEVAL_RESULTS_PATH = STAGE_DIR / "retrieval_results.csv"
 RETRIEVAL_METRICS_PATH = STAGE_DIR / "retrieval_metrics.csv"
 VISUAL_METRICS_PATH = STAGE_DIR / "visual_metrics.csv"
 VISUAL_GROUP_METRICS_PATH = STAGE_DIR / "visual_group_metrics.csv"
@@ -23,6 +26,23 @@ OBJECT_PRECISION_SUMMARY_PATH = STAGE_DIR / "object_precision_summary.csv"
 REPORT_PATH = STAGE_DIR / "report.md"
 
 TOP_K = 10
+OBJECT_QUERIES = [
+    "person",
+    "car",
+    "dog",
+    "cat",
+    "building",
+    "bird",
+    "person in street photography",
+    "car at night",
+    "dog on beach",
+    "cat indoors",
+    "bird in nature",
+    "building in city",
+]
+OBJECT_MODES = ("qdrant_semantic", "qdrant_object", "qdrant_object_rerank")
+BOOTSTRAP_SAMPLES = 10_000
+BOOTSTRAP_SEED = 42
 METRIC_COLUMNS = [
     "query",
     "query_group",
@@ -56,8 +76,32 @@ OBJECT_COLUMNS = [
 OBJECT_SUMMARY_COLUMNS = [
     "mode",
     "query_count",
+    "expected_groups",
+    "labeled_groups",
+    "coverage_groups",
+    "expected_images",
+    "labeled_images",
+    "coverage_images",
     "labeled_object_results",
     "object_precision_at_10",
+    "ci95_low",
+    "ci95_high",
+    "delta_vs_semantic",
+    "empty_result_queries",
+    "less_than_top10_queries",
+    "empty_result_rate",
+]
+OBJECT_REPORT_COLUMNS = [
+    "mode",
+    "query_count",
+    "coverage_groups",
+    "coverage_images",
+    "object_precision_at_10",
+    "ci95_low",
+    "ci95_high",
+    "delta_vs_semantic",
+    "empty_result_queries",
+    "less_than_top10_queries",
 ]
 
 
@@ -179,18 +223,86 @@ def compute_object_precision(rows: list[dict[str, str]]) -> tuple[list[dict[str,
     return metrics_rows, missing
 
 
-def aggregate_object_precision(rows: list[dict[str, object]]) -> list[dict[str, object]]:
-    grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
+def bootstrap_ci(values: list[float]) -> tuple[float, float]:
+    if not values:
+        return 0.0, 0.0
+    if len(values) == 1:
+        return values[0], values[0]
+    rng = np.random.default_rng(BOOTSTRAP_SEED)
+    samples = rng.choice(np.asarray(values, dtype=np.float64), size=(BOOTSTRAP_SAMPLES, len(values)), replace=True)
+    means = samples.mean(axis=1)
+    low, high = np.percentile(means, [2.5, 97.5])
+    return float(low), float(high)
+
+
+def retrieval_result_stats() -> dict[str, dict[str, int]]:
+    rows = read_csv(RETRIEVAL_RESULTS_PATH)
+    grouped: dict[tuple[str, str], int] = defaultdict(int)
     for row in rows:
+        if row.get("query") in OBJECT_QUERIES and row.get("mode") in OBJECT_MODES:
+            grouped[(str(row["query"]), str(row["mode"]))] += 1
+
+    stats: dict[str, dict[str, int]] = {}
+    for mode in OBJECT_MODES:
+        counts = [grouped.get((query, mode), 0) for query in OBJECT_QUERIES]
+        stats[mode] = {
+            "empty_result_queries": sum(count == 0 for count in counts),
+            "less_than_top10_queries": sum(count < TOP_K for count in counts),
+        }
+    return stats
+
+
+def aggregate_object_precision(
+    complete_rows: list[dict[str, object]],
+    inspection_rows: list[dict[str, str]],
+) -> list[dict[str, object]]:
+    grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for row in complete_rows:
         grouped[str(row["mode"])].append(row)
-    output = []
-    for mode, mode_rows in sorted(grouped.items()):
+
+    result_stats = retrieval_result_stats()
+    output: list[dict[str, object]] = []
+    expected_groups = len(OBJECT_QUERIES)
+    expected_images = expected_groups * TOP_K
+    for mode in OBJECT_MODES:
+        mode_rows = grouped.get(mode, [])
+        labeled_images = sum(
+            1
+            for row in inspection_rows
+            if row.get("query") in OBJECT_QUERIES
+            and row.get("mode") == mode
+            and parse_object_present(row.get("object_present", "")) is not None
+        )
+        precisions = [float(row["object_precision_at_10"]) for row in mode_rows]
+        ci_low, ci_high = bootstrap_ci(precisions)
         output.append({
             "mode": mode,
             "query_count": len(mode_rows),
+            "expected_groups": expected_groups,
+            "labeled_groups": len(mode_rows),
+            "coverage_groups": len(mode_rows) / expected_groups,
+            "expected_images": expected_images,
+            "labeled_images": labeled_images,
+            "coverage_images": labeled_images / expected_images,
             "labeled_object_results": sum(int(row["labeled_object_results"]) for row in mode_rows),
-            "object_precision_at_10": statistics.fmean(float(row["object_precision_at_10"]) for row in mode_rows),
+            "object_precision_at_10": statistics.fmean(precisions) if precisions else "",
+            "ci95_low": ci_low if precisions else "",
+            "ci95_high": ci_high if precisions else "",
+            "delta_vs_semantic": "",
+            "empty_result_queries": result_stats[mode]["empty_result_queries"],
+            "less_than_top10_queries": result_stats[mode]["less_than_top10_queries"],
+            "empty_result_rate": result_stats[mode]["empty_result_queries"] / expected_groups,
         })
+
+    baseline = next(
+        (row for row in output if row["mode"] == "qdrant_semantic" and row["object_precision_at_10"] != ""),
+        None,
+    )
+    if baseline is not None:
+        baseline_value = float(baseline["object_precision_at_10"])
+        for row in output:
+            if row["object_precision_at_10"] != "":
+                row["delta_vs_semantic"] = float(row["object_precision_at_10"]) - baseline_value
     return output
 
 
@@ -308,9 +420,9 @@ def update_report(metrics_rows: list[dict[str, object]], group_rows: list[dict[s
         "This metric uses the independently inspected `object_present` field. It is not the automatic YOLO payload metric.",
         "",
     ])
-    object_summary = aggregate_object_precision(object_rows)
+    object_summary = aggregate_object_precision(object_rows, read_csv(VISUAL_INSPECTION_PATH))
     if object_summary:
-        section.append(markdown_table(object_summary, OBJECT_SUMMARY_COLUMNS))
+        section.append(markdown_table(object_summary, OBJECT_REPORT_COLUMNS))
     else:
         section.append("No complete object-present labels are available yet.")
     if object_missing:
@@ -346,7 +458,7 @@ def main() -> None:
     group_rows = aggregate_group_metrics(metrics_rows)
     comparison_rows = build_automatic_vs_visual(metrics_rows)
     object_rows, object_missing = compute_object_precision(rows)
-    object_summary = aggregate_object_precision(object_rows)
+    object_summary = aggregate_object_precision(object_rows, rows)
 
     write_csv(VISUAL_METRICS_PATH, metrics_rows, METRIC_COLUMNS)
     write_csv(VISUAL_GROUP_METRICS_PATH, group_rows, GROUP_COLUMNS)

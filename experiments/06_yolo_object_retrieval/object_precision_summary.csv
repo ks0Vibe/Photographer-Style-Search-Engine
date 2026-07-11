@@ -1,1 +1,4 @@
-mode,query_count,labeled_object_results,object_precision_at_10
+mode,query_count,expected_groups,labeled_groups,coverage_groups,expected_images,labeled_images,coverage_images,labeled_object_results,object_precision_at_10,ci95_low,ci95_high,delta_vs_semantic,empty_result_queries,less_than_top10_queries,empty_result_rate
+qdrant_semantic,12,12,12,1.0,120,120,1.0,110,0.9166666666666666,0.8249999999999998,0.9916666666666667,0.0,0,0,0.0
+qdrant_object,10,12,10,0.8333333333333334,120,100,0.8333333333333334,98,0.9800000000000001,0.95,1.0,0.06333333333333346,2,2,0.16666666666666666
+qdrant_object_rerank,12,12,12,1.0,120,120,1.0,118,0.9833333333333334,0.9583333333333334,1.0,0.06666666666666676,0,0,0.0
