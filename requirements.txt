@@ -4,6 +4,7 @@ pillow
 opencv-python
 tqdm
 requests
+psutil
 streamlit
 
 torch
