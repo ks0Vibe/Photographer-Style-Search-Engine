@@ -1,0 +1,4 @@
+{
+  "available": false,
+  "error": "Command '['docker', 'stats', '--no-stream', '--format', '{{json .}}', 'photographer-style-qdrant']' returned non-zero exit status 1."
+}

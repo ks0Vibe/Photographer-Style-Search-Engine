@@ -1,0 +1,197 @@
+variant,query_id,query,type,top_k,latency_ms,overlap_at_10,labeled_results_at_10,labeled_precision_at_10,labeled_ndcg_at_10,top1_image_id,top1_score
+fp32_512_baseline,Q001,warm cinematic landscape,semantic_text,10,1.5576,1.0,10,0.9,0.914,mhePnduuYT0,0.295834
+fp32_512_baseline,Q002,dark moody forest,semantic_text,10,1.4373,1.0,10,1.0,1.0,Hr8gz4OE-Cs,0.325511
+fp32_512_baseline,Q003,vibrant summer portrait,semantic_text,10,1.4151,1.0,10,1.0,1.0,EMYWkp-RJiY,0.300331
+fp32_512_baseline,Q004,minimal architecture,semantic_text,10,1.5661,1.0,10,1.0,0.9982,yVCBr4ZuOnI,0.301916
+fp32_512_baseline,Q005,cold blue mountain scene,semantic_text,10,1.6885,1.0,10,0.8,0.7838,8gBUx7Xmsqo,0.295846
+fp32_512_baseline,Q006,food photography with warm light,semantic_text,10,1.5929,1.0,10,0.8,0.6951,IeRX8XZZBzc,0.298987
+fp32_512_baseline,Q007,quiet city street at dawn,semantic_text,10,1.4692,1.0,10,1.0,0.913,jQ4KKtB9_n4,0.279442
+fp32_512_baseline,Q008,dramatic ocean waves,semantic_text,10,1.4596,1.0,10,1.0,0.9958,s5_rlPwwads,0.319754
+fp32_512_baseline,Q009,warm golden hour light,style_text,10,1.5497,1.0,10,1.0,0.9783,pv8jyM-3Ous,0.283038
+fp32_512_baseline,Q010,low contrast pastel tones,style_text,10,1.6459,1.0,10,1.0,1.0,JINHNZ9d9Nc,0.28659
+fp32_512_baseline,Q011,high contrast black and white,style_text,10,1.7143,1.0,10,1.0,0.9832,QY6RO5kyvvo,0.30622
+fp32_512_baseline,Q012,cinematic teal and orange,style_text,10,1.3282,1.0,10,0.8,0.7942,fM2z6_GN8Uk,0.304065
+fp32_512_baseline,Q013,soft natural window light,style_text,10,1.8604,1.0,10,1.0,0.9741,A40lD_mDgVo,0.285604
+fp32_512_baseline,Q014,dark low key portrait lighting,style_text,10,2.0788,1.0,2,1.0,1.0,q_4pIVaXPEk,0.280238
+fp32_512_baseline,Q015,bright airy minimal style,style_text,10,1.2753,1.0,0,0.0,0.0,Y2DQpf4ennA,0.281069
+fp32_512_baseline,Q016,saturated colorful street scene,style_text,10,1.7414,1.0,0,0.0,0.0,5IVa9hrd9x4,0.279102
+fp32_512_baseline,Q017,person in street photography,object_text,10,1.591,1.0,0,0.0,0.0,qjZzZccbE1E,0.282343
+fp32_512_baseline,Q018,dog on beach,object_text,10,1.347,1.0,0,0.0,0.0,53nKeaK402I,0.318674
+fp32_512_baseline,Q019,car at night,object_text,10,1.5881,1.0,0,0.0,0.0,pl1Pp-mDzfw,0.323326
+fp32_512_baseline,Q020,bicycle in urban street,object_text,10,1.7508,1.0,0,0.0,0.0,vSl1odYyd8w,0.285886
+fp32_512_baseline,Q021,bird in nature,object_text,10,1.5249,1.0,0,0.0,0.0,kKtD7ZsgE0U,0.305853
+fp32_512_baseline,Q022,boat on water,object_text,10,1.4789,1.0,0,0.0,0.0,EGbnaltr0v4,0.311
+fp32_512_baseline,Q023,cup on table,object_text,10,1.6324,1.0,0,0.0,0.0,BpyMbCNZdUE,0.3065
+fp32_512_baseline,Q024,train in station,object_text,10,1.5521,1.0,0,0.0,0.0,o47Lif2bfqI,0.287809
+fp32_512_baseline,Q025,warm portrait with person outdoors,mixed_text,10,1.3058,1.0,0,0.0,0.0,keNdmwAyzl4,0.293986
+fp32_512_baseline,Q026,dark forest with animal,mixed_text,10,1.494,1.0,0,0.0,0.0,nadEf7Yjb_Q,0.312943
+fp32_512_baseline,Q027,bright beach scene with dog,mixed_text,10,1.7412,1.0,0,0.0,0.0,1nPPNXTMcjk,0.307777
+fp32_512_baseline,Q028,cinematic car on city street at night,mixed_text,10,1.4376,1.0,0,0.0,0.0,pl1Pp-mDzfw,0.305666
+float16_512,Q001,warm cinematic landscape,semantic_text,10,30.8626,1.0,10,0.9,0.9012,mhePnduuYT0,0.295898
+float16_512,Q002,dark moody forest,semantic_text,10,32.4896,1.0,10,1.0,1.0,Hr8gz4OE-Cs,0.325439
+float16_512,Q003,vibrant summer portrait,semantic_text,10,32.0265,0.9,9,1.0,1.0,EMYWkp-RJiY,0.300293
+float16_512,Q004,minimal architecture,semantic_text,10,31.1839,1.0,10,1.0,0.9982,yVCBr4ZuOnI,0.302002
+float16_512,Q005,cold blue mountain scene,semantic_text,10,32.2116,1.0,10,0.8,0.7786,8gBUx7Xmsqo,0.295898
+float16_512,Q006,food photography with warm light,semantic_text,10,31.7297,1.0,10,0.8,0.6951,IeRX8XZZBzc,0.299072
+float16_512,Q007,quiet city street at dawn,semantic_text,10,31.3493,1.0,10,1.0,0.913,jQ4KKtB9_n4,0.279541
+float16_512,Q008,dramatic ocean waves,semantic_text,10,30.8417,1.0,10,1.0,0.9958,s5_rlPwwads,0.31958
+float16_512,Q009,warm golden hour light,style_text,10,30.7189,1.0,10,1.0,0.9783,ua2Hgb5hrvs,0.282959
+float16_512,Q010,low contrast pastel tones,style_text,10,31.1238,1.0,10,1.0,1.0,JINHNZ9d9Nc,0.286621
+float16_512,Q011,high contrast black and white,style_text,10,31.0789,1.0,10,1.0,0.9832,QY6RO5kyvvo,0.306152
+float16_512,Q012,cinematic teal and orange,style_text,10,30.8954,1.0,10,0.8,0.7507,fM2z6_GN8Uk,0.303955
+float16_512,Q013,soft natural window light,style_text,10,31.3291,1.0,10,1.0,0.9741,A40lD_mDgVo,0.285645
+float16_512,Q014,dark low key portrait lighting,style_text,10,30.6982,1.0,2,1.0,1.0,q_4pIVaXPEk,0.280273
+float16_512,Q015,bright airy minimal style,style_text,10,30.9937,1.0,0,0.0,0.0,Y2DQpf4ennA,0.281006
+float16_512,Q016,saturated colorful street scene,style_text,10,31.0342,1.0,0,0.0,0.0,5IVa9hrd9x4,0.279053
+float16_512,Q017,person in street photography,object_text,10,31.0724,1.0,0,0.0,0.0,qjZzZccbE1E,0.282227
+float16_512,Q018,dog on beach,object_text,10,30.5165,1.0,0,0.0,0.0,53nKeaK402I,0.318604
+float16_512,Q019,car at night,object_text,10,30.538,1.0,0,0.0,0.0,pl1Pp-mDzfw,0.323242
+float16_512,Q020,bicycle in urban street,object_text,10,31.1563,1.0,0,0.0,0.0,vSl1odYyd8w,0.285889
+float16_512,Q021,bird in nature,object_text,10,31.0237,1.0,0,0.0,0.0,kKtD7ZsgE0U,0.305908
+float16_512,Q022,boat on water,object_text,10,31.685,1.0,0,0.0,0.0,EGbnaltr0v4,0.311035
+float16_512,Q023,cup on table,object_text,10,31.6369,1.0,0,0.0,0.0,BpyMbCNZdUE,0.306641
+float16_512,Q024,train in station,object_text,10,30.7109,1.0,0,0.0,0.0,o47Lif2bfqI,0.287842
+float16_512,Q025,warm portrait with person outdoors,mixed_text,10,30.6465,1.0,0,0.0,0.0,keNdmwAyzl4,0.293945
+float16_512,Q026,dark forest with animal,mixed_text,10,30.6291,1.0,0,0.0,0.0,nadEf7Yjb_Q,0.312988
+float16_512,Q027,bright beach scene with dog,mixed_text,10,30.4575,1.0,0,0.0,0.0,1nPPNXTMcjk,0.307861
+float16_512,Q028,cinematic car on city street at night,mixed_text,10,32.9699,1.0,0,0.0,0.0,pl1Pp-mDzfw,0.305664
+int8_per_vector_512,Q001,warm cinematic landscape,semantic_text,10,31.726,1.0,10,0.9,0.9012,mhePnduuYT0,0.294388
+int8_per_vector_512,Q002,dark moody forest,semantic_text,10,33.0606,0.9,9,1.0,1.0,Hr8gz4OE-Cs,0.324061
+int8_per_vector_512,Q003,vibrant summer portrait,semantic_text,10,32.2698,0.7,7,1.0,1.0,EMYWkp-RJiY,0.298572
+int8_per_vector_512,Q004,minimal architecture,semantic_text,10,32.1984,0.9,10,1.0,1.0,yVCBr4ZuOnI,0.298861
+int8_per_vector_512,Q005,cold blue mountain scene,semantic_text,10,31.6196,0.9,9,0.7778,0.8987,wfQaZHGAVHo,0.296675
+int8_per_vector_512,Q006,food photography with warm light,semantic_text,10,31.2396,0.9,9,0.7778,0.7304,IeRX8XZZBzc,0.300131
+int8_per_vector_512,Q007,quiet city street at dawn,semantic_text,10,31.2943,0.9,9,1.0,0.8588,jlb0nJeVT30,0.280674
+int8_per_vector_512,Q008,dramatic ocean waves,semantic_text,10,31.1192,0.9,10,1.0,0.9958,LYycu62H2-8,0.316894
+int8_per_vector_512,Q009,warm golden hour light,style_text,10,31.6619,0.5,6,1.0,1.0,sT_AXqGV8-Q,0.285443
+int8_per_vector_512,Q010,low contrast pastel tones,style_text,10,31.6251,0.8,10,0.9,0.9909,JINHNZ9d9Nc,0.283106
+int8_per_vector_512,Q011,high contrast black and white,style_text,10,31.2868,0.7,8,1.0,0.9865,QY6RO5kyvvo,0.307332
+int8_per_vector_512,Q012,cinematic teal and orange,style_text,10,32.1624,0.9,10,0.8,0.8189,fM2z6_GN8Uk,0.303688
+int8_per_vector_512,Q013,soft natural window light,style_text,10,31.692,0.8,8,1.0,0.9865,A40lD_mDgVo,0.287417
+int8_per_vector_512,Q014,dark low key portrait lighting,style_text,10,32.4167,0.9,2,1.0,1.0,q_4pIVaXPEk,0.278002
+int8_per_vector_512,Q015,bright airy minimal style,style_text,10,32.3599,0.8,0,0.0,0.0,Y2DQpf4ennA,0.284097
+int8_per_vector_512,Q016,saturated colorful street scene,style_text,10,32.1415,0.9,0,0.0,0.0,951ta4nTxxk,0.278262
+int8_per_vector_512,Q017,person in street photography,object_text,10,32.3291,1.0,0,0.0,0.0,qjZzZccbE1E,0.280624
+int8_per_vector_512,Q018,dog on beach,object_text,10,31.5883,0.9,0,0.0,0.0,53nKeaK402I,0.319382
+int8_per_vector_512,Q019,car at night,object_text,10,33.4431,0.9,0,0.0,0.0,pl1Pp-mDzfw,0.323719
+int8_per_vector_512,Q020,bicycle in urban street,object_text,10,33.0714,1.0,0,0.0,0.0,vSl1odYyd8w,0.284444
+int8_per_vector_512,Q021,bird in nature,object_text,10,33.3956,0.8,0,0.0,0.0,kKtD7ZsgE0U,0.307174
+int8_per_vector_512,Q022,boat on water,object_text,10,32.5736,1.0,0,0.0,0.0,EGbnaltr0v4,0.308445
+int8_per_vector_512,Q023,cup on table,object_text,10,32.8729,0.9,0,0.0,0.0,BpyMbCNZdUE,0.309592
+int8_per_vector_512,Q024,train in station,object_text,10,32.2868,0.9,0,0.0,0.0,o47Lif2bfqI,0.285797
+int8_per_vector_512,Q025,warm portrait with person outdoors,mixed_text,10,32.4646,0.8,0,0.0,0.0,keNdmwAyzl4,0.293849
+int8_per_vector_512,Q026,dark forest with animal,mixed_text,10,32.2286,0.9,0,0.0,0.0,odfhHtD3igY,0.313875
+int8_per_vector_512,Q027,bright beach scene with dog,mixed_text,10,32.2644,1.0,0,0.0,0.0,1nPPNXTMcjk,0.308156
+int8_per_vector_512,Q028,cinematic car on city street at night,mixed_text,10,32.3792,1.0,0,0.0,0.0,pl1Pp-mDzfw,0.30679
+pca256_fp32,Q001,warm cinematic landscape,semantic_text,10,1.2439,0.0,0,0.0,0.0,DK049L4odMw,0.378592
+pca256_fp32,Q002,dark moody forest,semantic_text,10,0.9932,0.0,0,0.0,0.0,DK049L4odMw,0.333277
+pca256_fp32,Q003,vibrant summer portrait,semantic_text,10,0.9749,0.1,1,1.0,1.0,WSxluGgdlFQ,0.399995
+pca256_fp32,Q004,minimal architecture,semantic_text,10,1.0741,0.1,1,1.0,1.0,jomuw0-3F8A,0.39434
+pca256_fp32,Q005,cold blue mountain scene,semantic_text,10,1.2386,0.0,0,0.0,0.0,P2pGX2-zWNs,0.366315
+pca256_fp32,Q006,food photography with warm light,semantic_text,10,0.9995,0.1,1,1.0,1.0,OSwea3yxjT0,0.365891
+pca256_fp32,Q007,quiet city street at dawn,semantic_text,10,1.0247,0.0,0,0.0,0.0,P2pGX2-zWNs,0.384926
+pca256_fp32,Q008,dramatic ocean waves,semantic_text,10,1.0261,0.0,0,0.0,0.0,OD7xwEvXoTI,0.333483
+pca256_fp32,Q009,warm golden hour light,style_text,10,1.2025,0.0,0,0.0,0.0,DK049L4odMw,0.349083
+pca256_fp32,Q010,low contrast pastel tones,style_text,10,1.3643,0.0,0,0.0,0.0,P7ASbD-vHW8,0.349946
+pca256_fp32,Q011,high contrast black and white,style_text,10,1.0644,0.0,0,0.0,0.0,qo-90E5WNUg,0.370565
+pca256_fp32,Q012,cinematic teal and orange,style_text,10,0.9058,0.0,1,0.0,0.0,t1_BuMsRRsI,0.310951
+pca256_fp32,Q013,soft natural window light,style_text,10,0.8316,0.0,0,0.0,0.0,WSxluGgdlFQ,0.343755
+pca256_fp32,Q014,dark low key portrait lighting,style_text,10,1.2925,0.1,0,0.0,0.0,P7ASbD-vHW8,0.421997
+pca256_fp32,Q015,bright airy minimal style,style_text,10,0.9571,0.0,0,0.0,0.0,DK049L4odMw,0.365942
+pca256_fp32,Q016,saturated colorful street scene,style_text,10,0.7967,0.1,0,0.0,0.0,VlOrWGCFl_w,0.369673
+pca256_fp32,Q017,person in street photography,object_text,10,0.9563,0.1,0,0.0,0.0,DK049L4odMw,0.417289
+pca256_fp32,Q018,dog on beach,object_text,10,0.8506,0.2,0,0.0,0.0,OPAUTV_6n10,0.391687
+pca256_fp32,Q019,car at night,object_text,10,0.9066,0.4,0,0.0,0.0,WquLr1q8pUw,0.394362
+pca256_fp32,Q020,bicycle in urban street,object_text,10,0.8526,0.0,0,0.0,0.0,DK049L4odMw,0.429732
+pca256_fp32,Q021,bird in nature,object_text,10,0.7459,0.0,0,0.0,0.0,DK049L4odMw,0.376049
+pca256_fp32,Q022,boat on water,object_text,10,0.849,0.0,0,0.0,0.0,vlmb9C2Ah_s,0.368543
+pca256_fp32,Q023,cup on table,object_text,10,0.8556,0.1,0,0.0,0.0,DK049L4odMw,0.371755
+pca256_fp32,Q024,train in station,object_text,10,0.7563,0.1,0,0.0,0.0,T5Eo0XKhytk,0.417846
+pca256_fp32,Q025,warm portrait with person outdoors,mixed_text,10,0.9713,0.0,0,0.0,0.0,WSxluGgdlFQ,0.382911
+pca256_fp32,Q026,dark forest with animal,mixed_text,10,0.7287,0.0,0,0.0,0.0,DK049L4odMw,0.362317
+pca256_fp32,Q027,bright beach scene with dog,mixed_text,10,0.7804,0.1,0,0.0,0.0,P2pGX2-zWNs,0.410575
+pca256_fp32,Q028,cinematic car on city street at night,mixed_text,10,0.6776,0.1,0,0.0,0.0,T5Eo0XKhytk,0.411764
+pca256_fp16,Q001,warm cinematic landscape,semantic_text,10,15.1554,0.0,0,0.0,0.0,DK049L4odMw,0.378662
+pca256_fp16,Q002,dark moody forest,semantic_text,10,15.5553,0.0,0,0.0,0.0,DK049L4odMw,0.333252
+pca256_fp16,Q003,vibrant summer portrait,semantic_text,10,14.7029,0.1,1,1.0,1.0,WSxluGgdlFQ,0.399902
+pca256_fp16,Q004,minimal architecture,semantic_text,10,14.9355,0.1,1,1.0,1.0,jomuw0-3F8A,0.394287
+pca256_fp16,Q005,cold blue mountain scene,semantic_text,10,15.1289,0.0,0,0.0,0.0,P2pGX2-zWNs,0.366211
+pca256_fp16,Q006,food photography with warm light,semantic_text,10,14.942,0.1,1,1.0,1.0,OSwea3yxjT0,0.365967
+pca256_fp16,Q007,quiet city street at dawn,semantic_text,10,14.6521,0.0,0,0.0,0.0,P2pGX2-zWNs,0.38501
+pca256_fp16,Q008,dramatic ocean waves,semantic_text,10,14.8989,0.0,0,0.0,0.0,OD7xwEvXoTI,0.333496
+pca256_fp16,Q009,warm golden hour light,style_text,10,15.2122,0.0,0,0.0,0.0,DK049L4odMw,0.349121
+pca256_fp16,Q010,low contrast pastel tones,style_text,10,16.1248,0.0,0,0.0,0.0,P7ASbD-vHW8,0.349854
+pca256_fp16,Q011,high contrast black and white,style_text,10,15.5573,0.0,0,0.0,0.0,qo-90E5WNUg,0.370605
+pca256_fp16,Q012,cinematic teal and orange,style_text,10,15.5082,0.0,1,0.0,0.0,t1_BuMsRRsI,0.311035
+pca256_fp16,Q013,soft natural window light,style_text,10,15.487,0.0,0,0.0,0.0,WSxluGgdlFQ,0.34375
+pca256_fp16,Q014,dark low key portrait lighting,style_text,10,15.5379,0.1,0,0.0,0.0,P7ASbD-vHW8,0.421875
+pca256_fp16,Q015,bright airy minimal style,style_text,10,15.4955,0.0,0,0.0,0.0,DK049L4odMw,0.365967
+pca256_fp16,Q016,saturated colorful street scene,style_text,10,15.4587,0.1,0,0.0,0.0,VlOrWGCFl_w,0.369629
+pca256_fp16,Q017,person in street photography,object_text,10,15.5122,0.1,0,0.0,0.0,DK049L4odMw,0.417236
+pca256_fp16,Q018,dog on beach,object_text,10,15.7776,0.2,0,0.0,0.0,OPAUTV_6n10,0.391602
+pca256_fp16,Q019,car at night,object_text,10,15.5828,0.4,0,0.0,0.0,WquLr1q8pUw,0.394287
+pca256_fp16,Q020,bicycle in urban street,object_text,10,15.9298,0.0,0,0.0,0.0,DK049L4odMw,0.429688
+pca256_fp16,Q021,bird in nature,object_text,10,16.4338,0.0,0,0.0,0.0,DK049L4odMw,0.375977
+pca256_fp16,Q022,boat on water,object_text,10,14.8801,0.0,0,0.0,0.0,vlmb9C2Ah_s,0.368652
+pca256_fp16,Q023,cup on table,object_text,10,15.5962,0.1,0,0.0,0.0,DK049L4odMw,0.371826
+pca256_fp16,Q024,train in station,object_text,10,15.1452,0.1,0,0.0,0.0,T5Eo0XKhytk,0.417725
+pca256_fp16,Q025,warm portrait with person outdoors,mixed_text,10,14.7383,0.0,0,0.0,0.0,WSxluGgdlFQ,0.383057
+pca256_fp16,Q026,dark forest with animal,mixed_text,10,14.9014,0.0,0,0.0,0.0,DK049L4odMw,0.362305
+pca256_fp16,Q027,bright beach scene with dog,mixed_text,10,15.5664,0.1,0,0.0,0.0,P2pGX2-zWNs,0.410645
+pca256_fp16,Q028,cinematic car on city street at night,mixed_text,10,15.2602,0.1,0,0.0,0.0,T5Eo0XKhytk,0.411865
+pca128_fp32,Q001,warm cinematic landscape,semantic_text,10,1.1854,0.0,0,0.0,0.0,P2pGX2-zWNs,0.433733
+pca128_fp32,Q002,dark moody forest,semantic_text,10,0.9018,0.0,0,0.0,0.0,YiUNjvAy6LY,0.419211
+pca128_fp32,Q003,vibrant summer portrait,semantic_text,10,0.8868,0.1,1,1.0,1.0,WSxluGgdlFQ,0.522003
+pca128_fp32,Q004,minimal architecture,semantic_text,10,0.8027,0.1,1,1.0,1.0,jomuw0-3F8A,0.467869
+pca128_fp32,Q005,cold blue mountain scene,semantic_text,10,0.634,0.0,0,0.0,0.0,P7ASbD-vHW8,0.410564
+pca128_fp32,Q006,food photography with warm light,semantic_text,10,0.7349,0.0,0,0.0,0.0,P7ASbD-vHW8,0.507653
+pca128_fp32,Q007,quiet city street at dawn,semantic_text,10,0.6102,0.0,0,0.0,0.0,VlOrWGCFl_w,0.468457
+pca128_fp32,Q008,dramatic ocean waves,semantic_text,10,0.5554,0.0,0,0.0,0.0,XvMiIGJFKwc,0.414978
+pca128_fp32,Q009,warm golden hour light,style_text,10,0.5374,0.0,0,0.0,0.0,P7ASbD-vHW8,0.448837
+pca128_fp32,Q010,low contrast pastel tones,style_text,10,0.4612,0.0,0,0.0,0.0,P7ASbD-vHW8,0.451316
+pca128_fp32,Q011,high contrast black and white,style_text,10,0.5485,0.0,0,0.0,0.0,1lY3XL_aHu0,0.438806
+pca128_fp32,Q012,cinematic teal and orange,style_text,10,0.6622,0.0,0,0.0,0.0,P7ASbD-vHW8,0.451359
+pca128_fp32,Q013,soft natural window light,style_text,10,0.5957,0.0,0,0.0,0.0,WSxluGgdlFQ,0.48194
+pca128_fp32,Q014,dark low key portrait lighting,style_text,10,0.65,0.1,0,0.0,0.0,P7ASbD-vHW8,0.567962
+pca128_fp32,Q015,bright airy minimal style,style_text,10,0.644,0.0,0,0.0,0.0,WSxluGgdlFQ,0.457058
+pca128_fp32,Q016,saturated colorful street scene,style_text,10,0.519,0.1,0,0.0,0.0,vYCkTmxkDAY,0.526821
+pca128_fp32,Q017,person in street photography,object_text,10,0.6165,0.1,0,0.0,0.0,qjZzZccbE1E,0.498728
+pca128_fp32,Q018,dog on beach,object_text,10,0.5352,0.1,0,0.0,0.0,OPAUTV_6n10,0.480186
+pca128_fp32,Q019,car at night,object_text,10,0.5421,0.5,0,0.0,0.0,WquLr1q8pUw,0.506604
+pca128_fp32,Q020,bicycle in urban street,object_text,10,0.6874,0.0,0,0.0,0.0,vYCkTmxkDAY,0.530931
+pca128_fp32,Q021,bird in nature,object_text,10,0.623,0.0,0,0.0,0.0,6Qjulv4ZayA,0.442926
+pca128_fp32,Q022,boat on water,object_text,10,0.6072,0.0,0,0.0,0.0,vlmb9C2Ah_s,0.431743
+pca128_fp32,Q023,cup on table,object_text,10,0.6307,0.0,0,0.0,0.0,WSxluGgdlFQ,0.457006
+pca128_fp32,Q024,train in station,object_text,10,0.4673,0.1,0,0.0,0.0,T5Eo0XKhytk,0.506653
+pca128_fp32,Q025,warm portrait with person outdoors,mixed_text,10,0.4922,0.1,0,0.0,0.0,WSxluGgdlFQ,0.507182
+pca128_fp32,Q026,dark forest with animal,mixed_text,10,0.5679,0.0,0,0.0,0.0,YElkMYaWKc8,0.428157
+pca128_fp32,Q027,bright beach scene with dog,mixed_text,10,0.5269,0.2,0,0.0,0.0,OPAUTV_6n10,0.421959
+pca128_fp32,Q028,cinematic car on city street at night,mixed_text,10,0.5754,0.1,0,0.0,0.0,yqymOwXGZ1Y,0.489567
+pca128_fp16,Q001,warm cinematic landscape,semantic_text,10,8.1133,0.0,0,0.0,0.0,P2pGX2-zWNs,0.433594
+pca128_fp16,Q002,dark moody forest,semantic_text,10,8.2742,0.0,0,0.0,0.0,YiUNjvAy6LY,0.419189
+pca128_fp16,Q003,vibrant summer portrait,semantic_text,10,8.2488,0.1,1,1.0,1.0,WSxluGgdlFQ,0.521973
+pca128_fp16,Q004,minimal architecture,semantic_text,10,7.8819,0.1,1,1.0,1.0,jomuw0-3F8A,0.467773
+pca128_fp16,Q005,cold blue mountain scene,semantic_text,10,7.9673,0.0,0,0.0,0.0,P7ASbD-vHW8,0.410645
+pca128_fp16,Q006,food photography with warm light,semantic_text,10,8.1052,0.0,0,0.0,0.0,P7ASbD-vHW8,0.507812
+pca128_fp16,Q007,quiet city street at dawn,semantic_text,10,7.9706,0.0,0,0.0,0.0,VlOrWGCFl_w,0.468506
+pca128_fp16,Q008,dramatic ocean waves,semantic_text,10,7.9604,0.0,0,0.0,0.0,XvMiIGJFKwc,0.414795
+pca128_fp16,Q009,warm golden hour light,style_text,10,8.0134,0.0,0,0.0,0.0,P7ASbD-vHW8,0.448975
+pca128_fp16,Q010,low contrast pastel tones,style_text,10,7.9463,0.0,0,0.0,0.0,P7ASbD-vHW8,0.451172
+pca128_fp16,Q011,high contrast black and white,style_text,10,7.9419,0.0,0,0.0,0.0,1lY3XL_aHu0,0.438721
+pca128_fp16,Q012,cinematic teal and orange,style_text,10,7.9666,0.0,0,0.0,0.0,P7ASbD-vHW8,0.451416
+pca128_fp16,Q013,soft natural window light,style_text,10,7.9063,0.0,0,0.0,0.0,WSxluGgdlFQ,0.481934
+pca128_fp16,Q014,dark low key portrait lighting,style_text,10,8.1175,0.1,0,0.0,0.0,P7ASbD-vHW8,0.567871
+pca128_fp16,Q015,bright airy minimal style,style_text,10,7.9114,0.0,0,0.0,0.0,WSxluGgdlFQ,0.457031
+pca128_fp16,Q016,saturated colorful street scene,style_text,10,7.924,0.1,0,0.0,0.0,vYCkTmxkDAY,0.526855
+pca128_fp16,Q017,person in street photography,object_text,10,7.9385,0.1,0,0.0,0.0,qjZzZccbE1E,0.498779
+pca128_fp16,Q018,dog on beach,object_text,10,7.912,0.1,0,0.0,0.0,OPAUTV_6n10,0.480225
+pca128_fp16,Q019,car at night,object_text,10,7.9837,0.5,0,0.0,0.0,WquLr1q8pUw,0.506348
+pca128_fp16,Q020,bicycle in urban street,object_text,10,7.9334,0.0,0,0.0,0.0,vYCkTmxkDAY,0.530762
+pca128_fp16,Q021,bird in nature,object_text,10,8.0368,0.0,0,0.0,0.0,6Qjulv4ZayA,0.442871
+pca128_fp16,Q022,boat on water,object_text,10,7.9776,0.0,0,0.0,0.0,vlmb9C2Ah_s,0.431641
+pca128_fp16,Q023,cup on table,object_text,10,8.0367,0.0,0,0.0,0.0,WSxluGgdlFQ,0.457031
+pca128_fp16,Q024,train in station,object_text,10,8.1442,0.1,0,0.0,0.0,T5Eo0XKhytk,0.506836
+pca128_fp16,Q025,warm portrait with person outdoors,mixed_text,10,7.9681,0.1,0,0.0,0.0,WSxluGgdlFQ,0.507324
+pca128_fp16,Q026,dark forest with animal,mixed_text,10,7.9195,0.0,0,0.0,0.0,YElkMYaWKc8,0.428223
+pca128_fp16,Q027,bright beach scene with dog,mixed_text,10,8.0696,0.2,0,0.0,0.0,OPAUTV_6n10,0.421875
+pca128_fp16,Q028,cinematic car on city street at night,mixed_text,10,7.9619,0.1,0,0.0,0.0,yqymOwXGZ1Y,0.489502

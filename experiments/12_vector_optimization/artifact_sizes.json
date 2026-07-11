@@ -1,0 +1,81 @@
+{
+  "clip_embeddings_fp16.npy": {
+    "path": "data\\optimized_vectors\\clip_embeddings_fp16.npy",
+    "size_mb": 24.3321533203125,
+    "shape": [
+      24916,
+      512
+    ],
+    "dtype": "float16"
+  },
+  "clip_embeddings_int8.npy": {
+    "path": "data\\optimized_vectors\\clip_embeddings_int8.npy",
+    "size_mb": 12.1661376953125,
+    "shape": [
+      24916,
+      512
+    ],
+    "dtype": "int8"
+  },
+  "clip_embeddings_int8_scales.npy": {
+    "path": "data\\optimized_vectors\\clip_embeddings_int8_scales.npy",
+    "size_mb": 0.0951690673828125,
+    "shape": [
+      24916
+    ],
+    "dtype": "float32"
+  },
+  "pca_mean.npy": {
+    "path": "data\\optimized_vectors\\pca_mean.npy",
+    "size_mb": 0.0020751953125,
+    "shape": [
+      512
+    ],
+    "dtype": "float32"
+  },
+  "pca_components.npy": {
+    "path": "data\\optimized_vectors\\pca_components.npy",
+    "size_mb": 0.5001220703125,
+    "shape": [
+      512,
+      256
+    ],
+    "dtype": "float32"
+  },
+  "clip_embeddings_pca256_fp32.npy": {
+    "path": "data\\optimized_vectors\\clip_embeddings_pca256_fp32.npy",
+    "size_mb": 24.3321533203125,
+    "shape": [
+      24916,
+      256
+    ],
+    "dtype": "float32"
+  },
+  "clip_embeddings_pca256_fp16.npy": {
+    "path": "data\\optimized_vectors\\clip_embeddings_pca256_fp16.npy",
+    "size_mb": 12.1661376953125,
+    "shape": [
+      24916,
+      256
+    ],
+    "dtype": "float16"
+  },
+  "clip_embeddings_pca128_fp32.npy": {
+    "path": "data\\optimized_vectors\\clip_embeddings_pca128_fp32.npy",
+    "size_mb": 12.1661376953125,
+    "shape": [
+      24916,
+      128
+    ],
+    "dtype": "float32"
+  },
+  "clip_embeddings_pca128_fp16.npy": {
+    "path": "data\\optimized_vectors\\clip_embeddings_pca128_fp16.npy",
+    "size_mb": 6.0831298828125,
+    "shape": [
+      24916,
+      128
+    ],
+    "dtype": "float16"
+  }
+}

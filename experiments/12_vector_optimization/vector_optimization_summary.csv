@@ -1,0 +1,8 @@
+variant,dim,dtype,vector_memory_25k_mb,estimated_vector_memory_500k_mb,memory_reduction_vs_fp32,avg_latency_ms,avg_overlap_at_10,labeled_precision_at_10,labeled_ndcg_at_10
+fp32_512_baseline,512,float32,48.6641,976.5625,1.0,1.5651,1.0,0.95,0.9307
+float16_512,512,float16,24.332,488.2812,2.0,31.2003,0.9964,0.95,0.9263
+int8_per_vector_512,512,int8+scale,12.2611,246.048,3.969,32.1704,0.875,0.9397,0.9405
+pca256_fp32,256,float32,24.332,488.2812,2.0,0.9615,0.0571,0.75,0.75
+pca256_fp16,256,float16,12.166,244.1406,4.0,15.3456,0.0571,0.75,0.75
+pca128_fp32,128,float32,12.166,244.1406,4.0,0.6358,0.0571,1.0,1.0
+pca128_fp16,128,float16,6.083,122.0703,8.0,8.0047,0.0571,1.0,1.0
