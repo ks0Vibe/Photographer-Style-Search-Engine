@@ -39,6 +39,9 @@ RERANKING_IMAGE_IDS = [
 STAGE_05_DIR = PROJECT_ROOT / "experiments" / "05_scaled_retrieval_quality"
 STAGE_06_DIR = PROJECT_ROOT / "experiments" / "06_yolo_object_retrieval"
 STAGE_07_DIR = PROJECT_ROOT / "experiments" / "07_synthetic_500k_scale"
+STAGE_11_DIR = PROJECT_ROOT / "experiments" / "11_search_quality_metrics"
+STAGE_12_DIR = PROJECT_ROOT / "experiments" / "12_vector_optimization"
+STAGE_13_DIR = PROJECT_ROOT / "experiments" / "13_index_selection"
 FINAL_REPORT_VISUALS = [
     STAGE_05_DIR / "visualizations" / "dog_on_beach__qdrant_keyword_primary.png",
     STAGE_05_DIR / "visualizations" / "person_in_street_photography__qdrant_keyword_primary.png",
@@ -96,6 +99,17 @@ def aggregate_latency(path: Path, mode: str, metric: str) -> str:
     return f"{sum(values) / len(values):.2f}"
 
 
+def csv_row_by_value(path: Path, column: str, value: str) -> dict[str, str]:
+    for row in read_csv(path):
+        if row.get(column) == value:
+            return row
+    return {}
+
+
+def count_nonempty_csv_column(path: Path, column: str) -> int:
+    return sum(1 for row in read_csv(path) if str(row.get(column, "")).strip())
+
+
 def copy_selected_visualizations() -> list[Path]:
     FINAL_REPORT_SELECTED_VISUALIZATIONS_DIR.mkdir(parents=True, exist_ok=True)
     for existing_file in FINAL_REPORT_SELECTED_VISUALIZATIONS_DIR.glob("*"):
@@ -118,6 +132,21 @@ def format_float(value: object, digits: int = 4) -> str:
         return "n/a"
 
 
+def docker_ram_for_label(path: Path, label: str) -> str:
+    document = read_json(path)
+    for snapshot in document.get("snapshots", []):
+        if snapshot.get("label") != label:
+            continue
+        values = [
+            float(sample["docker"]["memory_usage_mb"])
+            for sample in snapshot.get("docker_samples", [])
+            if sample.get("docker", {}).get("memory_usage_mb") not in {None, ""}
+        ]
+        if values:
+            return f"{sum(values) / len(values):.2f} MB"
+    return "n/a"
+
+
 def assemble_final_report() -> None:
     selected_visuals = copy_selected_visualizations()
     stage05_payload = read_json(STAGE_05_DIR / "qdrant_payload_stats.json")
@@ -125,12 +154,28 @@ def assemble_final_report() -> None:
     stage07_stats = read_json(STAGE_07_DIR / "synthetic_dataset_stats.json")
     stage07_latency_path = STAGE_07_DIR / "synthetic_latency_summary.csv"
     stage06_metrics_path = STAGE_06_DIR / "retrieval_metrics.csv"
+    stage11_metrics_path = STAGE_11_DIR / "metrics_by_system.csv"
+    stage10_labels_path = PROJECT_ROOT / "experiments" / "10_relevance_labeling" / "relevance_judgments.csv"
+    stage12_summary_path = STAGE_12_DIR / "vector_optimization_summary.csv"
     keyword_avg_relevance = aggregate_metric(stage06_metrics_path, "qdrant_keyword", "avg_relevance")
     object_avg_relevance = aggregate_metric(stage06_metrics_path, "qdrant_object", "avg_relevance")
     rerank_ndcg = aggregate_metric(stage06_metrics_path, "qdrant_object_rerank", "ndcg_at_10")
     synthetic_semantic_avg = aggregate_latency(stage07_latency_path, "qdrant_synthetic_semantic", "search_latency_ms_avg")
     synthetic_semantic_p95 = aggregate_latency(stage07_latency_path, "qdrant_synthetic_semantic", "search_latency_ms_p95")
     synthetic_collection_size = stage07_stats.get("collection_size", 500000)
+    qdrant_semantic_human = csv_row_by_value(stage11_metrics_path, "system", "qdrant_semantic")
+    qdrant_filtered_human = csv_row_by_value(stage11_metrics_path, "system", "qdrant_filtered")
+    qdrant_object_human = csv_row_by_value(stage11_metrics_path, "system", "qdrant_object_rerank")
+    labeled_judgments = count_nonempty_csv_column(stage10_labels_path, "relevance")
+    vector_fp16 = csv_row_by_value(stage12_summary_path, "variant", "float16_512")
+    vector_int8 = csv_row_by_value(stage12_summary_path, "variant", "int8_per_vector_512")
+    index_rows = read_csv(STAGE_13_DIR / "qdrant_index_benchmark.csv")
+    hnsw_index = next((row for row in index_rows if row.get("native_scalar_int8") == "False"), {})
+    native_scalar = next((row for row in index_rows if row.get("native_scalar_int8") == "True"), {})
+    manual_object_summary = read_csv(STAGE_06_DIR / "object_precision_summary.csv")
+    manual_object_semantic = csv_row_by_value(STAGE_06_DIR / "object_precision_summary.csv", "mode", "qdrant_semantic")
+    manual_object_filter = csv_row_by_value(STAGE_06_DIR / "object_precision_summary.csv", "mode", "qdrant_object")
+    manual_object_rerank = csv_row_by_value(STAGE_06_DIR / "object_precision_summary.csv", "mode", "qdrant_object_rerank")
 
     lines = [
         "# Photographer Style Search Engine: Final Report",
@@ -186,6 +231,9 @@ def assemble_final_report() -> None:
         "- `05_scaled_retrieval_quality`: 24,916-image scale test and visual diagnosis of keyword noise.",
         "- `06_yolo_object_retrieval`: YOLO object payloads, strict object filters, keyword/object combinations, and object-aware reranking.",
         "- `07_synthetic_500k_scale`: synthetic 500k vector-object benchmark in a separate Qdrant collection for scalability and indexing tests.",
+        "- `10_relevance_labeling` and `11_search_quality_metrics`: shared human relevance judgments and ranking metrics.",
+        "- `12_vector_optimization`: float16, int8, and reduced-dimension vector optimization experiments for memory/latency trade-offs.",
+        "- `13_index_selection`: exact FAISS ground truth, explicit Qdrant HNSW configurations, native scalar INT8, and hardware snapshots.",
         "",
         "## 5. Main Results",
         "",
@@ -226,6 +274,40 @@ def assemble_final_report() -> None:
         f"- qdrant_synthetic_semantic p95 latency = {synthetic_semantic_p95} ms",
         "- synthetic results are scalability/indexing diagnostics, not visual relevance conclusions.",
         "",
+        "Human relevance evaluation:",
+        "",
+        f"- labeled unique judgments = {labeled_judgments}",
+        f"- qdrant_filtered P@10 = {format_float(qdrant_filtered_human.get('precision_at_10'))}",
+        f"- qdrant_filtered nDCG@10 = {format_float(qdrant_filtered_human.get('ndcg_at_10'))}",
+        f"- qdrant_semantic P@10 = {format_float(qdrant_semantic_human.get('precision_at_10'))}",
+        f"- qdrant_semantic nDCG@10 = {format_float(qdrant_semantic_human.get('ndcg_at_10'))}",
+        f"- qdrant_object_rerank P@10 = {format_float(qdrant_object_human.get('precision_at_10'))}",
+        f"- qdrant_object_rerank nDCG@10 = {format_float(qdrant_object_human.get('ndcg_at_10'))}",
+        "- human-label metrics are complete for the 28-query validation set.",
+        "",
+        "Vector optimization:",
+        "",
+        f"- float16_512 estimated vector memory at 500k = {format_float(vector_fp16.get('estimated_vector_memory_500k_mb'), 2)} MB",
+        f"- float16_512 memory reduction = {format_float(vector_fp16.get('memory_reduction_vs_fp32'), 2)}x",
+        f"- float16_512 overlap@10 vs baseline = {format_float(vector_fp16.get('avg_overlap_at_10'))}",
+        f"- int8_per_vector_512 estimated vector memory at 500k = {format_float(vector_int8.get('estimated_vector_memory_500k_mb'), 2)} MB",
+        f"- int8_per_vector_512 memory reduction = {format_float(vector_int8.get('memory_reduction_vs_fp32'), 2)}x",
+        f"- int8_per_vector_512 overlap@10 vs baseline = {format_float(vector_int8.get('avg_overlap_at_10'))}",
+        "",
+        "Index selection and hardware:",
+        "",
+        f"- first explicit HNSW configuration Recall@10 = {format_float(hnsw_index.get('recall_at_10'))}, p50 = {format_float(hnsw_index.get('p50_latency_ms'), 2)} ms, p95 = {format_float(hnsw_index.get('p95_latency_ms'), 2)} ms",
+        f"- native Qdrant scalar INT8 Recall@10 = {format_float(native_scalar.get('recall_at_10'))}, p50 = {format_float(native_scalar.get('p50_latency_ms'), 2)} ms, p95 = {format_float(native_scalar.get('p95_latency_ms'), 2)} ms",
+        f"- native scalar INT8 container RAM = {format_float(native_scalar.get('container_memory_mb'), 2)} MB; disk = {format_float(native_scalar.get('disk_after_mb'), 2)} MB",
+        f"- Docker RAM snapshot 25k = {docker_ram_for_label(STAGE_13_DIR / 'hardware_metrics.json', '25k')}; 500k = {docker_ram_for_label(STAGE_13_DIR / 'hardware_metrics.json', '500k')}",
+        "",
+        "Manual YOLO object validation:",
+        "",
+        f"- complete object-label query groups = {manual_object_semantic.get('query_count', 'n/a')}",
+        f"- Object Precision@10 semantic baseline = {format_float(manual_object_semantic.get('object_precision_at_10'))}",
+        f"- Object Precision@10 object filter = {format_float(manual_object_filter.get('object_precision_at_10'))}",
+        f"- Object Precision@10 object-aware rerank = {format_float(manual_object_rerank.get('object_precision_at_10'))}",
+        "",
         "## 6. Qualitative Findings",
         "",
         "- Keyword filters help narrow the corpus, but they are noisy because they depend on external metadata.",
@@ -255,17 +337,18 @@ def assemble_final_report() -> None:
             "## 8. Limitations",
             "",
             "- Automatic relevance labels are weak diagnostics, not human ground truth.",
-            "- Manual visual inspection support exists, but stage 06 labels are still incomplete unless `visual_metrics.csv` contains rows.",
+            "- Manual visual inspection is reported separately from automatic YOLO payload metrics; `object_precision_summary.csv` is only populated for complete `object_present` labels.",
             "- YOLOv8n uses the fixed COCO class set and misses open-vocabulary scene concepts.",
             "- Local Qdrant path mode is convenient but not ideal above 20k points.",
             "- CPU YOLO inference is slow for full-corpus extraction.",
             "- Synthetic 500k vectors are generated from real embeddings and are not independent real photographs.",
             "- Synthetic payloads copy metadata from source images, so synthetic results cannot be used for visual relevance claims.",
+            "- App-level float16/int8 benchmark latencies include NumPy conversion overhead; native Qdrant scalar INT8 results in stage 13 are the production-like comparison.",
             "- The frontend is a local demo, not a production product UI.",
             "",
             "## 9. Future Work",
             "",
-            "- Finish manual visual inspection for stage 06.",
+            "- Complete any remaining manual visual inspection groups in stage 06.",
             "- Tune the YOLO confidence threshold.",
             "- Store bounding boxes and confidence scores.",
             "- Use Docker/server Qdrant for larger runs.",

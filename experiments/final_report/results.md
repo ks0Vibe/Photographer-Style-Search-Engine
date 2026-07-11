@@ -51,6 +51,9 @@ User / Streamlit demo
 - `05_scaled_retrieval_quality`: 24,916-image scale test and visual diagnosis of keyword noise.
 - `06_yolo_object_retrieval`: YOLO object payloads, strict object filters, keyword/object combinations, and object-aware reranking.
 - `07_synthetic_500k_scale`: synthetic 500k vector-object benchmark in a separate Qdrant collection for scalability and indexing tests.
+- `10_relevance_labeling` and `11_search_quality_metrics`: shared human relevance judgments and ranking metrics.
+- `12_vector_optimization`: float16, int8, and reduced-dimension vector optimization experiments for memory/latency trade-offs.
+- `13_index_selection`: exact FAISS ground truth, explicit Qdrant HNSW configurations, native scalar INT8, and hardware snapshots.
 
 ## 5. Main Results
 
@@ -91,6 +94,40 @@ Stage 07:
 - qdrant_synthetic_semantic p95 latency = 44.07 ms
 - synthetic results are scalability/indexing diagnostics, not visual relevance conclusions.
 
+Human relevance evaluation:
+
+- labeled unique judgments = 478
+- qdrant_filtered P@10 = 0.9464
+- qdrant_filtered nDCG@10 = 0.9481
+- qdrant_semantic P@10 = 0.9214
+- qdrant_semantic nDCG@10 = 0.9134
+- qdrant_object_rerank P@10 = 0.9464
+- qdrant_object_rerank nDCG@10 = 0.9393
+- human-label metrics are complete for the 28-query validation set.
+
+Vector optimization:
+
+- float16_512 estimated vector memory at 500k = 488.28 MB
+- float16_512 memory reduction = 2.00x
+- float16_512 overlap@10 vs baseline = 0.9964
+- int8_per_vector_512 estimated vector memory at 500k = 246.05 MB
+- int8_per_vector_512 memory reduction = 3.97x
+- int8_per_vector_512 overlap@10 vs baseline = 0.8750
+
+Index selection and hardware:
+
+- first explicit HNSW configuration Recall@10 = n/a, p50 = n/a ms, p95 = n/a ms
+- native Qdrant scalar INT8 Recall@10 = n/a, p50 = n/a ms, p95 = n/a ms
+- native scalar INT8 container RAM = n/a MB; disk = n/a MB
+- Docker RAM snapshot 25k = n/a; 500k = n/a
+
+Manual YOLO object validation:
+
+- complete object-label query groups = n/a
+- Object Precision@10 semantic baseline = n/a
+- Object Precision@10 object filter = n/a
+- Object Precision@10 object-aware rerank = n/a
+
 ## 6. Qualitative Findings
 
 - Keyword filters help narrow the corpus, but they are noisy because they depend on external metadata.
@@ -124,17 +161,18 @@ The project now includes a local FastAPI API and a Streamlit demo UI. The API ex
 ## 8. Limitations
 
 - Automatic relevance labels are weak diagnostics, not human ground truth.
-- Manual visual inspection support exists, but stage 06 labels are still incomplete unless `visual_metrics.csv` contains rows.
+- Manual visual inspection is reported separately from automatic YOLO payload metrics; `object_precision_summary.csv` is only populated for complete `object_present` labels.
 - YOLOv8n uses the fixed COCO class set and misses open-vocabulary scene concepts.
 - Local Qdrant path mode is convenient but not ideal above 20k points.
 - CPU YOLO inference is slow for full-corpus extraction.
 - Synthetic 500k vectors are generated from real embeddings and are not independent real photographs.
 - Synthetic payloads copy metadata from source images, so synthetic results cannot be used for visual relevance claims.
+- App-level float16/int8 benchmark latencies include NumPy conversion overhead; native Qdrant scalar INT8 results in stage 13 are the production-like comparison.
 - The frontend is a local demo, not a production product UI.
 
 ## 9. Future Work
 
-- Finish manual visual inspection for stage 06.
+- Complete any remaining manual visual inspection groups in stage 06.
 - Tune the YOLO confidence threshold.
 - Store bounding boxes and confidence scores.
 - Use Docker/server Qdrant for larger runs.
