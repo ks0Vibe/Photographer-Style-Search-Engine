@@ -1,0 +1,141 @@
+query_id,query,type,system,result_count,labeled_result_count,precision_at_5,precision_at_10,ndcg_at_5,ndcg_at_10,mrr,success_at_1,success_at_5,mean_relevance_at_10
+Q001,warm cinematic landscape,semantic_text,faiss_baseline,10,10,1.0,0.9,0.7599635902818439,0.913981382917702,1.0,1.0,1.0,1.5
+Q001,warm cinematic landscape,semantic_text,faiss_style_rerank,10,10,1.0,1.0,0.6864231448093613,0.8651797396012889,1.0,1.0,1.0,1.7
+Q001,warm cinematic landscape,semantic_text,qdrant_filtered,10,10,1.0,0.9,0.7599635902818439,0.913981382917702,1.0,1.0,1.0,1.5
+Q001,warm cinematic landscape,semantic_text,qdrant_object_rerank,10,10,1.0,0.9,0.7599635902818439,0.913981382917702,1.0,1.0,1.0,1.5
+Q001,warm cinematic landscape,semantic_text,qdrant_semantic,10,10,1.0,0.9,0.7599635902818439,0.913981382917702,1.0,1.0,1.0,1.5
+Q002,dark moody forest,semantic_text,faiss_baseline,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q002,dark moody forest,semantic_text,faiss_style_rerank,10,10,1.0,1.0,1.0,0.9856152297908297,1.0,1.0,1.0,1.7
+Q002,dark moody forest,semantic_text,qdrant_filtered,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q002,dark moody forest,semantic_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q002,dark moody forest,semantic_text,qdrant_semantic,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q003,vibrant summer portrait,semantic_text,faiss_baseline,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q003,vibrant summer portrait,semantic_text,faiss_style_rerank,10,10,1.0,0.8,0.8869465982421278,0.9609596885376617,1.0,1.0,1.0,1.4
+Q003,vibrant summer portrait,semantic_text,qdrant_filtered,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q003,vibrant summer portrait,semantic_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q003,vibrant summer portrait,semantic_text,qdrant_semantic,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q004,minimal architecture,semantic_text,faiss_baseline,10,10,1.0,1.0,1.0,0.9981666155888351,1.0,1.0,1.0,1.9
+Q004,minimal architecture,semantic_text,faiss_style_rerank,10,10,0.8,0.9,0.7330409974680542,0.9251351330383202,1.0,1.0,1.0,1.6
+Q004,minimal architecture,semantic_text,qdrant_filtered,10,10,1.0,1.0,1.0,0.9981666155888351,1.0,1.0,1.0,1.9
+Q004,minimal architecture,semantic_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,0.9981666155888351,1.0,1.0,1.0,1.9
+Q004,minimal architecture,semantic_text,qdrant_semantic,10,10,1.0,1.0,1.0,0.9981666155888351,1.0,1.0,1.0,1.9
+Q005,cold blue mountain scene,semantic_text,faiss_baseline,10,10,0.8,0.8,0.5733697430514892,0.7838326139984705,0.5,0.0,1.0,1.3
+Q005,cold blue mountain scene,semantic_text,faiss_style_rerank,10,10,0.8,0.9,0.8687949224876581,0.977015370299312,1.0,1.0,1.0,1.8
+Q005,cold blue mountain scene,semantic_text,qdrant_filtered,10,10,0.8,0.8,0.5733697430514892,0.7838326139984705,0.5,0.0,1.0,1.3
+Q005,cold blue mountain scene,semantic_text,qdrant_object_rerank,10,10,0.8,0.8,0.5733697430514892,0.7838326139984705,0.5,0.0,1.0,1.3
+Q005,cold blue mountain scene,semantic_text,qdrant_semantic,10,10,0.8,0.8,0.5733697430514892,0.7838326139984705,0.5,0.0,1.0,1.3
+Q006,food photography with warm light,semantic_text,faiss_baseline,10,10,0.8,0.8,0.45649691033014544,0.6951120655958085,1.0,1.0,1.0,1.1
+Q006,food photography with warm light,semantic_text,faiss_style_rerank,10,10,0.8,0.9,0.7112741403342752,0.9084371434538318,1.0,1.0,1.0,1.6
+Q006,food photography with warm light,semantic_text,qdrant_filtered,10,10,0.8,0.8,0.45649691033014544,0.6951120655958085,1.0,1.0,1.0,1.1
+Q006,food photography with warm light,semantic_text,qdrant_object_rerank,10,10,0.8,0.8,0.45649691033014544,0.6951120655958085,1.0,1.0,1.0,1.1
+Q006,food photography with warm light,semantic_text,qdrant_semantic,10,10,0.8,0.8,0.45649691033014544,0.6951120655958085,1.0,1.0,1.0,1.1
+Q007,quiet city street at dawn,semantic_text,faiss_baseline,10,10,1.0,1.0,0.7442890884191096,0.9129519303041321,1.0,1.0,1.0,1.7
+Q007,quiet city street at dawn,semantic_text,faiss_style_rerank,10,10,1.0,1.0,0.7442890884191096,0.9129519303041321,1.0,1.0,1.0,1.7
+Q007,quiet city street at dawn,semantic_text,qdrant_filtered,10,10,1.0,1.0,0.7442890884191096,0.9129519303041321,1.0,1.0,1.0,1.7
+Q007,quiet city street at dawn,semantic_text,qdrant_object_rerank,10,10,1.0,1.0,0.7442890884191096,0.9129519303041321,1.0,1.0,1.0,1.7
+Q007,quiet city street at dawn,semantic_text,qdrant_semantic,10,10,1.0,1.0,0.7442890884191096,0.9129519303041321,1.0,1.0,1.0,1.7
+Q008,dramatic ocean waves,semantic_text,faiss_baseline,10,10,1.0,1.0,1.0,0.9957591943893841,1.0,1.0,1.0,1.8
+Q008,dramatic ocean waves,semantic_text,faiss_style_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q008,dramatic ocean waves,semantic_text,qdrant_filtered,10,10,1.0,1.0,1.0,0.9957591943893841,1.0,1.0,1.0,1.8
+Q008,dramatic ocean waves,semantic_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,0.9957591943893841,1.0,1.0,1.0,1.8
+Q008,dramatic ocean waves,semantic_text,qdrant_semantic,10,10,1.0,1.0,1.0,0.9957591943893841,1.0,1.0,1.0,1.8
+Q009,warm golden hour light,style_text,faiss_baseline,10,10,1.0,1.0,0.9026211001048622,0.9783012898581852,1.0,1.0,1.0,1.9
+Q009,warm golden hour light,style_text,faiss_style_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q009,warm golden hour light,style_text,qdrant_filtered,10,10,1.0,1.0,0.9026211001048622,0.9783012898581852,1.0,1.0,1.0,1.9
+Q009,warm golden hour light,style_text,qdrant_object_rerank,10,10,1.0,1.0,0.9026211001048622,0.9783012898581852,1.0,1.0,1.0,1.9
+Q009,warm golden hour light,style_text,qdrant_semantic,10,10,1.0,1.0,0.9026211001048622,0.9783012898581852,1.0,1.0,1.0,1.9
+Q010,low contrast pastel tones,style_text,faiss_baseline,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.9
+Q010,low contrast pastel tones,style_text,faiss_style_rerank,10,10,1.0,0.9,1.0,0.9844134583746669,1.0,1.0,1.0,1.7
+Q010,low contrast pastel tones,style_text,qdrant_filtered,10,10,1.0,0.9,1.0,0.9912837918996535,1.0,1.0,1.0,1.6
+Q010,low contrast pastel tones,style_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.9
+Q010,low contrast pastel tones,style_text,qdrant_semantic,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.9
+Q011,high contrast black and white,style_text,faiss_baseline,10,10,1.0,1.0,1.0,0.9831726883068668,1.0,1.0,1.0,1.7
+Q011,high contrast black and white,style_text,faiss_style_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q011,high contrast black and white,style_text,qdrant_filtered,10,10,1.0,1.0,1.0,0.9831726883068668,1.0,1.0,1.0,1.7
+Q011,high contrast black and white,style_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,0.9831726883068668,1.0,1.0,1.0,1.7
+Q011,high contrast black and white,style_text,qdrant_semantic,10,10,1.0,1.0,1.0,0.9831726883068668,1.0,1.0,1.0,1.7
+Q012,cinematic teal and orange,style_text,faiss_baseline,10,10,0.8,0.8,0.5168430421725533,0.7941936318267284,1.0,1.0,1.0,1.3
+Q012,cinematic teal and orange,style_text,faiss_style_rerank,10,10,0.4,0.4,0.3077256276560777,0.5239709381440691,0.3333333333333333,0.0,1.0,0.6
+Q012,cinematic teal and orange,style_text,qdrant_filtered,10,10,0.8,0.8,0.5168430421725533,0.7941936318267284,1.0,1.0,1.0,1.3
+Q012,cinematic teal and orange,style_text,qdrant_object_rerank,10,10,0.8,0.8,0.5168430421725533,0.7941936318267284,1.0,1.0,1.0,1.3
+Q012,cinematic teal and orange,style_text,qdrant_semantic,10,10,0.8,0.8,0.5168430421725533,0.7941936318267284,1.0,1.0,1.0,1.3
+Q013,soft natural window light,style_text,faiss_baseline,10,10,1.0,1.0,0.9125299483251055,0.9741166015887968,1.0,1.0,1.0,1.7
+Q013,soft natural window light,style_text,faiss_style_rerank,10,10,1.0,1.0,0.9125299483251055,0.9741166015887968,1.0,1.0,1.0,1.7
+Q013,soft natural window light,style_text,qdrant_filtered,10,10,1.0,1.0,0.9125299483251055,0.9741166015887968,1.0,1.0,1.0,1.7
+Q013,soft natural window light,style_text,qdrant_object_rerank,10,10,1.0,1.0,0.9125299483251055,0.9741166015887968,1.0,1.0,1.0,1.7
+Q013,soft natural window light,style_text,qdrant_semantic,10,10,1.0,1.0,0.9125299483251055,0.9741166015887968,1.0,1.0,1.0,1.7
+Q014,dark low key portrait lighting,style_text,faiss_baseline,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q014,dark low key portrait lighting,style_text,faiss_style_rerank,10,10,1.0,1.0,0.9125299483251055,0.9842917035849112,1.0,1.0,1.0,1.8
+Q014,dark low key portrait lighting,style_text,qdrant_filtered,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q014,dark low key portrait lighting,style_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q014,dark low key portrait lighting,style_text,qdrant_semantic,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q015,bright airy minimal style,style_text,faiss_baseline,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q015,bright airy minimal style,style_text,faiss_style_rerank,10,10,1.0,1.0,0.8573424901769816,0.9470061337201197,1.0,1.0,1.0,1.8
+Q015,bright airy minimal style,style_text,qdrant_filtered,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q015,bright airy minimal style,style_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q015,bright airy minimal style,style_text,qdrant_semantic,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q016,saturated colorful street scene,style_text,faiss_baseline,10,10,0.8,0.9,0.5059073237779986,0.7457145263263075,1.0,1.0,1.0,1.3
+Q016,saturated colorful street scene,style_text,faiss_style_rerank,10,10,0.8,0.8,0.5599069317497283,0.7675011553925212,1.0,1.0,1.0,1.4
+Q016,saturated colorful street scene,style_text,qdrant_filtered,10,10,1.0,1.0,0.7738931964842558,0.879701908212405,1.0,1.0,1.0,1.7
+Q016,saturated colorful street scene,style_text,qdrant_object_rerank,10,10,0.8,0.9,0.5059073237779986,0.7457145263263075,1.0,1.0,1.0,1.3
+Q016,saturated colorful street scene,style_text,qdrant_semantic,10,10,0.8,0.9,0.5059073237779986,0.7457145263263075,1.0,1.0,1.0,1.3
+Q017,person in street photography,object_text,faiss_baseline,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q017,person in street photography,object_text,faiss_style_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q017,person in street photography,object_text,qdrant_filtered,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q017,person in street photography,object_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q017,person in street photography,object_text,qdrant_semantic,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q018,dog on beach,object_text,faiss_baseline,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q018,dog on beach,object_text,faiss_style_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q018,dog on beach,object_text,qdrant_filtered,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q018,dog on beach,object_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q018,dog on beach,object_text,qdrant_semantic,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q019,car at night,object_text,faiss_baseline,10,10,0.6,0.5,0.6843515475204854,0.8893839657191062,1.0,1.0,1.0,1.0
+Q019,car at night,object_text,faiss_style_rerank,10,10,0.8,0.6,0.7860137352654724,0.8878428156094798,1.0,1.0,1.0,1.2
+Q019,car at night,object_text,qdrant_filtered,10,10,0.8,0.9,0.8304198973631919,0.950420626211048,1.0,1.0,1.0,1.8
+Q019,car at night,object_text,qdrant_object_rerank,10,10,0.8,0.9,0.8304198973631919,0.950420626211048,1.0,1.0,1.0,1.8
+Q019,car at night,object_text,qdrant_semantic,10,10,0.6,0.5,0.6843515475204854,0.8893839657191062,1.0,1.0,1.0,1.0
+Q020,bicycle in urban street,object_text,faiss_baseline,10,10,1.0,0.9,1.0,0.9917359852641013,1.0,1.0,1.0,1.7
+Q020,bicycle in urban street,object_text,faiss_style_rerank,10,10,0.8,0.7,0.7429498456882974,0.9098441804414579,1.0,1.0,1.0,1.2
+Q020,bicycle in urban street,object_text,qdrant_filtered,10,10,1.0,1.0,1.0,0.9911365418282455,1.0,1.0,1.0,1.8
+Q020,bicycle in urban street,object_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,0.9911365418282455,1.0,1.0,1.0,1.8
+Q020,bicycle in urban street,object_text,qdrant_semantic,10,10,1.0,0.9,1.0,0.9917359852641013,1.0,1.0,1.0,1.7
+Q021,bird in nature,object_text,faiss_baseline,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q021,bird in nature,object_text,faiss_style_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q021,bird in nature,object_text,qdrant_filtered,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q021,bird in nature,object_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q021,bird in nature,object_text,qdrant_semantic,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q022,boat on water,object_text,faiss_baseline,10,10,1.0,1.0,0.6864231448093613,0.872011769891177,1.0,1.0,1.0,1.8
+Q022,boat on water,object_text,faiss_style_rerank,10,10,1.0,1.0,0.6864231448093613,0.872011769891177,1.0,1.0,1.0,1.8
+Q022,boat on water,object_text,qdrant_filtered,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q022,boat on water,object_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q022,boat on water,object_text,qdrant_semantic,10,10,1.0,1.0,0.6864231448093613,0.872011769891177,1.0,1.0,1.0,1.8
+Q023,cup on table,object_text,faiss_baseline,10,10,0.6,0.8,0.4273013932087828,0.7434137242382229,0.5,0.0,1.0,1.4
+Q023,cup on table,object_text,faiss_style_rerank,10,10,0.6,0.8,0.4273013932087828,0.7434137242382229,0.5,0.0,1.0,1.4
+Q023,cup on table,object_text,qdrant_filtered,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q023,cup on table,object_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,0.993216879066224,1.0,1.0,1.0,1.9
+Q023,cup on table,object_text,qdrant_semantic,10,10,0.6,0.8,0.4273013932087828,0.7434137242382229,0.5,0.0,1.0,1.4
+Q024,train in station,object_text,faiss_baseline,10,10,0.8,0.6,0.6497381291898623,0.7825575966429125,1.0,1.0,1.0,0.9
+Q024,train in station,object_text,faiss_style_rerank,10,10,0.8,0.6,0.6497381291898623,0.7825575966429125,1.0,1.0,1.0,0.9
+Q024,train in station,object_text,qdrant_filtered,10,10,0.8,0.4,0.9796808707575757,0.9796808707575757,1.0,1.0,1.0,0.7
+Q024,train in station,object_text,qdrant_object_rerank,10,10,0.6,0.4,0.7519536097687967,0.879043640258277,1.0,1.0,1.0,0.7
+Q024,train in station,object_text,qdrant_semantic,10,10,0.8,0.6,0.6497381291898623,0.7825575966429125,1.0,1.0,1.0,0.9
+Q025,warm portrait with person outdoors,mixed_text,faiss_baseline,10,10,1.0,1.0,0.8869465982421278,0.967679081840876,1.0,1.0,1.0,1.9
+Q025,warm portrait with person outdoors,mixed_text,faiss_style_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q025,warm portrait with person outdoors,mixed_text,qdrant_filtered,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q025,warm portrait with person outdoors,mixed_text,qdrant_object_rerank,10,10,1.0,1.0,0.8869465982421278,0.967679081840876,1.0,1.0,1.0,1.9
+Q025,warm portrait with person outdoors,mixed_text,qdrant_semantic,10,10,1.0,1.0,0.8869465982421278,0.967679081840876,1.0,1.0,1.0,1.9
+Q026,dark forest with animal,mixed_text,faiss_baseline,10,10,1.0,1.0,0.6134648581575844,0.7778671768025934,1.0,1.0,1.0,1.2
+Q026,dark forest with animal,mixed_text,faiss_style_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+Q026,dark forest with animal,mixed_text,qdrant_filtered,10,10,1.0,1.0,0.6134648581575844,0.7778671768025934,1.0,1.0,1.0,1.2
+Q026,dark forest with animal,mixed_text,qdrant_object_rerank,10,10,1.0,1.0,0.6134648581575844,0.7778671768025934,1.0,1.0,1.0,1.2
+Q026,dark forest with animal,mixed_text,qdrant_semantic,10,10,1.0,1.0,0.6134648581575844,0.7778671768025934,1.0,1.0,1.0,1.2
+Q027,bright beach scene with dog,mixed_text,faiss_baseline,10,10,0.8,0.9,0.6608397947263838,0.8328978515038052,0.5,0.0,1.0,1.8
+Q027,bright beach scene with dog,mixed_text,faiss_style_rerank,10,10,0.8,0.7,0.5477863929685118,0.7394997263736279,0.5,0.0,1.0,1.2
+Q027,bright beach scene with dog,mixed_text,qdrant_filtered,10,10,1.0,1.0,1.0,0.9897119920294625,1.0,1.0,1.0,1.9
+Q027,bright beach scene with dog,mixed_text,qdrant_object_rerank,10,10,1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0
+Q027,bright beach scene with dog,mixed_text,qdrant_semantic,10,10,0.8,0.9,0.6608397947263838,0.8328978515038052,0.5,0.0,1.0,1.8
+Q028,cinematic car on city street at night,mixed_text,faiss_baseline,10,10,1.0,0.9,0.7994765465672333,0.9561748186152264,1.0,1.0,1.0,1.5
+Q028,cinematic car on city street at night,mixed_text,faiss_style_rerank,10,10,1.0,0.8,0.989141344633751,0.9829464174950112,1.0,1.0,1.0,1.2
+Q028,cinematic car on city street at night,mixed_text,qdrant_filtered,10,10,1.0,1.0,0.9026211001048622,0.9783012898581852,1.0,1.0,1.0,1.9
+Q028,cinematic car on city street at night,mixed_text,qdrant_object_rerank,10,10,1.0,1.0,0.9026211001048622,0.9783012898581852,1.0,1.0,1.0,1.9
+Q028,cinematic car on city street at night,mixed_text,qdrant_semantic,10,10,1.0,0.9,0.7994765465672333,0.9561748186152264,1.0,1.0,1.0,1.5
