@@ -14,6 +14,10 @@ For every result in the `qdrant_semantic`, `qdrant_object`, and `qdrant_object_r
 
 The aggregate `object_precision_metrics.csv` reports Object Precision@10 before (`qdrant_semantic`) and after object filter/rerank (`qdrant_object`, `qdrant_object_rerank`).
 
+## Photo folders
+
+Run `experiments/scripts/export_yolo_manual_photos.py` to create `manual_photos/<query>/<mode>/` with one image file per ranked result.
+
 ## Object-Like Queries
 
 - `2` = requested object is clearly visible and central

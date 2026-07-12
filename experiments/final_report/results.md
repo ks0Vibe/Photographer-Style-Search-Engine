@@ -116,17 +116,27 @@ Vector optimization:
 
 Index selection and hardware:
 
-- first explicit HNSW configuration Recall@10 = n/a, p50 = n/a ms, p95 = n/a ms
-- native Qdrant scalar INT8 Recall@10 = n/a, p50 = n/a ms, p95 = n/a ms
-- native scalar INT8 container RAM = n/a MB; disk = n/a MB
-- Docker RAM snapshot 25k = n/a; 500k = n/a
+- hardware OS = Windows-10-10.0.19045-SP0; CPU logical cores = 16; host RAM = 16108.87 MB
+- GPU/CUDA available = False; Python = 3.12.10; PyTorch = 2.12.0; Qdrant server = 1.18.2
+- first explicit HNSW configuration Recall@10 = 1.0000, p50 = 16.02 ms, p95 = 31.98 ms
+- native Qdrant scalar INT8 Recall@10 = 0.8700, p50 = 15.62 ms, p95 = 30.74 ms
+- native scalar INT8 clean container RAM = 1475.58 MB; disk = 1734.37 MB
+- Docker RAM snapshot 25k = 95.27 MB; disk = 624.76 MB
 
 Manual YOLO object validation:
 
-- complete object-label query groups = n/a
-- Object Precision@10 semantic baseline = n/a
-- Object Precision@10 object filter = n/a
-- Object Precision@10 object-aware rerank = n/a
+- complete object-label query groups = 12
+- Object Precision@10 semantic baseline = 0.9167
+- Semantic 95% bootstrap CI = [0.8250, 0.9917]
+- Object Precision@10 object filter = 0.9800
+- Object-filter delta vs semantic = 0.0633
+- Object-filter label coverage = 10/12 groups, 100/120 images
+- Object-filter 95% bootstrap CI = [0.9500, 1.0000]
+- Object-filter empty result queries = 2 (0.1667)
+- Object Precision@10 object-aware rerank = 0.9833
+- Rerank delta vs semantic = 0.0667
+- Rerank label coverage = 12/12 groups, 120/120 images
+- Rerank 95% bootstrap CI = [0.9583, 1.0000]
 
 ## 6. Qualitative Findings
 

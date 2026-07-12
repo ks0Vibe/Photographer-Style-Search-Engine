@@ -195,106 +195,90 @@ Overall, the project has progressed from CLIP-only semantic retrieval to a multi
 
 ## Visual Inspection Metrics
 
-Human visual inspection is pending. `visual_inspection.csv` exists for manual labeling, but no query/mode pair has complete top-10 visual labels yet.
+Human visual labels are available for at least one complete query/mode top-10 group. These metrics use `visual_relevance` from `visual_inspection.csv`.
 
-Incomplete or missing top-10 visual labels:
+Overall visual metrics:
 
-- bird / qdrant_keyword
-- bird / qdrant_keyword_object
-- bird / qdrant_object
-- bird / qdrant_object_rerank
-- bird / qdrant_semantic
-- bird in nature / qdrant_keyword
-- bird in nature / qdrant_keyword_object
-- bird in nature / qdrant_object
-- bird in nature / qdrant_object_rerank
-- bird in nature / qdrant_semantic
-- building / qdrant_keyword
-- building / qdrant_object_rerank
-- building / qdrant_semantic
-- building in city / qdrant_keyword
-- building in city / qdrant_object_rerank
-- building in city / qdrant_semantic
-- car / qdrant_keyword
-- car / qdrant_keyword_object
-- car / qdrant_object
-- car / qdrant_object_rerank
-- car / qdrant_semantic
-- car at night / qdrant_keyword
-- car at night / qdrant_keyword_object
-- car at night / qdrant_object
-- car at night / qdrant_object_rerank
-- car at night / qdrant_semantic
-- cat / qdrant_keyword
-- cat / qdrant_keyword_object
-- cat / qdrant_object
-- cat / qdrant_object_rerank
-- cat / qdrant_semantic
-- cat indoors / qdrant_keyword
-- cat indoors / qdrant_keyword_object
-- cat indoors / qdrant_object
-- cat indoors / qdrant_object_rerank
-- cat indoors / qdrant_semantic
-- dog / qdrant_keyword
-- dog / qdrant_keyword_object
-- dog / qdrant_object
-- dog / qdrant_object_rerank
-- dog / qdrant_semantic
-- dog on beach / qdrant_keyword
-- dog on beach / qdrant_keyword_object
-- dog on beach / qdrant_object
-- dog on beach / qdrant_object_rerank
-- dog on beach / qdrant_semantic
-- person / qdrant_keyword
-- person / qdrant_keyword_object
-- person / qdrant_object
-- person / qdrant_object_rerank
-- person / qdrant_semantic
-- person in street photography / qdrant_keyword
-- person in street photography / qdrant_keyword_object
-- person in street photography / qdrant_object
-- person in street photography / qdrant_object_rerank
-- person in street photography / qdrant_semantic
+| query | query_group | mode | result_count | precision_at_10 | avg_relevance | dcg_at_10 | ndcg_at_10 | mrr_at_10 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| bird | object_like | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird | object_like | qdrant_keyword_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird | object_like | qdrant_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird | object_like | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird | object_like | qdrant_semantic | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird in nature | combined | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird in nature | combined | qdrant_keyword_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird in nature | combined | qdrant_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird in nature | combined | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| bird in nature | combined | qdrant_semantic | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| building | object_like | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| building | object_like | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| building | object_like | qdrant_semantic | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| building in city | combined | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| building in city | combined | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| building in city | combined | qdrant_semantic | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| car | object_like | qdrant_keyword | 10 | 0.9000 | 1.5000 | 10.5144 | 0.9678 | 1.0000 |
+| car | object_like | qdrant_keyword_object | 10 | 0.9000 | 1.5000 | 10.4918 | 0.9658 | 1.0000 |
+| car | object_like | qdrant_object | 10 | 0.9000 | 1.6000 | 11.0699 | 0.9601 | 1.0000 |
+| car | object_like | qdrant_object_rerank | 10 | 0.9000 | 1.5000 | 10.4918 | 0.9658 | 1.0000 |
+| car | object_like | qdrant_semantic | 10 | 0.9000 | 1.6000 | 11.0910 | 0.9619 | 1.0000 |
+| car at night | combined | qdrant_keyword | 10 | 1.0000 | 1.7000 | 11.2788 | 0.9543 | 1.0000 |
+| car at night | combined | qdrant_keyword_object | 10 | 1.0000 | 1.9000 | 12.6307 | 0.9677 | 1.0000 |
+| car at night | combined | qdrant_object | 10 | 1.0000 | 1.9000 | 12.6307 | 0.9677 | 1.0000 |
+| car at night | combined | qdrant_object_rerank | 10 | 1.0000 | 1.9000 | 12.6307 | 0.9677 | 1.0000 |
+| car at night | combined | qdrant_semantic | 10 | 1.0000 | 1.3000 | 8.3835 | 0.9521 | 1.0000 |
+| cat | object_like | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat | object_like | qdrant_keyword_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat | object_like | qdrant_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat | object_like | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat | object_like | qdrant_semantic | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat indoors | combined | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat indoors | combined | qdrant_keyword_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat indoors | combined | qdrant_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat indoors | combined | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| cat indoors | combined | qdrant_semantic | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog | object_like | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog | object_like | qdrant_keyword_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog | object_like | qdrant_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog | object_like | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog | object_like | qdrant_semantic | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog on beach | combined | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog on beach | combined | qdrant_keyword_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog on beach | combined | qdrant_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog on beach | combined | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| dog on beach | combined | qdrant_semantic | 10 | 1.0000 | 1.9000 | 12.9183 | 0.9897 | 1.0000 |
+| person | object_like | qdrant_keyword | 10 | 1.0000 | 1.8000 | 12.1027 | 0.9721 | 1.0000 |
+| person | object_like | qdrant_keyword_object | 10 | 1.0000 | 1.9000 | 12.9183 | 0.9897 | 1.0000 |
+| person | object_like | qdrant_object | 10 | 1.0000 | 1.8000 | 12.3162 | 0.9892 | 1.0000 |
+| person | object_like | qdrant_object_rerank | 10 | 1.0000 | 1.9000 | 12.9183 | 0.9897 | 1.0000 |
+| person | object_like | qdrant_semantic | 10 | 0.7000 | 1.2000 | 8.5801 | 0.8999 | 1.0000 |
+| person in street photography | combined | qdrant_keyword | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| person in street photography | combined | qdrant_keyword_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| person in street photography | combined | qdrant_object | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| person in street photography | combined | qdrant_object_rerank | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+| person in street photography | combined | qdrant_semantic | 10 | 1.0000 | 2.0000 | 13.6307 | 1.0000 | 1.0000 |
+
+Visual metrics by query group:
+
+| query_group | mode | query_mode_count | precision_at_10 | avg_relevance | dcg_at_10 | ndcg_at_10 | mrr_at_10 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| combined | qdrant_keyword | 6 | 1.0000 | 1.9500 | 13.2387 | 0.9924 | 1.0000 |
+| combined | qdrant_keyword_object | 5 | 1.0000 | 1.9800 | 13.4307 | 0.9935 | 1.0000 |
+| combined | qdrant_object | 5 | 1.0000 | 1.9800 | 13.4307 | 0.9935 | 1.0000 |
+| combined | qdrant_object_rerank | 6 | 1.0000 | 1.9833 | 13.4640 | 0.9946 | 1.0000 |
+| combined | qdrant_semantic | 6 | 1.0000 | 1.8667 | 12.6374 | 0.9903 | 1.0000 |
+| object_like | qdrant_keyword | 6 | 0.9833 | 1.8833 | 12.8566 | 0.9900 | 1.0000 |
+| object_like | qdrant_keyword_object | 5 | 0.9800 | 1.8800 | 12.8604 | 0.9911 | 1.0000 |
+| object_like | qdrant_object | 5 | 0.9800 | 1.8800 | 12.8556 | 0.9899 | 1.0000 |
+| object_like | qdrant_object_rerank | 6 | 0.9833 | 1.9000 | 12.9888 | 0.9926 | 1.0000 |
+| object_like | qdrant_semantic | 6 | 0.9333 | 1.8000 | 12.3656 | 0.9770 | 1.0000 |
 
 ## Manual Object Precision@10
 
 This metric uses the independently inspected `object_present` field. It is not the automatic YOLO payload metric.
 
-No complete object-present labels are available yet.
-
-Incomplete object labels:
-
-- bird / qdrant_object
-- bird / qdrant_object_rerank
-- bird / qdrant_semantic
-- bird in nature / qdrant_object
-- bird in nature / qdrant_object_rerank
-- bird in nature / qdrant_semantic
-- building / qdrant_object_rerank
-- building / qdrant_semantic
-- building in city / qdrant_object_rerank
-- building in city / qdrant_semantic
-- car / qdrant_object
-- car / qdrant_object_rerank
-- car / qdrant_semantic
-- car at night / qdrant_object
-- car at night / qdrant_object_rerank
-- car at night / qdrant_semantic
-- cat / qdrant_object
-- cat / qdrant_object_rerank
-- cat / qdrant_semantic
-- cat indoors / qdrant_object
-- cat indoors / qdrant_object_rerank
-- cat indoors / qdrant_semantic
-- dog / qdrant_object
-- dog / qdrant_object_rerank
-- dog / qdrant_semantic
-- dog on beach / qdrant_object
-- dog on beach / qdrant_object_rerank
-- dog on beach / qdrant_semantic
-- person / qdrant_object
-- person / qdrant_object_rerank
-- person / qdrant_semantic
-- person in street photography / qdrant_object
-- person in street photography / qdrant_object_rerank
-- person in street photography / qdrant_semantic
+| mode | query_count | coverage_groups | coverage_images | object_precision_at_10 | ci95_low | ci95_high | delta_vs_semantic | empty_result_queries | less_than_top10_queries |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| qdrant_semantic | 12 | 1.0000 | 1.0000 | 0.9167 | 0.8250 | 0.9917 | 0.0000 | 0 | 0 |
+| qdrant_object | 10 | 0.8333 | 0.8333 | 0.9800 | 0.9500 | 1.0000 | 0.0633 | 2 | 2 |
+| qdrant_object_rerank | 12 | 1.0000 | 1.0000 | 0.9833 | 0.9583 | 1.0000 | 0.0667 | 0 | 0 |

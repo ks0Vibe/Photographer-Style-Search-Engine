@@ -147,6 +147,15 @@ def docker_ram_for_label(path: Path, label: str) -> str:
     return "n/a"
 
 
+def hardware_disk_for_label(path: Path, label: str) -> str:
+    document = read_json(path)
+    for snapshot in document.get("snapshots", []):
+        if snapshot.get("label") == label:
+            value = snapshot.get("qdrant_storage_disk_mb")
+            return f"{float(value):.2f} MB" if value not in {None, ""} else "n/a"
+    return "n/a"
+
+
 def assemble_final_report() -> None:
     selected_visuals = copy_selected_visualizations()
     stage05_payload = read_json(STAGE_05_DIR / "qdrant_payload_stats.json")
@@ -176,6 +185,16 @@ def assemble_final_report() -> None:
     manual_object_semantic = csv_row_by_value(STAGE_06_DIR / "object_precision_summary.csv", "mode", "qdrant_semantic")
     manual_object_filter = csv_row_by_value(STAGE_06_DIR / "object_precision_summary.csv", "mode", "qdrant_object")
     manual_object_rerank = csv_row_by_value(STAGE_06_DIR / "object_precision_summary.csv", "mode", "qdrant_object_rerank")
+    hardware_path = STAGE_13_DIR / "hardware_metrics.json"
+    hardware_document = read_json(hardware_path)
+    hardware_500k = next(
+        (snapshot for snapshot in hardware_document.get("snapshots", []) if snapshot.get("label") == "500k"),
+        {},
+    )
+    hardware_host = hardware_500k.get("host", {})
+    hardware_python = hardware_500k.get("python", {})
+    hardware_gpu = hardware_500k.get("gpu", {})
+    hardware_qdrant = hardware_500k.get("qdrant", {}).get("root", {})
 
     lines = [
         "# Photographer Style Search Engine: Final Report",
@@ -296,17 +315,27 @@ def assemble_final_report() -> None:
         "",
         "Index selection and hardware:",
         "",
+        f"- hardware OS = {hardware_host.get('os', 'n/a')}; CPU logical cores = {hardware_host.get('cpu_count', 'n/a')}; host RAM = {format_float(hardware_host.get('memory', {}).get('total_mb'), 2)} MB",
+        f"- GPU/CUDA available = {hardware_gpu.get('cuda_available', 'n/a')}; Python = {str(hardware_python.get('version', 'n/a')).split(' (')[0]}; PyTorch = {hardware_python.get('torch', 'n/a')}; Qdrant server = {hardware_qdrant.get('version', 'n/a')}",
         f"- first explicit HNSW configuration Recall@10 = {format_float(hnsw_index.get('recall_at_10'))}, p50 = {format_float(hnsw_index.get('p50_latency_ms'), 2)} ms, p95 = {format_float(hnsw_index.get('p95_latency_ms'), 2)} ms",
         f"- native Qdrant scalar INT8 Recall@10 = {format_float(native_scalar.get('recall_at_10'))}, p50 = {format_float(native_scalar.get('p50_latency_ms'), 2)} ms, p95 = {format_float(native_scalar.get('p95_latency_ms'), 2)} ms",
-        f"- native scalar INT8 container RAM = {format_float(native_scalar.get('container_memory_mb'), 2)} MB; disk = {format_float(native_scalar.get('disk_after_mb'), 2)} MB",
-        f"- Docker RAM snapshot 25k = {docker_ram_for_label(STAGE_13_DIR / 'hardware_metrics.json', '25k')}; 500k = {docker_ram_for_label(STAGE_13_DIR / 'hardware_metrics.json', '500k')}",
+        f"- native scalar INT8 clean container RAM = {docker_ram_for_label(hardware_path, '500k')}; disk = {hardware_disk_for_label(hardware_path, '500k')}",
+        f"- Docker RAM snapshot 25k = {docker_ram_for_label(hardware_path, '25k')}; disk = {hardware_disk_for_label(hardware_path, '25k')}",
         "",
         "Manual YOLO object validation:",
         "",
         f"- complete object-label query groups = {manual_object_semantic.get('query_count', 'n/a')}",
         f"- Object Precision@10 semantic baseline = {format_float(manual_object_semantic.get('object_precision_at_10'))}",
+        f"- Semantic 95% bootstrap CI = [{format_float(manual_object_semantic.get('ci95_low'))}, {format_float(manual_object_semantic.get('ci95_high'))}]",
         f"- Object Precision@10 object filter = {format_float(manual_object_filter.get('object_precision_at_10'))}",
+        f"- Object-filter delta vs semantic = {format_float(manual_object_filter.get('delta_vs_semantic'))}",
+        f"- Object-filter label coverage = {manual_object_filter.get('labeled_groups', 'n/a')}/{manual_object_filter.get('expected_groups', 'n/a')} groups, {manual_object_filter.get('labeled_images', 'n/a')}/{manual_object_filter.get('expected_images', 'n/a')} images",
+        f"- Object-filter 95% bootstrap CI = [{format_float(manual_object_filter.get('ci95_low'))}, {format_float(manual_object_filter.get('ci95_high'))}]",
+        f"- Object-filter empty result queries = {manual_object_filter.get('empty_result_queries', 'n/a')} ({format_float(manual_object_filter.get('empty_result_rate'))})",
         f"- Object Precision@10 object-aware rerank = {format_float(manual_object_rerank.get('object_precision_at_10'))}",
+        f"- Rerank delta vs semantic = {format_float(manual_object_rerank.get('delta_vs_semantic'))}",
+        f"- Rerank label coverage = {manual_object_rerank.get('labeled_groups', 'n/a')}/{manual_object_rerank.get('expected_groups', 'n/a')} groups, {manual_object_rerank.get('labeled_images', 'n/a')}/{manual_object_rerank.get('expected_images', 'n/a')} images",
+        f"- Rerank 95% bootstrap CI = [{format_float(manual_object_rerank.get('ci95_low'))}, {format_float(manual_object_rerank.get('ci95_high'))}]",
         "",
         "## 6. Qualitative Findings",
         "",
