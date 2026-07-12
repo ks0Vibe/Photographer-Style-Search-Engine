@@ -43,6 +43,38 @@ def directory_size_mb(path: Path) -> float:
     return sum(item.stat().st_size for item in path.rglob("*") if item.is_file()) / (1024 * 1024)
 
 
+def docker_storage_size_mb(container: str) -> float | None:
+    try:
+        result = subprocess.run(
+            ["docker", "exec", container, "sh", "-c", "du -sb /qdrant/storage | cut -f1"],
+            cwd=PROJECT_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        return int(result.stdout.strip()) / (1024 * 1024)
+    except (FileNotFoundError, subprocess.CalledProcessError, ValueError):
+        return None
+
+
+def parse_memory_usage_mb(raw: str) -> float | None:
+    match = re.match(r"\s*([0-9.]+)\s*([KMGT]?i?B)", raw or "", re.IGNORECASE)
+    if not match:
+        return None
+    units = {
+        "b": 1,
+        "kb": 1024,
+        "kib": 1024,
+        "mb": 1024**2,
+        "mib": 1024**2,
+        "gb": 1024**3,
+        "gib": 1024**3,
+        "tb": 1024**4,
+        "tib": 1024**4,
+    }
+    return float(match.group(1)) * units[match.group(2).lower()] / (1024 * 1024)
+
+
 def docker_stats(container: str) -> dict[str, Any]:
     try:
         result = subprocess.run(
@@ -51,6 +83,8 @@ def docker_stats(container: str) -> dict[str, Any]:
         )
         row = json.loads(result.stdout.strip().splitlines()[0])
         row["available"] = True
+        row["memory_usage_mb"] = parse_memory_usage_mb(str(row.get("MemUsage", "")).split("/")[0])
+        row["memory_limit_mb"] = parse_memory_usage_mb(str(row.get("MemUsage", "")).split("/")[-1])
         return row
     except (FileNotFoundError, subprocess.CalledProcessError, IndexError, json.JSONDecodeError) as exc:
         return {"available": False, "error": str(exc)}
@@ -151,7 +185,7 @@ def main() -> None:
         },
         "gpu": gpu_info(),
         "qdrant": qdrant_info(args.qdrant_url, args.collection),
-        "qdrant_storage_disk_mb": directory_size_mb(resolve(args.qdrant_path)),
+        "qdrant_storage_disk_mb": docker_storage_size_mb(args.container) or directory_size_mb(resolve(args.qdrant_path)),
         "container": args.container,
         "docker_samples": snapshots,
     })

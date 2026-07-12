@@ -93,6 +93,27 @@ def storage_path() -> Path:
     return synthetic_qdrant_path() if synthetic_qdrant_mode() == "local" else SERVER_QDRANT_STORAGE_PATH
 
 
+def qdrant_storage_size_mb(container: str, collection: str | None = None) -> float:
+    if synthetic_qdrant_mode() != "server":
+        return directory_size_mb(storage_path())
+    try:
+        target = "/qdrant/storage/collections"
+        if collection:
+            target += f"/{collection}"
+        result = subprocess.run(
+            ["docker", "exec", container, "sh", "-c", f"du -sb {target} | cut -f1"],
+            cwd=PROJECT_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        return int(result.stdout.strip()) / (1024 * 1024)
+    except (FileNotFoundError, subprocess.CalledProcessError, ValueError):
+        if collection and synthetic_qdrant_mode() == "server":
+            return 0.0
+        return directory_size_mb(storage_path())
+
+
 def parse_memory_mb(raw: str) -> float | None:
     match = re.match(r"\s*([0-9.]+)\s*([KMGT]?i?B)", raw or "", re.IGNORECASE)
     if not match:
@@ -186,6 +207,13 @@ def create_collection(qdrant: QdrantClient, collection: str, args: argparse.Name
         quantization_config=quantization,
         on_disk_payload=True,
     )
+
+
+def clear_benchmark_collections(qdrant: QdrantClient, collection_prefix: str) -> None:
+    for collection_info in qdrant.get_collections().collections:
+        if str(collection_info.name).startswith(f"{collection_prefix}_"):
+            qdrant.delete_collection(collection_info.name)
+    time.sleep(3)
 
 
 def upload(qdrant: QdrantClient, collection: str, embeddings: np.ndarray, image_ids: np.ndarray, batch_size: int) -> None:
@@ -285,13 +313,14 @@ def main() -> None:
             variants.append(("native_scalar_int8_m32_efc200_efs128", 32, 200, 128, True))
         for variant, m, ef_construct, ef_search, scalar in variants:
             collection = f"{args.collection_prefix}_{variant}"[:200]
-            disk_before = directory_size_mb(storage_path())
+            clear_benchmark_collections(qdrant, args.collection_prefix)
+            disk_before = qdrant_storage_size_mb(args.container, collection)
             started = time.perf_counter()
             create_collection(qdrant, collection, args, m=m, ef_construct=ef_construct, scalar=scalar)
             upload(qdrant, collection, embeddings, image_ids, args.batch_size)
             wait_until_green(qdrant, collection)
             build_seconds = time.perf_counter() - started
-            disk_after = directory_size_mb(storage_path())
+            disk_after = qdrant_storage_size_mb(args.container, collection)
             recall, p50, p95 = run_searches(qdrant, collection, queries, ground_truth, args.top_k, ef_search, args.latency_runs)
             stats = docker_stats(args.container)
             rows.append({

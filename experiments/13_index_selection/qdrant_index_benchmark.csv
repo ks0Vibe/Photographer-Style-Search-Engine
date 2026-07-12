@@ -1,0 +1,5 @@
+variant,collection,collection_size,m,ef_construct,ef_search,native_scalar_int8,build_time_seconds,recall_at_10,p50_latency_ms,p95_latency_ms,disk_after_mb,disk_delta_mb,container_memory_mb,container_mem_usage,container_cpu,docker_stats_available
+hnsw_m16_efc100_efs64,index_benchmark_hnsw_m16_efc100_efs64,500000,16,100,64,False,274.977,1.0,5.829,28.729,2700.723,2700.723,1405.952,1.373GiB / 7.621GiB,0.55%,True
+hnsw_m32_efc200_efs128,index_benchmark_hnsw_m32_efc200_efs128,500000,32,200,128,False,316.359,1.0,7.121,30.529,2640.715,2640.715,1330.176,1.299GiB / 7.621GiB,0.44%,True
+hnsw_m64_efc400_efs256,index_benchmark_hnsw_m64_efc400_efs256,500000,64,400,256,False,311.068,1.0,26.055,34.739,2645.52,2645.52,1277.952,1.248GiB / 7.621GiB,0.76%,True
+native_scalar_int8_m32_efc200_efs128,index_benchmark_native_scalar_int8_m32_efc200_efs128,500000,32,200,128,True,279.352,0.8833,6.345,31.097,2948.755,2948.755,1666.048,1.627GiB / 7.621GiB,1.42%,True

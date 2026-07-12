@@ -11,11 +11,12 @@ docker compose up -d qdrant
 docker inspect photographer-style-qdrant --format '{{.Config.Image}}'
 ```
 
-Use server mode for the 500k run so Qdrant RAM is the container RAM:
+For the 500k index benchmark use the dedicated named-volume container. It avoids HNSW segment rename permission errors on Windows bind mounts:
 
 ```powershell
+docker compose -f docker-compose.benchmark.yml up -d qdrant_benchmark
 $env:QDRANT_MODE='server'
-$env:QDRANT_URL='http://localhost:6333'
+$env:QDRANT_URL='http://localhost:6335'
 ```
 
 ## 2. HNSW vs exact FAISS ground truth
@@ -24,7 +25,8 @@ The script recreates one collection per variant, uploads the same vectors, waits
 
 ```powershell
 .\.venv\Scripts\python.exe experiments\scripts\benchmark_qdrant_index.py `
-  --query-count 30 --latency-runs 5 --batch-size 2048
+  --container photographer-style-qdrant-benchmark `
+  --query-count 30 --latency-runs 5 --batch-size 256
 ```
 
 Outputs:
@@ -40,7 +42,11 @@ Capture snapshots only after the corresponding collection is fully uploaded and 
 
 ```powershell
 .\.venv\Scripts\python.exe experiments\scripts\capture_hardware_metrics.py --label 25k --collection photos
-.\.venv\Scripts\python.exe experiments\scripts\capture_hardware_metrics.py --label 500k --collection index_benchmark_native_scalar_int8_m32_efc200_efs128
+.\.venv\Scripts\python.exe experiments\scripts\capture_hardware_metrics.py `
+  --label 500k `
+  --collection index_benchmark_native_scalar_int8_m32_efc200_efs128 `
+  --qdrant-url http://localhost:6335 `
+  --container photographer-style-qdrant-benchmark
 ```
 
 The JSON includes OS, CPU, host RAM, GPU/CUDA, Python, PyTorch, qdrant-client, Qdrant HTTP information, Qdrant storage disk size, and repeated `docker stats` samples. If host RAM is missing, install the optional observer dependency once:
@@ -51,6 +57,22 @@ The JSON includes OS, CPU, host RAM, GPU/CUDA, Python, PyTorch, qdrant-client, Q
 
 For a fair 25k measurement, create/upload the real `photos` collection and run the `--label 25k` command. For 500k, run it after the synthetic collection used by the benchmark is green. Keep the container name unchanged or pass `--container`.
 
+When the main Qdrant container already contains other collections, use the isolated 25k container for a clean RAM measurement:
+
+```powershell
+docker compose -f docker-compose.25k.yml up -d qdrant_25k
+$env:QDRANT_MODE='server'
+$env:QDRANT_URL='http://localhost:6337'
+$env:QDRANT_COLLECTION='photos_25k'
+.\.venv\Scripts\python.exe scripts\setup_qdrant_collection.py
+.\.venv\Scripts\python.exe scripts\upload_embeddings_to_qdrant.py
+.\.venv\Scripts\python.exe experiments\scripts\capture_hardware_metrics.py `
+  --label 25k `
+  --collection photos_25k `
+  --qdrant-url http://localhost:6337 `
+  --container photographer-style-qdrant-25k
+```
+
 ## 4. Native Qdrant scalar INT8
 
 `benchmark_qdrant_index.py` includes `native_scalar_int8_m32_efc200_efs128` by default. It uses Qdrant's server-side `ScalarQuantization(INT8)` and Qdrant search, so Python dequantization is not in latency.
@@ -59,7 +81,8 @@ To isolate only this production-like variant:
 
 ```powershell
 .\.venv\Scripts\python.exe experiments\scripts\benchmark_qdrant_index.py `
-  --hnsw-config 32,200,128 --query-count 30 --latency-runs 5
+  --container photographer-style-qdrant-benchmark `
+  --hnsw-config 32,200,128 --query-count 30 --latency-runs 5 --batch-size 256
 ```
 
 Use its Recall@10, p50/p95, `container_memory_mb`, and disk columns beside the float32 HNSW baseline. The old `int8_per_vector_512` result in stage 12 remains a Python/Numpy diagnostic and must not be presented as native Qdrant latency.

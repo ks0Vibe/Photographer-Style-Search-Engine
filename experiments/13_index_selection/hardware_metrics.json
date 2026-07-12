@@ -1,0 +1,303 @@
+{
+  "snapshots": [
+    {
+      "label": "25k",
+      "host": {
+        "os": "Windows-10-10.0.19045-SP0",
+        "system": "Windows",
+        "release": "10",
+        "machine": "AMD64",
+        "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+        "cpu_count": 16,
+        "memory": {
+          "total_mb": 16108.8671875,
+          "available_mb": 2539.81640625
+        }
+      },
+      "python": {
+        "version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+        "executable": "C:\\Users\\ksvibe\\Photographer-Style-Search-Engine\\.venv\\Scripts\\python.exe",
+        "numpy": "1.26.4",
+        "torch": "2.12.0",
+        "qdrant_client": "1.18.0"
+      },
+      "gpu": {
+        "cuda_available": false,
+        "torch_cuda": null
+      },
+      "qdrant": {
+        "available": true,
+        "http_status": 200,
+        "root": {
+          "title": "qdrant - vector search engine",
+          "version": "1.18.2",
+          "commit": "44ad62f8cd69642be5afa6441612525e24a0d063"
+        },
+        "collection": "photos_25k",
+        "collection_http_status": 200,
+        "collection_info": {
+          "result": {
+            "status": "green",
+            "optimizer_status": "ok",
+            "indexed_vectors_count": 0,
+            "points_count": 24916,
+            "segments_count": 8,
+            "config": {
+              "params": {
+                "vectors": {
+                  "size": 512,
+                  "distance": "Cosine"
+                },
+                "shard_number": 1,
+                "replication_factor": 1,
+                "write_consistency_factor": 1,
+                "on_disk_payload": true
+              },
+              "hnsw_config": {
+                "m": 16,
+                "ef_construct": 100,
+                "full_scan_threshold": 10000,
+                "max_indexing_threads": 0,
+                "on_disk": false
+              },
+              "optimizer_config": {
+                "deleted_threshold": 0.2,
+                "vacuum_min_vector_number": 1000,
+                "default_segment_number": 0,
+                "max_segment_size": null,
+                "memmap_threshold": null,
+                "indexing_threshold": 10000,
+                "flush_interval_sec": 5,
+                "max_optimization_threads": null,
+                "prevent_unoptimized": null
+              },
+              "wal_config": {
+                "wal_capacity_mb": 32,
+                "wal_segments_ahead": 0,
+                "wal_retain_closed": 1
+              },
+              "quantization_config": null
+            },
+            "payload_schema": {},
+            "update_queue": {
+              "length": 0
+            }
+          },
+          "status": "ok",
+          "time": 0.000396133
+        }
+      },
+      "qdrant_storage_disk_mb": 624.7552175521851,
+      "container": "photographer-style-qdrant-25k",
+      "docker_samples": [
+        {
+          "sample_index": 1,
+          "timestamp_utc": "2026-07-11T12:48:14Z",
+          "docker": {
+            "BlockIO": "33.6MB / 190MB",
+            "CPUPerc": "0.43%",
+            "Container": "photographer-style-qdrant-25k",
+            "ID": "32ca17cc18cb",
+            "MemPerc": "1.22%",
+            "MemUsage": "95.47MiB / 7.621GiB",
+            "Name": "photographer-style-qdrant-25k",
+            "NetIO": "313MB / 602kB",
+            "PIDs": "59",
+            "available": true,
+            "memory_usage_mb": 95.47,
+            "memory_limit_mb": 7803.904
+          }
+        },
+        {
+          "sample_index": 2,
+          "timestamp_utc": "2026-07-11T12:48:16Z",
+          "docker": {
+            "BlockIO": "33.6MB / 190MB",
+            "CPUPerc": "0.47%",
+            "Container": "photographer-style-qdrant-25k",
+            "ID": "32ca17cc18cb",
+            "MemPerc": "1.22%",
+            "MemUsage": "95.17MiB / 7.621GiB",
+            "Name": "photographer-style-qdrant-25k",
+            "NetIO": "313MB / 602kB",
+            "PIDs": "59",
+            "available": true,
+            "memory_usage_mb": 95.17,
+            "memory_limit_mb": 7803.904
+          }
+        },
+        {
+          "sample_index": 3,
+          "timestamp_utc": "2026-07-11T12:48:18Z",
+          "docker": {
+            "BlockIO": "33.6MB / 190MB",
+            "CPUPerc": "0.32%",
+            "Container": "photographer-style-qdrant-25k",
+            "ID": "32ca17cc18cb",
+            "MemPerc": "1.22%",
+            "MemUsage": "95.17MiB / 7.621GiB",
+            "Name": "photographer-style-qdrant-25k",
+            "NetIO": "313MB / 602kB",
+            "PIDs": "59",
+            "available": true,
+            "memory_usage_mb": 95.17,
+            "memory_limit_mb": 7803.904
+          }
+        }
+      ]
+    },
+    {
+      "label": "500k",
+      "host": {
+        "os": "Windows-10-10.0.19045-SP0",
+        "system": "Windows",
+        "release": "10",
+        "machine": "AMD64",
+        "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+        "cpu_count": 16,
+        "memory": {
+          "total_mb": 16108.8671875,
+          "available_mb": 2298.09375
+        }
+      },
+      "python": {
+        "version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+        "executable": "C:\\Users\\ksvibe\\Photographer-Style-Search-Engine\\.venv\\Scripts\\python.exe",
+        "numpy": "1.26.4",
+        "torch": "2.12.0",
+        "qdrant_client": "1.18.0"
+      },
+      "gpu": {
+        "cuda_available": false,
+        "torch_cuda": null
+      },
+      "qdrant": {
+        "available": true,
+        "http_status": 200,
+        "root": {
+          "title": "qdrant - vector search engine",
+          "version": "1.18.2",
+          "commit": "44ad62f8cd69642be5afa6441612525e24a0d063"
+        },
+        "collection": "index_benchmark_native_scalar_int8_m32_efc200_efs128",
+        "collection_http_status": 200,
+        "collection_info": {
+          "result": {
+            "status": "green",
+            "optimizer_status": "ok",
+            "indexed_vectors_count": 496128,
+            "points_count": 500000,
+            "segments_count": 8,
+            "config": {
+              "params": {
+                "vectors": {
+                  "size": 512,
+                  "distance": "Cosine"
+                },
+                "shard_number": 1,
+                "replication_factor": 1,
+                "write_consistency_factor": 1,
+                "on_disk_payload": true
+              },
+              "hnsw_config": {
+                "m": 32,
+                "ef_construct": 200,
+                "full_scan_threshold": 10000,
+                "max_indexing_threads": 0,
+                "on_disk": false
+              },
+              "optimizer_config": {
+                "deleted_threshold": 0.2,
+                "vacuum_min_vector_number": 1000,
+                "default_segment_number": 0,
+                "max_segment_size": null,
+                "memmap_threshold": null,
+                "indexing_threshold": 10000,
+                "flush_interval_sec": 5,
+                "max_optimization_threads": null,
+                "prevent_unoptimized": null
+              },
+              "wal_config": {
+                "wal_capacity_mb": 32,
+                "wal_segments_ahead": 0,
+                "wal_retain_closed": 1
+              },
+              "quantization_config": {
+                "scalar": {
+                  "type": "int8",
+                  "quantile": 0.99,
+                  "always_ram": false
+                }
+              }
+            },
+            "payload_schema": {},
+            "update_queue": {
+              "length": 0
+            }
+          },
+          "status": "ok",
+          "time": 0.000493922
+        }
+      },
+      "qdrant_storage_disk_mb": 1764.8327493667603,
+      "container": "photographer-style-qdrant-benchmark",
+      "docker_samples": [
+        {
+          "sample_index": 1,
+          "timestamp_utc": "2026-07-12T15:12:56Z",
+          "docker": {
+            "BlockIO": "2.78GB / 34.2GB",
+            "CPUPerc": "0.23%",
+            "Container": "photographer-style-qdrant-benchmark",
+            "ID": "9d4f733317ec",
+            "MemPerc": "19.67%",
+            "MemUsage": "1.499GiB / 7.621GiB",
+            "Name": "photographer-style-qdrant-benchmark",
+            "NetIO": "21.9GB / 32MB",
+            "PIDs": "59",
+            "available": true,
+            "memory_usage_mb": 1534.976,
+            "memory_limit_mb": 7803.904
+          }
+        },
+        {
+          "sample_index": 2,
+          "timestamp_utc": "2026-07-12T15:12:58Z",
+          "docker": {
+            "BlockIO": "2.78GB / 34.2GB",
+            "CPUPerc": "0.42%",
+            "Container": "photographer-style-qdrant-benchmark",
+            "ID": "9d4f733317ec",
+            "MemPerc": "19.67%",
+            "MemUsage": "1.499GiB / 7.621GiB",
+            "Name": "photographer-style-qdrant-benchmark",
+            "NetIO": "21.9GB / 32MB",
+            "PIDs": "59",
+            "available": true,
+            "memory_usage_mb": 1534.976,
+            "memory_limit_mb": 7803.904
+          }
+        },
+        {
+          "sample_index": 3,
+          "timestamp_utc": "2026-07-12T15:13:00Z",
+          "docker": {
+            "BlockIO": "2.78GB / 34.2GB",
+            "CPUPerc": "0.53%",
+            "Container": "photographer-style-qdrant-benchmark",
+            "ID": "9d4f733317ec",
+            "MemPerc": "19.67%",
+            "MemUsage": "1.499GiB / 7.621GiB",
+            "Name": "photographer-style-qdrant-benchmark",
+            "NetIO": "21.9GB / 32MB",
+            "PIDs": "59",
+            "available": true,
+            "memory_usage_mb": 1534.976,
+            "memory_limit_mb": 7803.904
+          }
+        }
+      ]
+    }
+  ],
+  "schema_version": 1
+}

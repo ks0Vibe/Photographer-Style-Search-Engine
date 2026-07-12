@@ -1,0 +1,12 @@
+services:
+  qdrant_25k:
+    image: qdrant/qdrant:latest
+    container_name: photographer-style-qdrant-25k
+    ports:
+      - "6337:6333"
+      - "6338:6334"
+    volumes:
+      - qdrant_25k_storage:/qdrant/storage
+
+volumes:
+  qdrant_25k_storage:

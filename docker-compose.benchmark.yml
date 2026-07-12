@@ -1,0 +1,12 @@
+services:
+  qdrant_benchmark:
+    image: qdrant/qdrant:latest
+    container_name: photographer-style-qdrant-benchmark
+    ports:
+      - "6335:6333"
+      - "6336:6334"
+    volumes:
+      - qdrant_benchmark_storage:/qdrant/storage
+
+volumes:
+  qdrant_benchmark_storage:
