@@ -66,6 +66,7 @@ data/**/*.csv
 # Embeddings
 data/embeddings/*.npy
 data/embeddings/*.npz
+data/optimized_vectors/
 
 # Model weights / exports
 *.pt
@@ -88,12 +89,14 @@ data/qdrant_synthetic_500k/
 # Experiments
 experiments/runs/
 experiments/*/visualizations/
+experiments/06_yolo_object_retrieval/manual_photos/
 
 experiments/09_validation_results/*.csv
 experiments/09_validation_results/run_summary.md
 
 experiments/final_report/selected_visualizations/
 experiments/final_report/results.pdf
+experiments/10_relevance_labeling/review_images_by_query/
 
 # Temporary files
 *.log
@@ -101,3 +104,5 @@ experiments/final_report/results.pdf
 *.temp
 
 /docss
+
+present.md
