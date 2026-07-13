@@ -97,7 +97,7 @@ data/unsplash-lite/keywords.csv000
 Download the local image corpus and create the metadata CSV:
 
 ```powershell
-python download_dataset.py
+python scripts/download_dataset.py
 ```
 
 If the dataset is already prepared, skip this step.

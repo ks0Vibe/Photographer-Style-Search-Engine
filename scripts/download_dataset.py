@@ -95,7 +95,6 @@ def main() -> None:
         raise FileNotFoundError(f"Photos file not found: {PHOTOS_PATH}")
 
     photos = pd.read_csv(PHOTOS_PATH, sep="\t")
-
     rows = []
     existing_count = 0
     newly_downloaded = 0
@@ -116,16 +115,7 @@ def main() -> None:
 
         if image_path.exists():
             width, height = get_existing_image_size(image_path)
-
-            rows.append(
-                build_metadata_row(
-                    row=row,
-                    image_path=image_path,
-                    width=width,
-                    height=height,
-                )
-            )
-
+            rows.append(build_metadata_row(row, image_path, width, height))
             existing_count += 1
             continue
 
@@ -140,23 +130,12 @@ def main() -> None:
                 continue
 
             image.save(image_path, "JPEG", quality=90)
-
-            rows.append(
-                build_metadata_row(
-                    row=row,
-                    image_path=image_path,
-                    width=width,
-                    height=height,
-                )
-            )
-
+            rows.append(build_metadata_row(row, image_path, width, height))
             newly_downloaded += 1
             time.sleep(SLEEP_SECONDS)
-
-        except Exception as e:
+        except Exception as exc:
             skipped += 1
-            print(f"Skipped {photo_id}: {e}")
-            continue
+            print(f"Skipped {photo_id}: {exc}")
 
     metadata = pd.DataFrame(rows)
     metadata.to_csv(METADATA_PATH, index=False)

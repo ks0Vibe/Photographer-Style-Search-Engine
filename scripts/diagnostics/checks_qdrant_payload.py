@@ -1,5 +1,7 @@
 from collections import Counter
+
 from qdrant_client import QdrantClient
+
 
 QDRANT_PATH = "data/qdrant"
 COLLECTION_NAME = "photos"
@@ -15,13 +17,10 @@ try:
 
     offset = None
     total_seen = 0
-
     keyword_non_empty = 0
     object_non_empty = 0
-
     keyword_counter = Counter()
     object_counter = Counter()
-
     sample_payloads = []
 
     while True:
@@ -48,16 +47,10 @@ try:
 
             if isinstance(keywords, str):
                 keywords = [keywords]
-
             if isinstance(detected_objects, str):
                 detected_objects = [detected_objects]
 
-            keywords = [
-                str(x).lower().strip()
-                for x in keywords
-                if str(x).strip()
-            ]
-
+            keywords = [str(x).lower().strip() for x in keywords if str(x).strip()]
             detected_objects = [
                 str(x).lower().strip()
                 for x in detected_objects
@@ -66,7 +59,6 @@ try:
 
             if keywords:
                 keyword_non_empty += 1
-
             if detected_objects:
                 object_non_empty += 1
 
@@ -87,12 +79,11 @@ try:
     print()
     print("Images with non-empty keywords:", keyword_non_empty)
     print("Keyword coverage:", keyword_non_empty / total_seen if total_seen else 0)
-
     print()
     print("Images with non-empty detected_objects:", object_non_empty)
     print("Object coverage:", object_non_empty / total_seen if total_seen else 0)
-
     print()
+
     print("Top 50 payload keywords:")
     for keyword, count in keyword_counter.most_common(50):
         print(f"{keyword}: {count}")
@@ -101,6 +92,5 @@ try:
     print("Top 50 detected objects:")
     for obj, count in object_counter.most_common(50):
         print(f"{obj}: {count}")
-
 finally:
     client.close()

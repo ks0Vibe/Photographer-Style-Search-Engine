@@ -1,6 +1,7 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, FieldCondition, MatchValue
 
+
 QDRANT_PATH = "data/qdrant"
 COLLECTION_NAME = "photos"
 
@@ -59,6 +60,5 @@ try:
             print("ai_description:", payload.get("ai_description"))
             print("keywords:", payload.get("keywords"))
             print()
-
 finally:
     client.close()
